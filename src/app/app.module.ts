@@ -69,6 +69,9 @@ import { TictactoeserviceService } from './services/tictactoeservice.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,6 +124,8 @@ import { environment } from '../environments/environment';
     MatIconModule,
     MatDialogModule,
     MatGridListModule,
+      MatMenuModule,
+    MatDividerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireAuthGuardModule,

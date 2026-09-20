@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Imports de vos composants
+// Imports des composants
 import { AccueilComponent } from './accueil/accueil.component';
 import { EvenementsComponent } from './academie/evenements/evenements.component';
 import { AnnoncesComponent } from './academie/annonces/annonces.component';
@@ -30,37 +30,41 @@ import { KronosComponent } from './game/kronos/kronos.component';
 import { AgainComponent } from './play/again/again.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginComponent } from './login/login.component';
- 
+
 const routes: Routes = [
+  // Page de connexion (Accessible sans authentification)
+  { path: 'login', component: LoginComponent },
+  //routes publiques
   { path: 'accueil', component: AccueilComponent },
-{ path: 'login', component: LoginComponent },
-{ path: 'academie', component: AcademieComponent, canActivate: [AuthGuard] },
-  { path: 'coursprives', component: CoursprivesComponent, canActivate: [AuthGuard] },
-  { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
-
-
-  { path: 'evenements', component: EvenementsComponent },
-  { path: 'annonces', component: AnnoncesComponent },
-   { path: 'boutique', component: BoutiqueComponent },
-  { path: 'master', component: MasterclassComponent },
-  { path: 'apprendre', component: ApprendreComponent },
-   { path: 'encemoment', component: EncemomentComponent },
-  { path: 'abonnement', component: AbonnementComponent },
+  { path: 'play', component: PlayComponent },
   { path: 'offoland', component: OffolandComponent },
-   { path: 'live', component: LiveComponent },
   { path: 'home', component: HomeComponent },
   { path: 'game', component: CharlyguitaregameComponent },
-  { path: 'rouge', component: RougeComponent },
-  { path: 'vert', component: VertComponent },
-  { path: 'bleu', component: BleuComponent },
-  { path: 'blanc', component: BlancComponent },
-  { path: 'noir', component: NoirComponent },
-  { path: 'play', component: PlayComponent },
-  { path: 'gardien', component: GardienComponent },
-  { path: 'tictac', component: TictactoeComponent },
-  { path: 'cards', component: CardgameComponent },
-  { path: 'kronos', component: KronosComponent },
-  { path: 'again', component: AgainComponent },
+  // Ensemble des routes protégées par AuthGuard
+
+  { path: 'academie', component: AcademieComponent, canActivate: [AuthGuard] },
+  { path: 'coursprives', component: CoursprivesComponent, canActivate: [AuthGuard] },
+  { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
+  { path: 'evenements', component: EvenementsComponent, canActivate: [AuthGuard] },
+  { path: 'annonces', component: AnnoncesComponent, canActivate: [AuthGuard] },
+  { path: 'boutique', component: BoutiqueComponent, canActivate: [AuthGuard] },
+  { path: 'master', component: MasterclassComponent, canActivate: [AuthGuard] },
+  { path: 'apprendre', component: ApprendreComponent, canActivate: [AuthGuard] },
+  { path: 'encemoment', component: EncemomentComponent, canActivate: [AuthGuard] },
+  { path: 'abonnement', component: AbonnementComponent, canActivate: [AuthGuard] },
+  { path: 'live', component: LiveComponent, canActivate: [AuthGuard] },
+  { path: 'rouge', component: RougeComponent, canActivate: [AuthGuard] },
+  { path: 'vert', component: VertComponent, canActivate: [AuthGuard] },
+  { path: 'bleu', component: BleuComponent, canActivate: [AuthGuard] },
+  { path: 'blanc', component: BlancComponent, canActivate: [AuthGuard] },
+  { path: 'noir', component: NoirComponent, canActivate: [AuthGuard] },
+  { path: 'gardien', component: GardienComponent, canActivate: [AuthGuard] },
+  { path: 'tictac', component: TictactoeComponent, canActivate: [AuthGuard] },
+  { path: 'cards', component: CardgameComponent, canActivate: [AuthGuard] },
+  { path: 'kronos', component: KronosComponent, canActivate: [AuthGuard] },
+  { path: 'again', component: AgainComponent, canActivate: [AuthGuard] },
+
+  // Redirections par défaut
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

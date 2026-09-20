@@ -1,36 +1,75 @@
 <!-- En-tête de navigation -->
-<header class="navbar">
-  <a [routerLink]="['/']" class="logo-link" title="CHARLY GUITARE - Accueil">
-    <div class="logo">
-      <span class="logo-text">Charly Guitare</span>
-      <span class="logo-icon" aria-hidden="true">🎸</span>
+<header class="navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-container">
+    
+    <!-- 1. Gauche : Logo avec espacement entre l'icône et le texte -->
+    <a [routerLink]="['/']" class="logo-link" title="CHARLY GUITARE - Accueil">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">🎸</span>
+        <span class="logo-text">CHARLY <span>GUITARE</span></span>
+      </div>
+    </a>
+
+    <!-- 2. Centre : Liens de navigation -->
+    <nav class="nav-links" [class.open]="isMobileMenuOpen" aria-label="Navigation principale">
+      <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">Accueil</a>
+      <a [routerLink]="['/live']" routerLinkActive="active" (click)="closeMobileMenu()">Live</a>
+      <a [routerLink]="['/academie']" routerLinkActive="active" (click)="closeMobileMenu()">Académie</a>
+      <a [routerLink]="['/abonnement']" routerLinkActive="active" (click)="closeMobileMenu()">Abonnement</a>
+      <a [routerLink]="['/offoland']" routerLinkActive="active" (click)="closeMobileMenu()">Offoland</a>
+      
+      <!-- Optionnel pour le menu mobile -->
+      <div class="mobile-auth" *ngIf="!(auth.user$ | async)">
+        <a [routerLink]="['/login']" class="btn-login-mobile" (click)="closeMobileMenu()">Connexion</a>
+      </div>
+    </nav>
+
+    <!-- 3. Droite : Authentification & Menu Burger -->
+    <div class="header-actions">
+      <!-- Si l'utilisateur est connecté -->
+      <ng-container *ngIf="auth.user$ | async as user; else loggedOut">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-btn">
+          <div class="avatar">
+            <img *ngIf="user.photoURL; else defaultAvatar" [src]="user.photoURL" [alt]="user.displayName" />
+            <ng-template #defaultAvatar>
+              <span>{{ getInitials(user.displayName) }}</span>
+            </ng-template>
+          </div>
+          <span class="user-name">{{ user.displayName || 'Mon Compte' }}</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+
+        <mat-menu #userMenu="matMenu" xPosition="before" class="custom-user-menu">
+          <div class="menu-header">
+            <p class="menu-user-name">{{ user.displayName }}</p>
+            <p class="menu-user-email">{{ user.email }}</p>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item [routerLink]="['/profil']">
+            <mat-icon>person</mat-icon>
+            <span>Mon Profil</span>
+          </button>
+          <button mat-menu-item (click)="onLogout()" class="logout-item">
+            <mat-icon color="warn">logout</mat-icon>
+            <span>Déconnexion</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+
+      <!-- Si l'utilisateur est déconnecté -->
+      <ng-template #loggedOut>
+        <a [routerLink]="['/login']" class="btn-login-desktop">Connexion</a>
+      </ng-template>
+
+      <!-- Bouton Menu Burger Mobile -->
+      <button class="burger-btn" (click)="toggleMobileMenu()" [class.is-active]="isMobileMenuOpen" aria-label="Menu Mobile">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-  </a>
 
-  <nav class="nav-links" aria-label="Navigation principale">
-    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-    <a [routerLink]="['/live']" routerLinkActive="active">Live</a>
-    <a [routerLink]="['/academie']" routerLinkActive="active">Academie</a>
-    <a [routerLink]="['/abonnement']" routerLinkActive="active">Abonnement</a>
-    <a [routerLink]="['/offoland']" routerLinkActive="active">Offoland</a>
-  </nav>
-  <!-- Si l'utilisateur est connecté -->
-<ng-container *ngIf="auth.user$ | async as user; else loggedOut">
-  <div class="user-profile">
-    <img [src]="user.photoURL" [alt]="user.displayName" class="avatar" />
-    <span>{{ user.displayName }}</span>
-    <button mat-stroked-button color="warn" (click)="onLogout()">
-      <mat-icon>logout</mat-icon> Déconnexion
-    </button>
   </div>
-</ng-container>
-
-<!-- Si l'utilisateur n'est PAS connecté -->
-<ng-template #loggedOut>
-  <button mat-raised-button color="primary" (click)="onGoogleLogin()">
-    <mat-icon>account_circle</mat-icon> Se connecter avec Google
-  </button>
-</ng-template>
 </header>
 
 <!-- Contenu principal -->

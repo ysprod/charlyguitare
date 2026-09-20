@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class Player {\n  constructor() {\n    this.bot = true;\n    this.score = 0;\n  }\n\n  updateScore(total) {\n    this.score += total;\n    return this.score;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

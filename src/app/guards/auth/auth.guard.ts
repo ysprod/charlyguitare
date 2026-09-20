@@ -18,8 +18,8 @@ export class AuthGuard implements CanActivate {
         if (user) {
           return true; // Accès autorisé
         } else {
-          // Redirige vers la page d'accueil si non connecté
-          return this.router.createUrlTree(['/home']);
+          // Redirige vers la page de connexion si non connecté
+          return this.router.createUrlTree(['/login']);
         }
       })
     );

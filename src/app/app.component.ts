@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,6 +18,41 @@ constructor(
     private snackBar: MatSnackBar
   ) {}
 
+  isMobileMenuOpen = false;
+  isScrolled = false;
+
+  
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 20;
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  onLogout(): void {
+    this.closeMobileMenu();
+    this.auth.logout();
+    
+    this.snackBar.open('Déconnexion réussie', 'Fermer', { duration: 3000 });
+    this.router.navigate(['/home']); // Ajustez selon la méthode de votre service auth
+  }
+
+  getInitials(name: string | null | undefined): string {
+    if (!name) return 'U';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  }
+
   async onGoogleLogin() {
     try {
       const result = await this.auth.loginWithGoogle();
@@ -32,10 +67,10 @@ constructor(
     }
   }
 
-  async onLogout() {
-    await this.auth.logout();
-    this.snackBar.open('Déconnexion réussie', 'Fermer', { duration: 3000 });
-    this.router.navigate(['/home']);
-  }
+  // async onLogout() {
+  //   await this.auth.logout();
+  //   this.snackBar.open('Déconnexion réussie', 'Fermer', { duration: 3000 });
+  //   this.router.navigate(['/home']);
+  // }
 
 }

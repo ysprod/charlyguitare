@@ -59,6 +59,7 @@ $red-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    margin-right: 2rem;
 
     .logo-text {
       font-family: 'Playfair Display', serif;
@@ -76,7 +77,7 @@ $red-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
   .nav-links {
     display: flex;
     gap: 2rem;
-
+margin-right: 2rem;
     a {
       color: #e0e0e0;
       text-decoration: none;
@@ -561,4 +562,524 @@ $red-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
 .hero-content {
   max-width: 750px;
   margin: 0 auto;
+}
+
+// Variables
+$primary-color: #ff4757;
+$primary-hover: #e84118;
+$bg-dark: #1e1e24;
+$text-light: #f1f2f6;
+$text-muted: #a4b0be;
+$border-color: rgba(255, 255, 255, 0.1);
+$navbar-height: 72px;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
+  background-color: rgba(30, 30, 36, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid $border-color;
+  transition: all 0.3s ease;
+
+  .navbar-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// Logo
+.logo-link {
+  text-decoration: none;
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .logo-icon {
+      font-size: 1.5rem;
+    }
+
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: $text-light;
+      text-transform: uppercase;
+
+      span {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+// Nav Links
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  a {
+    position: relative;
+    color: $text-muted;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-light;
+    }
+
+    &.active {
+      color: $primary-color;
+      font-weight: 600;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $primary-color;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .mobile-auth {
+    display: none;
+  }
+}
+
+// User Profil & Actions
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $text-light !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 20px !important;
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: $primary-color;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .user-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+.btn-login-desktop {
+  background-color: $primary-color;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+  }
+}
+
+// Menu Burger Button
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  span {
+    width: 100%;
+    height: 2px;
+    background-color: $text-light;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  &.is-active {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+// Main Content Wrapper
+.main-content {
+  min-height: calc(100vh - #{$navbar-height});
+}
+
+// Mobile Responsive
+@media (max-width: 868px) {
+  .burger-btn {
+    display: flex;
+  }
+
+  .btn-login-desktop {
+    display: none;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    right: 0;
+    background-color: $bg-dark;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    gap: 1.25rem;
+    border-bottom: 1px solid $border-color;
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    a {
+      width: 100%;
+      font-size: 1.1rem;
+
+      &.active::after {
+        display: none;
+      }
+    }
+
+    .mobile-auth {
+      display: block;
+      width: 100%;
+      padding-top: 1rem;
+      border-top: 1px solid $border-color;
+
+      .btn-login-mobile {
+        display: block;
+        text-align: center;
+        background-color: $primary-color;
+        color: #fff;
+        padding: 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Variables
+$primary-color: #ff4757;
+$primary-hover: #e84118;
+$bg-dark: #1e1e24;
+$text-light: #f1f2f6;
+$text-muted: #a4b0be;
+$border-color: rgba(255, 255, 255, 0.1);
+$navbar-height: 72px;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
+  background-color: rgba(30, 30, 36, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid $border-color;
+
+  .navbar-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    
+    // Utilisation de CSS Grid pour forcer 3 zones : Gauche, Centre, Droite
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+}
+
+// 1. GAUCHE : Logo
+.logo-link {
+  text-decoration: none;
+  justify-self: start; // Alignement à gauche
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem; // Espacement généreux entre l'icône 🎸 et le texte
+
+    .logo-icon {
+      font-size: 1.6rem;
+      display: inline-block;
+      transform: translateY(-1px); // Ajustement optique
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: $text-light;
+      text-transform: uppercase;
+      white-space: nowrap;
+
+      span {
+        color: $primary-color;
+        margin-left: 0.25rem; // Espacement entre "CHARLY" et "GUITARE"
+      }
+    }
+  }
+}
+
+// 2. CENTRE : Menu de Navigation
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Centrage des liens
+  gap: 2.25rem;
+  justify-self: center; // Alignement du bloc complet au centre du header
+
+  a {
+    position: relative;
+    color: $text-muted;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-light;
+    }
+
+    &.active {
+      color: $primary-color;
+      font-weight: 600;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $primary-color;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .mobile-auth {
+    display: none;
+  }
+}
+
+// 3. DROITE : Actions & Profil
+.header-actions {
+  justify-self: end; // Alignement à droite
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $text-light !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 20px !important;
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: $primary-color;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .user-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+.btn-login-desktop {
+  background-color: $primary-color;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+  }
+}
+
+// Burger Mobile
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  span {
+    width: 100%;
+    height: 2px;
+    background-color: $text-light;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  &.is-active {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+// Main Content
+.main-content {
+  min-height: calc(100vh - #{$navbar-height});
+}
+
+// Adaptations Écran Mobile/Tablette
+@media (max-width: 900px) {
+  .navbar .navbar-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .burger-btn {
+    display: flex;
+  }
+
+  .btn-login-desktop {
+    display: none;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    right: 0;
+    background-color: $bg-dark;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    gap: 1.25rem;
+    border-bottom: 1px solid $border-color;
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    a {
+      width: 100%;
+      font-size: 1.1rem;
+
+      &.active::after {
+        display: none;
+      }
+    }
+
+    .mobile-auth {
+      display: block;
+      width: 100%;
+      padding-top: 1rem;
+      border-top: 1px solid $border-color;
+
+      .btn-login-mobile {
+        display: block;
+        text-align: center;
+        background-color: $primary-color;
+        color: #fff;
+        padding: 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    }
+  }
 }
