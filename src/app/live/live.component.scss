@@ -1,0 +1,229 @@
+$red-glow: #ff003c;
+$red-accent: #ff2a2a;
+$bg-dark: #0a0a0c;
+$bg-card: #141419;
+$text-light: #ffffff;
+$text-muted: #a0a0ab;
+
+.live-hub-container {
+  background-color: $bg-dark;
+  color: $text-light;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 5rem;
+  font-family: 'Montserrat', sans-serif;
+
+  /* --- HERO BANNER --- */
+  .hero-banner {
+    position: relative;
+    border-radius: 16px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(255, 0, 60, 0.25) 0%, rgba(10, 10, 12, 0.95) 80%);
+    border: 1px solid rgba($red-glow, 0.4);
+    box-shadow: 0 0 30px rgba($red-glow, 0.2);
+    margin-bottom: 3.5rem;
+    overflow: hidden;
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba($red-glow, 0.15);
+      border: 1px solid $red-glow;
+      color: #fff;
+      padding: 0.4rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 12px rgba($red-glow, 0.5);
+
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background-color: $red-glow;
+        border-radius: 50%;
+        box-shadow: 0 0 8px $red-glow;
+        animation: pulse 1.5s infinite;
+      }
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0 0 1rem;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px rgba($red-glow, 0.5);
+    }
+
+    .hero-description {
+      color: $text-muted;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+
+  /* --- GRILLE DES CARTES --- */
+  .grid-section {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .live-card {
+      background-color: $bg-card;
+      border-radius: 12px;
+      padding: 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+
+      &:hover {
+        transform: translateY(-6px);
+        border-color: rgba($red-glow, 0.6);
+        box-shadow: 0 10px 25px rgba($red-glow, 0.15);
+
+        .card-action .arrow {
+          transform: translateX(6px);
+        }
+      }
+
+      &.highlight-card {
+        border-color: rgba($red-glow, 0.5);
+        background: linear-gradient(145deg, rgba($red-glow, 0.08) 0%, $bg-card 100%);
+      }
+
+      .card-status-bar {
+        margin-bottom: 1rem;
+
+        .live-now-tag {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: $red-accent;
+          letter-spacing: 1px;
+        }
+      }
+
+      .card-content {
+        .card-icon {
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 800;
+          color: #fff;
+          margin: 0 0 0.6rem;
+          letter-spacing: 0.5px;
+        }
+
+        p {
+          color: $text-muted;
+          font-size: 0.95rem;
+          line-height: 1.4;
+          margin: 0 0 1.5rem;
+        }
+      }
+
+      .card-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $red-accent;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 1rem;
+        transition: color 0.3s ease;
+
+        .arrow {
+          font-size: 1.2rem;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          color: lighten($red-accent, 15%);
+        }
+      }
+    }
+  }
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .live-hub-container {
+    padding: 1rem 1rem 3rem;
+
+    .hero-banner {
+      padding: 2.5rem 1rem;
+
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+
+    .grid-section .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+.hero-content {
+  text-align: center; /* Centre le texte et les éléments inline (comme l'image) */
+  margin: 0 auto 2rem auto;
+  max-width: 800px; /* Aligne proprement la largeur de la description */
+
+  .row {
+    display: flex;
+    justify-content: center; /* Centre la colonne Bootstrap */
+    margin: 0;
+  }
+
+  p img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 12px; /* Optionnel : pour un visuel plus élégant */
+  }
+
+  .hero-description {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 0 auto;
+  }
+}

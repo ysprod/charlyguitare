@@ -1,0 +1,127 @@
+<div class="auth-sub-container">
+
+  <div class="hero-content text-center">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p><a [routerLink]="['/']" title="5 Charly Guitare">
+            <img src="../assets/abonnement.jpg"> </a></p>
+      </div>
+    </div><br>
+    <p class="hero-description">
+      Gérez votre compte, accédez à vos offres exclusives, débloquez les contenus de l'Académie et profitez des jeux
+      Offoland.
+    </p><br>
+  </div>
+
+  <section class="grid-section">
+    <div class="cards-grid">
+
+     
+
+      <!-- Se connecter -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">🔑</div>
+          <h3>Se connecter</h3>
+        </div>
+        <p class="card-desc">Accédez à votre espace personnel et retrouvez vos accès.</p>
+        <a routerLink="/auth/login" class="card-action">
+          <span>Connexion</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+       <!-- Créer un compte -->
+      <div class="auth-card highlight-card">
+        <div class="card-header">
+          <div class="card-icon">👤</div>
+          <h3>Créer un compte</h3>
+        </div>
+        <p class="card-desc">Rejoignez la communauté et accédez à l'ensemble des services.</p>
+        <a routerLink="/auth/register" class="card-action">
+          <span>S'inscrire maintenant</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- S'abonner à l'Académie -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">🎓</div>
+          <h3>S’abonner à l’Académie</h3>
+        </div>
+        <p class="card-desc">Débloquez l'accès illimité aux formations, cours et ressources.</p>
+        <a routerLink="/subscription/academy" class="card-action">
+          <span>Découvrir l'abonnement</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Acheter un document -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">📚</div>
+          <h3>Acheter un document</h3>
+        </div>
+        <p class="card-desc">Obtenez des méthodes, livres numériques et partitions à l'unité.</p>
+        <a routerLink="/shop/documents" class="card-action">
+          <span>Voir le catalogue</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Accéder aux jeux Offoland -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">🎮</div>
+          <h3>Accéder aux jeux Offoland</h3>
+        </div>
+        <p class="card-desc">Profitez des jeux interactifs et des défis ludiques réservés aux membres.</p>
+        <a routerLink="/games/offoland" class="card-action">
+          <span>Lancer l'espace jeu</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Choisir une formule -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">⭐</div>
+          <h3>Choisir une formule</h3>
+        </div>
+        <p class="card-desc">Comparez les différents plans d'abonnement selon vos besoins.</p>
+        <a routerLink="/subscription/plans" class="card-action">
+          <span>Voir les formules</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Paiement -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">💳</div>
+          <h3>Paiement</h3>
+        </div>
+        <p class="card-desc">Effectuez vos règlements en toute sécurité via nos moyens de paiement.</p>
+        <a routerLink="/checkout" class="card-action">
+          <span>Espace paiement</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Mes abonnements -->
+      <div class="auth-card">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <h3>Mes abonnements</h3>
+        </div>
+        <p class="card-desc">Consultez l'état de vos abonnements, vos factures et renouvellements.</p>
+        <a routerLink="/account/subscriptions" class="card-action">
+          <span>Gérer mes accès</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div>

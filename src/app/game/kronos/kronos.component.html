@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <app-deux letitre="KRONOS IN THE NEW GAME"></app-deux>
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <h1>KRONOS LE MAITRE DU TEMPS: {{ randomnumber }}</h1>
+      <p>Il a entre ses mains un dodécaèdre ayant 12 faces.</p>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <button class="btn btn-success" (click)="resetjeu()">
+        Lancer le DE de Khronos
+      </button>
+      <p>En cliquant sur le bouton ci-dessus, Kronos lance son dé et vous perdez 1000 points de vie.
+      </p>
+      <br>
+      <p>
+        Vous gagnerez vos points de vie multipliés par le chiffre qui s'affiche en point de vies.</p>
+      <div *ngIf="gagnant()">
+        <p>C'est Bien!.  Vous pouvez a tout moment<button class="btn btn-primary"
+            (click)="onrecommencer()">
+            Passer a un autre jeu
+          </button> ou continuer à jouer avec KRONOS pour gagner des points de vie.</p>
+      </div>
+      <div *ngIf="casuffit()">
+        <p>Attention : LYKO LE SAGE ne vous permet pas de depasser 10 000 points de vie chez lui. Veuillez passer à un
+          autre jeu.</p>
+      </div>
+      <h2>Points de vie : {{ lavie }}</h2><br><button class="btn btn-primary" (click)="onrecommencer()">
+        Passer a un autre jeu
+      </button><br>
+      <br><br>
+    </div>
+  </div>
+</div>

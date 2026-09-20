@@ -1,0 +1,101 @@
+<div class="live-hub-container">
+
+  <div class="hero-content text-center">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p><a [routerLink]="['/']" title="5 Charly Guitare">
+            <img src="../assets/live.jpg"> </a></p>
+      </div>
+    </div><br>
+    <p class="hero-description">
+      Suivez les performances en direct, rejoignez les masterclass interactives et réécoutez vos sessions préférées.
+    </p><br>
+  </div>
+
+  <section class="grid-section">
+    <div class="cards-grid">
+
+      <!-- Live Maintenant -->
+      <div class="live-card highlight-card">
+        <div class="card-status-bar">
+          <span class="live-now-tag">● EN CE MOMENT</span>
+        </div>
+        <div class="card-content">
+          <div class="card-icon">🔴</div>
+          <h3>LIVE MAINTENANT</h3>
+          <p>Voir les directs en cours d'émission</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>Accéder au direct</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Programmés -->
+      <div class="live-card">
+        <div class="card-content">
+          <div class="card-icon">📅</div>
+          <h3>PROGRAMMES</h3>
+          <p>Découvrir les prochains lives à venir</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>Voir le programme</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Master Class Live -->
+      <div class="live-card">
+        <div class="card-content">
+          <div class="card-icon">🎓</div>
+          <h3>MASTER CLASS LIVE</h3>
+          <p>Participer aux sessions interactives avec les experts</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>Rejoindre la session</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Cours Live -->
+      <div class="live-card">
+        <div class="card-content">
+          <div class="card-icon">🎸</div>
+          <h3>COURS LIVE</h3>
+          <p>Apprendre en temps réel avec un formateur</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>S'inscrire au cours</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Concerts -->
+      <div class="live-card">
+        <div class="card-content">
+          <div class="card-icon">🎤</div>
+          <h3>CONCERTS</h3>
+          <p>Vivre les grandes performances musicales</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>Assister au concert</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Replay -->
+      <div class="live-card">
+        <div class="card-content">
+          <div class="card-icon">⏮️</div>
+          <h3>REPLAY</h3>
+          <p>Revoir tous les directs et événements terminés</p>
+        </div>
+        <a routerLink="/encemoment" class="card-action">
+          <span>Accéder aux archives</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div>

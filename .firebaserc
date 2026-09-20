@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "charly-guitare"
+  },
+  "targets": {
+    "charlyguitare": {
+      "hosting": {
+        "charlyguitare": [
+          "charlyguitare"
+        ]
+      }
+    }
+  }
+}

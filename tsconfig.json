@@ -3,6 +3,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+   "skipLibCheck": true,
+   "paths": {
+      "@firebase/auth": ["node_modules/@firebase/auth"],
+      "@firebase/auth-compat": ["node_modules/@firebase/auth-compat"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

@@ -1,0 +1,9 @@
+.game-area {
+  margin-top: 5px;
+  width: 92%;
+}
+
+mat-grid-tile {
+  background: magenta;
+  cursor: pointer;
+}

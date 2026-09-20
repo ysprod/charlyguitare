@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <app-deux letitre="THE NEW GAME"></app-deux>
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div class="game-area" *ngIf="oncontinue()">
+        <mat-grid-list class="tick-tack-grid" cols="3">
+          <mat-grid-tile *ngFor="let block of gs.blocks; let i = index" (click)="playerClick(i)">
+            <img src="{{ block.urlimg() }}" *ngIf="block.value"></mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <button class="btn btn-success" (click)="resetjeu()" *ngIf="rejouer">
+        Continuer à jouer
+      </button><br><br><button class="btn btn-primary" (click)="onrecommencer()" *ngIf="gagnant()">
+        Passer a un autre jeu
+      </button><br>
+      <p>En cliquant dans les cases ci-dessus, Vous devez aligner trois charly guitare pour recuperer la guitare
+        blanche face à LYKO LE SAGE le gardien des guitares
+        sacrés. Vous gagnerez des points de vie.</p>
+      <div *ngIf="gagnant()">
+        <p>C'est Bien!. Vous detenez la guitare blanche. Vous pouvez <button class="btn btn-primary"
+            (click)="onrecommencer()">
+            Passer a un autre jeu
+          </button> ou continuer à jouer avec LYKO LE SAGE pour gagner des points de vie.</p>
+      </div>
+      <div *ngIf="casuffit()">
+        <p>Attention : LYKO LE SAGE ne vous permet pas de depasser 10 000 points de vie chez lui. Veuillez passer à un
+          autre jeu.</p>
+      </div>
+      <h2>Points de vie : {{ lavie }}</h2>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>TOI:</td>
+            <td>{{ gs.players[0].score }}</td>
+          </tr>
+          <tr>
+            <td>Lyko le sage (le gardien des guitares sacrés):</td>
+            <td>{{ gs.players[1].score }}</td>
+          </tr>
+          <tr>
+            <td> MAtch Nul:</td>
+            <td>{{ gs.draw }}</td>
+          </tr>
+        </tbody>
+      </table><br><br>
+      <!-- <a class="pull-right text-right" class="btn btn-danger" (click)="resetjeu($event)" href="#">Reset Game</a>
+     <a class="pull-right text-right" class="btn btn-danger" (click)="newGame($event)" href="#">New Game</a> -->
+    </div>
+  </div>
+</div>

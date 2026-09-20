@@ -1,0 +1,230 @@
+$gold-glow: #ffd700;
+$gold-border: #f0b400;
+$blue-dark: #070d1e;
+$blue-card: #0f172a;
+$text-light: #ffffff;
+$text-muted: #94a3b8;
+
+.academie-container {
+  background-color: $blue-dark;
+  color: $text-light;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 5rem;
+  font-family: 'Montserrat', system-ui, sans-serif;
+
+  /* --- HERO BANNER --- */
+  .hero-banner {
+    position: relative;
+    border-radius: 20px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(14, 116, 144, 0.3) 0%, rgba(7, 13, 30, 0.95) 85%);
+    border: 2px solid $gold-border;
+    box-shadow: 0 0 35px rgba($gold-glow, 0.25);
+    margin-bottom: 3.5rem;
+
+    .hero-content {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .academy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba($gold-glow, 0.1);
+      border: 1px solid $gold-border;
+      color: $gold-glow;
+      padding: 0.4rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 0 12px rgba($gold-glow, 0.3);
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin: 0 0 1rem;
+      background: linear-gradient(180deg, #ffffff 0%, $gold-glow 100%);
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    .hero-description {
+      color: $text-muted;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  /* --- GRILLE DES CARTES --- */
+  .grid-section {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .academy-card {
+      background-color: $blue-card;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        transform: translateY(-6px);
+        border-color: $gold-border;
+        box-shadow: 0 12px 30px rgba($gold-glow, 0.2);
+
+        .card-action .arrow {
+          transform: translateX(6px);
+        }
+      }
+
+      &.highlight-card {
+        border-color: $gold-border;
+        background: linear-gradient(145deg, rgba($gold-glow, 0.08) 0%, $blue-card 100%);
+      }
+
+      &.full-width-card {
+        grid-column: 1 / -1;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+
+        .card-icon {
+          font-size: 2.2rem;
+        }
+
+        h3 {
+          font-size: 1.35rem;
+          font-weight: 800;
+          color: $gold-glow;
+          margin: 0;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .subcategories-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.8rem;
+
+        li {
+          color: $text-muted;
+          font-size: 0.95rem;
+          padding: 0.4rem 0;
+          position: relative;
+          padding-left: 1.2rem;
+
+          &::before {
+            content: "•";
+            color: $gold-border;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+          }
+        }
+
+        &.horizontal-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+
+          li {
+            padding-left: 1.2rem;
+          }
+        }
+      }
+
+      .card-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 1.2rem;
+        transition: color 0.3s ease;
+
+        .arrow {
+          color: $gold-glow;
+          font-size: 1.2rem;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          color: $gold-glow;
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .academie-container {
+    padding: 1rem 1rem 3rem;
+
+    .hero-banner {
+      padding: 2.5rem 1rem;
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+    }
+
+    .grid-section .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .subcategories-list.horizontal-list {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+}
+
+.hero-content {
+  text-align: center; /* Centre le texte et les éléments inline (comme l'image) */
+  margin: 0 auto 2rem auto;
+  max-width: 800px; /* Aligne proprement la largeur de la description */
+
+  .row {
+    display: flex;
+    justify-content: center; /* Centre la colonne Bootstrap */
+    margin: 0;
+  }
+
+  p img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 12px; /* Optionnel : pour un visuel plus élégant */
+  }
+
+  .hero-description {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 0 auto;
+  }
+}

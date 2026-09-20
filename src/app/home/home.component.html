@@ -1,0 +1,56 @@
+<div class="landing-page">
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <!-- Overlay & Background Image -->
+    <div class="hero-bg">
+      <img src="assets/charly-guitare-hero.png" alt="Charly Guitare" class="hero-image" />
+      <div class="hero-gradient-overlay"></div>
+    </div>
+
+    <!-- Content Left -->
+    <div class="hero-content">
+      <div class="accent-line"></div>
+      <h1 class="hero-title">CHARLY<br>GUITARE</h1>
+      <p class="hero-subtitle">La musique est une école<br>de vie.</p>
+      
+      <!-- Bouton CTA pointant vers la présentation / accueil -->
+      <button class="cta-button" [routerLink]="['/academie']">
+        Découvrir <span class="arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Navigation Grid / Icons Footer Section -->
+  <section class="quick-nav">
+    
+    <!-- Carte 1 : Jeux -->
+    <a [routerLink]="['/play']" class="nav-card">
+      <div class="icon-square">
+        <img src="assets/jeux.jpg" alt="Jeux Charly Guitare" class="nav-icon-img" />
+      </div>
+    </a>
+
+    <!-- Carte 2 : Cours de Guitare -->
+    <a [routerLink]="['/academie']" class="nav-card">
+      <div class="icon-square">
+        <img src="assets/coursguitare.jpg" alt="Cours de Guitare" class="nav-icon-img" />
+      </div>
+    </a>
+
+    <!-- Carte 3 : Livres / Documents -->
+    <a [routerLink]="['/offoland']" class="nav-card">
+      <div class="icon-square">
+        <img src="assets/livres.jpg" alt="Livres & Documents" class="nav-icon-img" />
+      </div>
+    </a>
+
+    <!-- Carte 4 : La Méthode / Formations -->
+    <a [routerLink]="['/academie']" class="nav-card">
+      <div class="icon-square">
+        <img src="assets/methode.jpg" alt="La Méthode Charly Guitare" class="nav-icon-img" />
+      </div>
+    </a>
+
+  </section>
+</div>

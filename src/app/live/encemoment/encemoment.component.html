@@ -1,0 +1,122 @@
+<div class="live-container">
+  <!-- EN-TÊTE / HERO DE LA PAGE -->
+  <header class="live-hero">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span> EN CE MOMENT
+    </div>
+    <h1 class="hero-title">Espace Live & Sessions Directes</h1>
+    <p class="hero-subtitle">
+      Suivez nos cours en direct, posez vos questions en temps réel et perfectionnez votre jeu de guitare avec Charly.
+    </p>
+  </header>
+
+  <!-- SECTION MAIN LIVE / EN CE MOMENT -->
+  <section class="current-live-section">
+    <div class="live-card highlight-card">
+      <div class="live-media-wrapper">
+        <div class="live-overlay">
+          <span class="live-status-tag">🔴 LIVE MAINTENANT</span>
+          <div class="viewer-count">
+            <span class="icon">👁️</span> 142 spectateurs
+          </div>
+        </div>
+        <!-- Image de présentation ou miniature vidéo -->
+        <img src="assets/academie.jpg" alt="Live Charly Guitare" class="live-thumbnail">
+        
+        <a [routerLink]="['/play']" class="play-btn-overlay" title="Rejoindre le direct">
+          <div class="play-icon-circle">
+            <div class="play-arrow"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="live-details">
+        <div class="live-meta">
+          <span class="category-tag">Masterclass Guitare</span>
+          <span class="time-tag">Commencé il y a 15 min</span>
+        </div>
+        <h2 class="live-title">Secrets du Coupé-Décalé & Harmonies Avancées à la Guitare</h2>
+        <p class="live-description">
+          Rejoignez Charly en direct pour décortiquer la rythmique, les accords suspendus et les techniques de solos spécifiques au style. Interaction en direct dans le chat !
+        </p>
+        <div class="live-actions">
+          <a [routerLink]="['/play']" class="btn-primary-live">
+            <span>Rejoindre le direct</span>
+            <span class="arrow">→</span>
+          </a>
+          <button class="btn-secondary-live">Voir les directs en cours d'émission</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PROCHAIN DIRECT (PLANIFIÉ) -->
+  <section class="upcoming-section">
+    <div class="section-header">
+      <h2>📅 Prochaines Sessions en Direct</h2>
+      <p>Ne manquez aucun rendez-vous musical. Programmez vos rappels dès maintenant.</p>
+    </div>
+
+    <div class="upcoming-grid">
+      <!-- Carte 1 -->
+      <div class="upcoming-card">
+        <div class="card-date-badge">
+          <span class="day">DEMAIN</span>
+          <span class="time">19:00 GMT</span>
+        </div>
+        <div class="card-content">
+          <span class="badge-topic">Atelier Solfège & Rythme</span>
+          <h3>Accords enrichis et gammes pentatoniques</h3>
+          <p>Une session interactive de 1h30 axée sur l'improvisation et la théorie appliquée à la guitare.</p>
+          <button class="btn-outline">🔔 M'ajouter un rappel</button>
+        </div>
+      </div>
+
+      <!-- Carte 2 -->
+      <div class="upcoming-card">
+        <div class="card-date-badge">
+          <span class="day">SAMEDI</span>
+          <span class="time">16:30 GMT</span>
+        </div>
+        <div class="card-content">
+          <span class="badge-topic">Session Questions / Réponses</span>
+          <h3>Coaching Privé & Analyse de vos vidéos</h3>
+          <p>Charly analyse les prestations de 5 étudiants tirés au sort et donne des conseils personnalisés.</p>
+          <button class="btn-outline">🔔 M'ajouter un rappel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION REPLAYS & ARCHIVES -->
+  <section class="replays-section">
+    <div class="section-header">
+      <h2>📚 Replays Récents</h2>
+      <p>Rattrapez les sessions en direct que vous avez manquées.</p>
+    </div>
+
+    <div class="replays-grid">
+      <div class="replay-card">
+        <div class="replay-thumbnail-box">
+          <span class="duration-tag">01:24:10</span>
+          <img src="assets/academie.jpg" alt="Replay Masterclass">
+        </div>
+        <div class="replay-info">
+          <h4>Les secrets de la guitare solo moderne</h4>
+          <span class="replay-date">Diffusé le 12 Septembre</span>
+        </div>
+      </div>
+
+      <div class="replay-card">
+        <div class="replay-thumbnail-box">
+          <span class="duration-tag">58:45</span>
+          <img src="assets/academie.jpg" alt="Replay MAO">
+        </div>
+        <div class="replay-info">
+          <h4>Introduction à la MAO & Arrangement Guitare</h4>
+          <span class="replay-date">Diffusé le 5 Septembre</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

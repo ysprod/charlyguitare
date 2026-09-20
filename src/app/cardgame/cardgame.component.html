@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <app-deux letitre="THE NEW GAME"></app-deux>
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div class="game-area" *ngIf="oncontinue()">
+        <mat-grid-list class="tick-tack-grid" cols="3" gutterSize="14px">
+          <mat-grid-tile *ngFor="let c of cards; let idx=index">
+            <app-gamecard [data]="c" (cardClicked)="cardClicked(idx)"></app-gamecard>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <br>
+      <p>Appuyez sur une carte pour la retourner. Vous ne pouvez retourner qu'un maximum de deux
+        cartes à la fois. Un match supprimera ces cartes ! A chaque fois que vous touchez une carte vous perdez 100
+        points.</p>
+      <div *ngIf="gagnant()">
+        <p>Vous pouvez A tout moment <button class="btn btn-primary" (click)="onrecommencer()">
+            Passer a un autre jeu
+          </button> ou continuer à jouer avec BOUBOUNI le gardien des cartes
+          magiques, pour gagner des points de vie et des bonus.</p>
+      </div>
+      <div *ngIf="casuffit()">
+        <p>Attention : BOUBOUNI ne vous permet pas de depasser 10 000 points de vie chez lui. Veuillez passer à un
+          autre
+          jeu.</p>
+      </div>
+      <h2>VOS GAINS</h2>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>Points de vie ::</td>
+            <td>{{ lavie}}</td>
+          </tr>
+          <tr>
+            <td>Bonus:</td>
+            <td>{{ lebonus }}</td>
+          </tr>
+        </tbody>
+      </table><br>
+    </div>
+  </div>
+</div>

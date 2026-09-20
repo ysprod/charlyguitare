@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <app-deux letitre="{{ titredelapage }}"></app-deux>
+  <div class="row">
+    <div class="col-xs-12 col-md-3">
+      <app-trois bonus="{{ lebonus }}" vie="{{ lavie }}"></app-trois>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <app-quatre monquatre="{{ etapedujeu }}"></app-quatre>
+      <button type="button" class="btn btn-danger" (click)="onVisualiser()" *ngIf="texteboutonun"> {{ texteboutonun }}
+      </button>
+      &nbsp;
+      <button type="button" class="btn btn-primary" (click)="onBoutondeux()"
+        *ngIf="texteboutondeux">{{ texteboutondeux }}</button>
+      &nbsp;
+      <button type="button" class="btn btn-success" (click)="onBoutontrois()"
+        *ngIf="texteboutontrois">{{ texteboutontrois }}</button>
+      &nbsp;
+      <button type="button" class="btn btn-info" (click)="onBoutonquatre()"
+        *ngIf="texteboutonquatre">{{ texteboutonquatre }}</button>
+      &nbsp;
+      <button type="button" class="btn btn-warning" (click)="onBoutoncinq()"
+        *ngIf="texteboutoncinq">{{ texteboutoncinq }}</button>
+      <br><br>
+      <p>CREATIK : {{ etapedujeu }} </p><br>
+      <button class="btn btn-link" (click)="onrecommencer()">
+        Recommencer le jeu
+      </button>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <app-cinq moncinq="{{ etapedujeu }}"></app-cinq>
+    </div>
+  </div>
+  <app-un monid="{{ succes }}"></app-un>
+</div>

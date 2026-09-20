@@ -1,0 +1,345 @@
+$blue-dark: #050a18;
+$card-bg: #0d1527;
+$gold-glow: #ffd700;
+$gold-border: #f0b400;
+$text-light: #ffffff;
+$text-muted: #94a3b8;
+
+.app-footer {
+  background: linear-gradient(180deg, $blue-dark 0%, #02050d 100%);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  color: $text-light;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  padding-top: 3.5rem;
+  padding-bottom: 5rem; /* Marges de sécurité pour la navigation mobile inférieure */
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  /* BRAND COLUMN */
+  .footer-brand {
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+
+      .logo-icon {
+        font-size: 1.8rem;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        color: $gold-glow;
+      }
+    }
+
+    .brand-description {
+      color: $text-muted;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      max-width: 380px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+
+      .social-icon {
+        font-size: 1.3rem;
+        text-decoration: none;
+        padding: 0.4rem 0.6rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+
+        &:hover {
+          transform: translateY(-3px);
+          border-color: $gold-border;
+        }
+      }
+    }
+  }
+
+  /* NAV COLUMNS */
+  .footer-column {
+    .column-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: $gold-glow;
+      margin: 0 0 1.2rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      a {
+        color: $text-muted;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s ease, transform 0.2s ease;
+        width: fit-content;
+
+        &:hover,
+        &.active {
+          color: #ffffff;
+          transform: translateX(4px);
+        }
+      }
+    }
+  }
+
+  /* BOTTOM COPYRIGHT BAR */
+  .footer-bottom {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    .bottom-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: $text-muted;
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      strong {
+        color: $gold-glow;
+      }
+
+      .legal-links {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+
+        a {
+          color: $text-muted;
+          text-decoration: none;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: #ffffff;
+          }
+        }
+
+        .separator {
+          color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   FOOTER PRINCIPAL
+   ========================================================================== */
+.app-footer {
+  background-color: #0f172a;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 4rem;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+}
+
+/* Identité / Marque */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.brand-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+}
+
+/* ==========================================================================
+   ICÔNES RÉSEAUX SOCIAUX
+   ========================================================================== */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Effets de Survol des icônes */
+.social-icon:hover {
+  transform: translateY(-3px);
+  border-color: #ef4444;
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+.social-icon:hover .social-img {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   COLONNES DE NAVIGATION
+   ========================================================================== */
+.column-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.column-title::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: #ef4444;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-nav a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-nav a:hover, .footer-nav a.active {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   BAS DE PAGE & COPYRIGHT
+   ========================================================================== */
+.footer-bottom {
+  background-color: #0b1120;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+}
+
+.bottom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottom-container strong {
+  color: #f1f5f9;
+}
+
+.legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.legal-links a {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.legal-links a:hover {
+  color: #cbd5e1;
+}
+
+.separator {
+  color: #475569;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .bottom-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
