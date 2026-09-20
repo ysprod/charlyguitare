@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GameService } from '../../services/game.service';
-import { TictactoeserviceService } from '../../services/tictactoeservice.service';
+ 
 import { ActivatedRoute, Router } from '@angular/router';
+import { GameService } from '../services/game.service';
+import { TictactoeserviceService } from '../services/tictactoeservice.service';
  
 
 @Component({

@@ -1,16 +1,17 @@
- 
 <main class="main-container">
 
-  <!-- HERO SECTION -->
-  <section class="hero-header">
-    <div class="hero-title-badge">
-      <span>🎤</span> Événements & Immersions
-    </div>
-    <h1 class="hero-title">Master Class Exclusives</h1>
-    <p class="hero-subtitle">
-      Perfectionnez votre jeu, découvrez des secrets d'harmonisation en direct et échangez lors de nos sessions intensives en présentiel ou en ligne.
-    </p>
-  </section>
+  <div class="hero-content text-center">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p><a [routerLink]="['/']" title="5 Charly Guitare">
+            <img src="../assets/masterclass.jpg"> </a></p>
+      </div>
+    </div><br>
+    <p class="hero-description">
+      Perfectionnez votre jeu, découvrez des secrets d'harmonisation en direct et échangez lors de nos sessions
+      intensives en présentiel ou en ligne.
+    </p><br>
+  </div>
 
   <!-- HIGHLIGHTED MASTERCLASS (A LA UNE) -->
   <section class="featured-masterclass">
@@ -20,7 +21,8 @@
         <span class="category-tag">Coupé-Décalé & Groove Afro</span>
         <h2 class="featured-title">Secrets du Toucher & Attaques Rythmiques</h2>
         <p class="featured-description">
-          Une immersion de 3 heures pour décortiquer les voicings, l'indépendance des doigts et la précision des riffs dans la musique africaine moderne.
+          Une immersion de 3 heures pour décortiquer les voicings, l'indépendance des doigts et la précision des riffs
+          dans la musique africaine moderne.
         </p>
         <div class="meta-grid">
           <div class="meta-card">
@@ -66,7 +68,7 @@
   <!-- UPCOMING SESSIONS & PROGRAM -->
   <section class="section-block">
     <h2 class="section-title">📅 Prochaines Master Class & Programmes</h2>
-    
+
     <div class="masterclass-grid">
 
       <!-- Master Class 1 -->
@@ -80,7 +82,7 @@
           <p class="mc-desc">
             Analyse des substitutions d'accords, création d'arpèges fluides et développement du phrasé solo.
           </p>
-          
+
           <div class="program-preview">
             <h4>📋 Programme Détaillé :</h4>
             <ul>
@@ -107,7 +109,7 @@
           <p class="mc-desc">
             Apprenez à enregistrer une guitare propre, régler vos effets et mixer vos morceaux sur DAW.
           </p>
-          
+
           <div class="program-preview">
             <h4>📋 Programme Détaillé :</h4>
             <ul>
@@ -148,4 +150,4 @@
     </div>
   </section>
 
-</main> 
+</main>

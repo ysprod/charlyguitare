@@ -30,6 +30,7 @@ import { KronosComponent } from './game/kronos/kronos.component';
 import { AgainComponent } from './play/again/again.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { ProfilComponent } from './profil/profil.component';
 
 const routes: Routes = [
   // Page de connexion (Accessible sans authentification)
@@ -43,6 +44,7 @@ const routes: Routes = [
   // Ensemble des routes protégées par AuthGuard
 
   { path: 'academie', component: AcademieComponent, canActivate: [AuthGuard] },
+    { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
   { path: 'coursprives', component: CoursprivesComponent, canActivate: [AuthGuard] },
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
   { path: 'evenements', component: EvenementsComponent, canActivate: [AuthGuard] },

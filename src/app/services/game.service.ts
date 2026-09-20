@@ -9,7 +9,7 @@ export class GameService {
     ["0", ["THE NEW GAME", "LYKO LE SAGE", "Je le ferais plus-tard", "", "", "", "1"]],
     ["1", ["LA DIMENSION BLANCHE", "BOUBOUNI", "Je le ferais plus-tard", "", "", "", "2"]],
     ["2", ["LA DIMENSION BLANCHE", "LE DE DE KRONOS ", "Je le ferais plus-tard", "", "", "", "3"]],
-    ["3", ["LA DIMENSION BLANCHE", "CONTINUEZ", "", "", "", "", "4"]],
+    ["3", ["LA DIMENSION ROUGE", "CONTINUEZ", "", "", "", "", "4"]],
     ["4", ["LA DIMENSION BLANCHE", "AVANCER", "", "", "", "", "5"]],
     ["5", ["LA DIMENSION BLANCHE", "GAGNER", "", "", "", "", "6"]],
     ["6", ["LA DIMENSION BLANCHE", "NOIR", "ROUGE", "VERT", "BLEU", "BLANC", "6"]]

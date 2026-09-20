@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -11,15 +11,20 @@ export class AuthGuard implements CanActivate {
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
-  canActivate(): Observable<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
     return this.afAuth.authState.pipe(
       take(1),
       map(user => {
         if (user) {
           return true; // Accès autorisé
         } else {
-          // Redirige vers la page de connexion si non connecté
-          return this.router.createUrlTree(['/login']);
+          // Redirige vers /login en passant l'URL tentée dans queryParams (?returnUrl=/ma-page)
+          return this.router.createUrlTree(['/login'], {
+            queryParams: { returnUrl: state.url }
+          });
         }
       })
     );

@@ -21,7 +21,7 @@ export class CardgameComponent implements OnInit {
   pointdebonus: number = 0;
   cardImages = [
     'assets/bleu.jpg',
-      'assets/vert.jpg',
+    'assets/vert.jpg',
     'assets/rouge.jpg',
     'assets/vert.jpg',
     'assets/noir.jpg',
@@ -37,9 +37,9 @@ export class CardgameComponent implements OnInit {
 
   ngOnInit(): void {
     this.lavie = this.Activatedroute.snapshot.queryParamMap.get('vie') || 0;
-		this.lebonus = this.Activatedroute.snapshot.queryParamMap.get('bonus') || 0;
-		this.etapedujeu = this.Activatedroute.snapshot.queryParamMap.get('etape') || this.etapedujeu;
-		this.pointdevies = parseInt(this.lavie.toString());
+    this.lebonus = this.Activatedroute.snapshot.queryParamMap.get('bonus') || 0;
+    this.etapedujeu = this.Activatedroute.snapshot.queryParamMap.get('etape') || this.etapedujeu;
+    this.pointdevies = parseInt(this.lavie.toString());
     this.setupCards();
   }
 
@@ -101,14 +101,14 @@ export class CardgameComponent implements OnInit {
   }
 
   incrementervie() {
-		this.pointdevies += 5000;
-		this.lavie = this.pointdevies;
-	}
+    this.pointdevies += 5000;
+    this.lavie = this.pointdevies;
+  }
 
   decrementervie() {
-		this.pointdevies -= 100;
-		this.lavie = this.pointdevies;
-	}
+    this.pointdevies -= 100;
+    this.lavie = this.pointdevies;
+  }
 
   restart(): void {
     this.matchedCount = 0;
@@ -116,13 +116,13 @@ export class CardgameComponent implements OnInit {
   }
 
   onrecommencer() {
-    if ((this.lavie) && (this.lebonus)) { this.goToPlay(this.lavie, this.lebonus,this.etapedujeu); }
+    if ((this.lavie) && (this.lebonus)) { this.goToPlay(this.lavie, this.lebonus, this.etapedujeu); }
   }
 
   goToPlay(lavie: string | number, lebonus: string | number, letape: string | number) {
-		this.router.navigate(['/play'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
-	}
-  
+    this.router.navigate(['/play'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
+  }
+
   gagnant() {
     return this.pointdevies != 0;
   }

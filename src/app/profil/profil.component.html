@@ -1,0 +1,226 @@
+<div class="profile-update-container">
+  <!-- En-tête de la page -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Paramètres du Profil</h1>
+      <p>Gérez vos informations personnelles, votre présence publique et votre sécurité.</p>
+    </div>
+  </header>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form-grid">
+    
+    <!-- Colonne Gauche : Photo de profil & Actions rapides -->
+    <aside class="sidebar-column">
+      <div class="glass-card avatar-section">
+        <h3>Photo de Profil</h3>
+        <div class="avatar-wrapper">
+          <img [src]="avatarPreview || 'assets/images/default-avatar.jpg'" alt="Photo de profil" class="avatar-img" />
+          <label for="avatar-input" class="avatar-upload-btn" title="Changer la photo">
+            <span class="icon">📷</span>
+          </label>
+          <input type="file" id="avatar-input" (change)="onAvatarSelected($event)" accept="image/*" hidden />
+        </div>
+        <p class="avatar-hint">JPG, PNG ou WEBP. Max 2 Mo.</p>
+        
+        <div class="user-quick-info">
+          <h4>{{ profileForm.get('displayName')?.value || 'Nom d\'artiste' }}</h4>
+          <span class="role-badge">Musicien / Artiste</span>
+        </div>
+      </div>
+
+      <!-- Navigation d'ancres / Onglets rapides -->
+      <div class="glass-card quick-nav">
+        <ul>
+          <li class="active"><a href="#info-perso">Informations Générales</a></li>
+          <li><a href="#social-links">Réseaux & Liens</a></li>
+          <li><a href="#security">Sécurité</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Colonne Droite : Formulaires principaux -->
+    <main class="main-column">
+
+      <!-- Bannières d'état -->
+      <div *ngIf="successMessage" class="alert-banner success-banner fade-in">
+        <span class="icon">✅</span> {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert-banner error-banner fade-in">
+        <span class="icon">⚠️</span> {{ errorMessage }}
+      </div>
+
+      <!-- Section 1 : Informations Générales -->
+      <section id="info-perso" class="glass-card form-section">
+        <div class="section-header">
+          <span class="section-icon">👤</span>
+          <h2>Informations Générales</h2>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label for="fullName">Nom & Prénom <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="fullName" 
+              formControlName="fullName" 
+              placeholder="ex: Jean-Charles Kotchi" 
+              [class.invalid]="isFieldInvalid('fullName')"
+            />
+            <span class="error-text" *ngIf="isFieldInvalid('fullName')">
+              Le nom complet est requis.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="displayName">Nom d'Artiste / Pseudonyme</label>
+            <input 
+              type="text" 
+              id="displayName" 
+              formControlName="displayName" 
+              placeholder="ex: Charly Guitare" 
+            />
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label for="email">Adresse Email <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email" 
+              placeholder="votre@email.com" 
+              [class.invalid]="isFieldInvalid('email')"
+            />
+            <span class="error-text" *ngIf="isFieldInvalid('email')">
+              Veuillez saisir un email valide.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Numéro de Téléphone</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              formControlName="phone" 
+              placeholder="+225 07 00 00 00 00" 
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bio">Biographie / Présentation</label>
+          <textarea 
+            id="bio" 
+            formControlName="bio" 
+            rows="4" 
+            placeholder="Décrivez votre parcours, vos influences et votre style..."
+          ></textarea>
+          <span class="char-count">{{ profileForm.get('bio')?.value?.length || 0 }} / 500</span>
+        </div>
+      </section>
+
+      <!-- Section 2 : Liens & Réseaux Sociaux -->
+      <section id="social-links" class="glass-card form-section">
+        <div class="section-header">
+          <span class="section-icon">🌐</span>
+          <h2>Liens & Réseaux Sociaux</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="website">Site Web Officiel / Portfolio</label>
+
+          <div class="input-with-icon">
+            <span class="input-icon">🔗</span>
+            <input 
+              type="url" 
+              id="website" 
+              formControlName="website" 
+              placeholder="https://charlyguitare.com"
+            />
+          </div>
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label for="youtube">Chaîne YouTube</label>
+            <div class="input-with-icon">
+              <span class="input-icon">▶</span>
+              <input 
+                type="url" 
+                id="youtube" 
+                formControlName="youtube" 
+                placeholder="https://youtube.com/@charlyguitare" 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="instagram">Compte Instagram</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📸</span>
+              <input 
+                type="text" 
+                id="instagram" 
+                formControlName="instagram" 
+                placeholder="@charlyguitare" 
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3 : Sécurité -->
+      <section id="security" class="glass-card form-section">
+        <div class="section-header">
+          <span class="section-icon">🔒</span>
+          <h2>Sécurité & Mot de passe</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="currentPassword">Mot de passe actuel</label>
+          <input 
+            type="password" 
+            id="currentPassword" 
+            formControlName="currentPassword" 
+            placeholder="••••••••" 
+          />
+        </div>
+
+        <div class="form-row two-cols">
+          <div class="form-group">
+            <label for="newPassword">Nouveau mot de passe</label>
+            <input 
+              type="password" 
+              id="newPassword" 
+              formControlName="newPassword" 
+              placeholder="Au moins 8 caractères" 
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              formControlName="confirmPassword" 
+              placeholder="Au moins 8 caractères" 
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Zone de Soumission Fixe ou Bas de page -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="onReset()">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Enregistrer les modifications</span>
+          <span *ngIf="isSubmitting" class="spinner-wrapper">
+            <span class="spinner"></span> Enregistrement...
+          </span>
+        </button>
+      </div>
+
+    </main>
+  </form>
+</div>

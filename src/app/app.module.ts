@@ -71,6 +71,8 @@ import { environment } from '../environments/environment';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfilComponent } from './profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -112,10 +114,13 @@ import { MatDividerModule } from '@angular/material/divider';
     BoutiqueComponent,
     CoursprivesComponent,
     AnnoncesComponent,
-    LoginComponent
+    LoginComponent,
+    ProfilComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatSnackBarModule,
