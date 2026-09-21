@@ -31,20 +31,27 @@ import { AgainComponent } from './play/again/again.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ProfilComponent } from './profil/profil.component';
+import { RegisterComponent } from './register/register.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { MentionsComponent } from './mentions/mentions.component';
+import { ContactComponent } from './contact/contact.component'; 
 
 const routes: Routes = [
   // Page de connexion (Accessible sans authentification)
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   //routes publiques
   { path: 'accueil', component: AccueilComponent },
   { path: 'play', component: PlayComponent },
   { path: 'offoland', component: OffolandComponent },
   { path: 'home', component: HomeComponent },
   { path: 'game', component: CharlyguitaregameComponent },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'mentions', component: MentionsComponent },
   // Ensemble des routes protégées par AuthGuard
-
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
   { path: 'academie', component: AcademieComponent, canActivate: [AuthGuard] },
-    { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
+  { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
   { path: 'coursprives', component: CoursprivesComponent, canActivate: [AuthGuard] },
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
   { path: 'evenements', component: EvenementsComponent, canActivate: [AuthGuard] },
@@ -65,6 +72,7 @@ const routes: Routes = [
   { path: 'cards', component: CardgameComponent, canActivate: [AuthGuard] },
   { path: 'kronos', component: KronosComponent, canActivate: [AuthGuard] },
   { path: 'again', component: AgainComponent, canActivate: [AuthGuard] },
+  
 
   // Redirections par défaut
   { path: '', redirectTo: 'home', pathMatch: 'full' },

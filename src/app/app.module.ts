@@ -62,6 +62,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { 
+  AngularFireAnalyticsModule, 
+  ScreenTrackingService, 
+  UserTrackingService 
+} from '@angular/fire/compat/analytics'; // <-- Ajout Analytics
 
 // Services & Environment
 import { GameService } from './services/game.service';
@@ -73,7 +80,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfilComponent } from './profil/profil.component';
-
+import { RegisterComponent } from './register/register.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { MentionsComponent } from './mentions/mentions.component';
+import { ContactComponent } from './contact/contact.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,7 +125,11 @@ import { ProfilComponent } from './profil/profil.component';
     CoursprivesComponent,
     AnnoncesComponent,
     LoginComponent,
-    ProfilComponent
+    ProfilComponent,
+    RegisterComponent,
+    PrivacyComponent,
+    MentionsComponent,
+    ContactComponent, 
   ],
   imports: [
     BrowserModule,
@@ -129,17 +143,26 @@ import { ProfilComponent } from './profil/profil.component';
     MatIconModule,
     MatDialogModule,
     MatGridListModule,
-      MatMenuModule,
+    MatMenuModule,
     MatDividerModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
     AngularFireAuthGuardModule,
+    AngularFireAnalyticsModule, // <-- Ajout Analytics dans les imports
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [CookieService, TictactoeserviceService, GameService],
+  providers: [
+    CookieService, 
+    TictactoeserviceService, 
+    GameService,
+    ScreenTrackingService, // <-- Suivi automatique de la navigation de page
+    UserTrackingService   // <-- Suivi automatique de la connexion utilisateur
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

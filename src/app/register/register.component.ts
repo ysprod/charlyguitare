@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';// Import de Realtime Database
+import { AngularFireDatabase } from '@angular/fire/compat/database'; // Import Realtime Database
 import firebase from 'firebase/compat/app';
-import { UserProfile } from '../models/user.model';
-  // Ajustez le chemin vers votre interface
+import { UserProfile } from '../models/user.model'; // Ajustez le chemin de votre modèle
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   email = '';
   password = '';
+  confirmPassword = '';
   errorMessage = '';
-  successMessage = '';
   loading = false;
   showPassword = false;
   returnUrl = '/academie';
@@ -32,21 +31,39 @@ export class LoginComponent implements OnInit {
   }
 
   async handleSubmit(): Promise<void> {
-    if (!this.email || !this.password) {
+    if (!this.email || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Veuillez remplir tous les champs.';
       return;
     }
 
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Les mots de passe ne correspondent pas.';
+      return;
+    }
+
+    if (this.password.length < 6) {
+      this.errorMessage = 'Le mot de passe doit contenir au moins 6 caractères.';
+      return;
+    }
+
     this.loading = true;
-    this.clearMessages();
+    this.errorMessage = '';
 
     try {
-      const credential = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
-      
+      const credential = await this.afAuth.createUserWithEmailAndPassword(
+        this.email,
+        this.password
+      );
+
       if (credential.user) {
-        await this.updateUserDataInRealtimeDB(credential.user);
+        // Enregistrer l'utilisateur dans Realtime Database
+        await this.saveUserDataInRealtimeDB(credential.user);
+        
+        // Envoi de l'email de vérification
+        await credential.user.sendEmailVerification();
       }
 
+      // Redirection vers l'espace demandé
       await this.router.navigateByUrl(this.returnUrl);
     } catch (error: any) {
       this.errorMessage = this.getFrenchErrorMessage(error.code);
@@ -55,9 +72,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async loginWithGoogle(): Promise<void> {
+  async signUpWithGoogle(): Promise<void> {
     this.loading = true;
-    this.clearMessages();
+    this.errorMessage = '';
 
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -65,7 +82,8 @@ export class LoginComponent implements OnInit {
       const credential = await this.afAuth.signInWithPopup(provider);
 
       if (credential.user) {
-        await this.updateUserDataInRealtimeDB(credential.user);
+        // Enregistrer ou mettre à jour dans Realtime Database
+        await this.saveUserDataInRealtimeDB(credential.user);
       }
 
       await this.router.navigateByUrl(this.returnUrl);
@@ -78,44 +96,23 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async onForgotPassword(): Promise<void> {
-    if (!this.email) {
-      this.errorMessage = 'Entrez votre e-mail pour recevoir un lien de réinitialisation.';
-      return;
-    }
-
-    this.loading = true;
-    this.clearMessages();
-
-    try {
-      await this.afAuth.sendPasswordResetEmail(this.email);
-      this.successMessage = 'Un e-mail de réinitialisation vous a été envoyé.';
-    } catch (error: any) {
-      this.errorMessage = this.getFrenchErrorMessage(error.code);
-    } finally {
-      this.loading = false;
-    }
-  }
-
   /**
-   * Crée ou met à jour l'utilisateur dans Realtime Database sous la clé 'users/{uid}'
+   * Enregistre ou met à jour le profil utilisateur sous la clé 'users/{uid}'
    */
-  private async updateUserDataInRealtimeDB(user: firebase.User): Promise<void> {
+  private async saveUserDataInRealtimeDB(user: firebase.User): Promise<void> {
     const userRef = this.db.object<UserProfile>(`users/${user.uid}`);
-    
-    // Vérifier si l'utilisateur existe déjà dans la base
     const snapshot = await userRef.query.once('value');
     const now = new Date().toISOString();
 
     if (snapshot.exists()) {
-      // Si l'utilisateur existe déjà, on met à jour uniquement lastLogin (et infos de base)
+      // Si le profil existe déjà (cas de Google Auth s'il s'était déjà connecté)
       await userRef.update({
         lastLogin: now,
         email: user.email || '',
         displayName: user.displayName || user.email?.split('@')[0] || ''
       });
     } else {
-      // Première connexion : création initiale du profil complet
+      // Nouveau compte : création complète
       const newUser: UserProfile = {
         uid: user.uid,
         email: user.email || '',
@@ -131,27 +128,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private clearMessages(): void {
-    this.errorMessage = '';
-    this.successMessage = '';
-  }
-
   private getFrenchErrorMessage(code: string): string {
     switch (code) {
-      case 'auth/user-not-found':
-      case 'auth/wrong-password':
-      case 'auth/invalid-credential':
-        return 'Email ou mot de passe incorrect.';
+      case 'auth/email-already-in-use':
+        return 'Cette adresse e-mail est déjà utilisée par un autre compte.';
+      case 'auth/weak-password':
+        return 'Le mot de passe doit contenir au moins 6 caractères.';
       case 'auth/invalid-email':
         return 'Adresse e-mail invalide.';
-      case 'auth/user-disabled':
-        return 'Ce compte a été désactivé.';
-      case 'auth/too-many-requests':
-        return 'Trop de tentatives échouées. Réessayez plus tard.';
       case 'auth/network-request-failed':
         return 'Problème de connexion réseau. Vérifiez votre internet.';
       default:
-        return 'Une erreur est survenue. Veuillez réessayer.';
+        return 'Une erreur est survenue lors de l\'inscription.';
     }
   }
 }

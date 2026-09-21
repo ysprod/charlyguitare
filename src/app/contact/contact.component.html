@@ -1,0 +1,113 @@
+<div class="contact-container">
+  <header class="contact-header">
+    <span class="badge">Restons en contact</span>
+    <h1>Contactez Charly Guitare</h1>
+    <p class="subtitle">
+      Une question sur les cours, un problème technique ou simplement envie d'échanger ? Envoyez-nous un message !
+    </p>
+  </header>
+
+  <main class="contact-card">
+    <!-- Message de succès -->
+    <div *ngIf="submitSuccess" class="alert alert-success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11"/>
+      </svg>
+      <div>
+        <strong>Message envoyé avec succès !</strong>
+        <p>Merci pour votre message. L'équipe Charly Guitare vous répondra dans les plus brefs délais.</p>
+      </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="submitError" class="alert alert-error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div>
+        <strong>Erreur d'envoi</strong>
+        <p>{{ errorMessage }}</p>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-grid">
+        <!-- Nom complet -->
+        <div class="form-group">
+          <label for="fullName">Nom complet</label>
+          <input
+            type="text"
+            id="fullName"
+            formControlName="fullName"
+            placeholder="Ex: Jean Dupont"
+            [class.invalid]="f.fullName.touched && f.fullName.invalid"
+          />
+          <div *ngIf="f.fullName.touched && f.fullName.invalid" class="error-text">
+            <span *ngIf="f.fullName.errors?.required">Le nom est obligatoire.</span>
+            <span *ngIf="f.fullName.errors?.minlength">Au moins 2 caractères requis.</span>
+          </div>
+        </div>
+
+        <!-- E-mail -->
+        <div class="form-group">
+          <label for="email">Adresse e-mail</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Ex: jean@example.com"
+            [class.invalid]="f.email.touched && f.email.invalid"
+          />
+          <div *ngIf="f.email.touched && f.email.invalid" class="error-text">
+            <span *ngIf="f.email.errors?.required">L'adresse e-mail est obligatoire.</span>
+            <span *ngIf="f.email.errors?.email">Veuillez entrer un e-mail valide.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sujet -->
+      <div class="form-group">
+        <label for="subject">Sujet</label>
+        <input
+          type="text"
+          id="subject"
+          formControlName="subject"
+          placeholder="Ex: Question sur le cours de Coupé-Décalé"
+          [class.invalid]="f.subject.touched && f.subject.invalid"
+        />
+        <div *ngIf="f.subject.touched && f.subject.invalid" class="error-text">
+          <span *ngIf="f.subject.errors?.required">Le sujet est obligatoire.</span>
+          <span *ngIf="f.subject.errors?.minlength">Au moins 3 caractères requis.</span>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          rows="5"
+          formControlName="message"
+          placeholder="Écrivez votre message ici..."
+          [class.invalid]="f.message.touched && f.message.invalid"
+        ></textarea>
+        <div *ngIf="f.message.touched && f.message.invalid" class="error-text">
+          <span *ngIf="f.message.errors?.required">Le message ne peut pas être vide.</span>
+          <span *ngIf="f.message.errors?.minlength">Au moins 10 caractères requis.</span>
+        </div>
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Envoyer le message</span>
+        <span *ngIf="isSubmitting" class="spinner-container">
+          <span class="spinner"></span> Envoi en cours...
+        </span>
+      </button>
+    </form>
+  </main>
+</div>
