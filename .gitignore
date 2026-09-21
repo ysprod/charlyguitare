@@ -40,10 +40,9 @@ yarn-error.log
 testem.log
 /typings
 
+# Angular CLI cache & build artifacts
 .angular/
 
 # System Files
 .DS_Store
 Thumbs.db
-.angular
- 
