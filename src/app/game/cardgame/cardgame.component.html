@@ -1,0 +1,68 @@
+<div class="game-wrapper">
+
+
+  <div class="main-content">
+    <!-- Zone de jeu -->
+    <section class="game-section">
+      <div class="game-area-card" *ngIf="oncontinue()">
+        <mat-grid-list cols="4" rowHeight="1:1" gutterSize="16px">
+          <mat-grid-tile *ngFor="let c of cards; let idx = index">
+            <app-gamecard [data]="c" (click)="cardClicked(idx)" class="card-item">
+            </app-gamecard>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <!-- Écran Limite Atteinte -->
+      <div class="limit-reached-card" *ngIf="casuffit()">
+        <div class="limit-icon">🏆</div>
+        <h2>Score maximum atteint !</h2>
+        <p>BOUBOUNI ne vous permet pas de dépasser <strong>10 000 points de vie</strong> ici. Félicitations !</p>
+        <button class="btn-action pulse" (click)="onrecommencer()">
+          Passer au jeu suivant 🚀
+        </button>
+      </div>
+    </section>
+
+    <!-- Sidebar Tableau de bord -->
+    <aside class="dashboard-section">
+      <!-- Header dynamique -->
+      <header class="game-header">
+        <div class="header-title">
+          <h1>BOUBOUNI</h1>
+        </div>
+      </header>
+      <!-- Panneau de score -->
+      <div class="glass-card score-card">
+        <h3>VOS GAINS</h3>
+        <div class="stat-row">
+          <div class="stat-item">
+            <span class="stat-label">Points de Vie</span>
+            <span class="stat-value life-pts">{{ lavie | number }}</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-label">Bonus</span>
+            <span class="stat-value bonus-pts">+{{ lebonus }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions & Actions -->
+      <div class="glass-card info-card">
+        <h3>Règles du Gardien</h3>
+        <p class="rules-text">
+          Flip deux cartes pour former une paire.
+          <span class="penalty-text">-100 pts par coup</span>.
+          Trouvez toutes les paires pour remporter le trésor de BOUBOUNI !
+        </p>
+
+        <div class="action-zone">
+          <button class="btn-secondary" (click)="onrecommencer()">
+            Retour au Menu des Jeux
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 // Imports des composants
-import { AccueilComponent } from './accueil/accueil.component';
+import { AccueilComponent } from './home/accueil/accueil.component';
 import { EvenementsComponent } from './academie/evenements/evenements.component';
 import { AnnoncesComponent } from './academie/annonces/annonces.component';
 import { CoursprivesComponent } from './academie/coursprives/coursprives.component';
@@ -25,7 +24,7 @@ import { NoirComponent } from './univers/noir/noir.component';
 import { PlayComponent } from './play/play.component';
 import { GardienComponent } from './play/gardien/gardien.component';
 import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
-import { CardgameComponent } from './cardgame/cardgame.component';
+import { CardgameComponent } from './game/cardgame/cardgame.component';
 import { KronosComponent } from './game/kronos/kronos.component';
 import { AgainComponent } from './play/again/again.component';
 import { AuthGuard } from './guards/auth/auth.guard';
@@ -34,22 +33,35 @@ import { ProfilComponent } from './profil/profil.component';
 import { RegisterComponent } from './register/register.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { MentionsComponent } from './mentions/mentions.component';
-import { ContactComponent } from './contact/contact.component'; 
+import { ContactComponent } from './contact/contact.component';
+import { MessagerieComponent } from './messagerie/messagerie.component';
+import { LykoComponent } from './lyko/lyko.component';
+import { FretboardComponent } from './game/fretboard/fretboard.component';
+import { MemoryComponent } from './game/memory/memory.component';
+import { AcousticComponent } from './game/acoustic/acoustic.component';
+import { MetronomeComponent } from './game/metronome/metronome.component';
+import { ChordComponent } from './game/chord/chord.component';
+import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
 
 const routes: Routes = [
   // Page de connexion (Accessible sans authentification)
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  //routes publiques
-  { path: 'accueil', component: AccueilComponent },
-  { path: 'play', component: PlayComponent },
-  { path: 'offoland', component: OffolandComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'game', component: CharlyguitaregameComponent },
-  { path: 'privacy', component: PrivacyComponent },
-  { path: 'mentions', component: MentionsComponent },
   // Ensemble des routes protégées par AuthGuard
+  { path: 'accueil', component: AccueilComponent, canActivate: [AuthGuard] },
+  { path: 'fretboard', component: FretboardComponent, canActivate: [AuthGuard] },
+  { path: 'memory', component: MemoryComponent, canActivate: [AuthGuard] },
+  { path: 'metronome', component: MetronomeComponent, canActivate: [AuthGuard] },
+  { path: 'acoustic', component: AcousticComponent, canActivate: [AuthGuard] },
+  { path: 'chord', component: ChordComponent, canActivate: [AuthGuard] },
+  { path: 'play', component: PlayComponent, canActivate: [AuthGuard] },
+  { path: 'offoland', component: OffolandComponent, canActivate: [AuthGuard] },
+  { path: 'game', component: CharlyguitaregameComponent, canActivate: [AuthGuard] },
+  { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard] },
+  { path: 'mentions', component: MentionsComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'inbox', component: MessagerieComponent, canActivate: [AuthGuard] },
   { path: 'academie', component: AcademieComponent, canActivate: [AuthGuard] },
   { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
   { path: 'coursprives', component: CoursprivesComponent, canActivate: [AuthGuard] },
@@ -72,15 +84,19 @@ const routes: Routes = [
   { path: 'cards', component: CardgameComponent, canActivate: [AuthGuard] },
   { path: 'kronos', component: KronosComponent, canActivate: [AuthGuard] },
   { path: 'again', component: AgainComponent, canActivate: [AuthGuard] },
-  
-
+  { path: 'lyko', component: LykoComponent, canActivate: [AuthGuard] },
+    { path: 'tictacduo', component: TictacduoComponent, canActivate: [AuthGuard] },
   // Redirections par défaut
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top' // Remet le scroll à (0, 0)
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,96 +1,119 @@
 <div class="method-container">
-  <!-- En-tête / Carte Titre -->
-  <header class="section-header">
-    <div class="header-card">
-      <div class="rocket-icon-wrapper">
-        <svg id="rocket" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101.678 101.678" class="rocket-svg">
-          <title>CHARLY GUITARE</title>
-          <g id="Group_83" transform="translate(-141 -696)">
-            <circle id="Ellipse_8" cx="50.839" cy="50.839" r="50.839" transform="translate(141 696)" fill="#ef4444" />
-            <g id="Group_47" transform="translate(165.185 720.185)">
-              <path id="Path_33" d="M3.4,42.615a3.084,3.084,0,0,0,3.553,3.553,21.419,21.419,0,0,0,12.215-6.107L9.511,30.4A21.419,21.419,0,0,0,3.4,42.615Z" transform="translate(0.371 3.363)" fill="#fff" />
-              <path id="Path_34" d="M53.3,3.221A3.09,3.09,0,0,0,50.081,0,48.227,48.227,0,0,0,18.322,13.437c-6-1.666-14.991-1.221-18.322,7.218A33.892,33.892,0,0,1,9.439,25.1l-.333.666a3.013,3.013,0,0,0,.555,3.553L23.985,43.641a2.9,2.9,0,0,0,3.553.555l.666-.333A33.892,33.892,0,0,1,32.647,53.3c8.55-3.664,8.884-12.326,7.218-18.322A48.227,48.227,0,0,0,53.3,3.221ZM34.424,9.772a6.439,6.439,0,1,1,9.106,9.106,6.368,6.368,0,0,1-9.106,0A6.467,6.467,0,0,1,34.424,9.772Z" transform="translate(0 0.005)" fill="#fff" />
-            </g>
-          </g>
-        </svg>
-      </div>
-      <h2 class="header-title">LES 5 DIMENSIONS CHARLY GUITARE</h2>
+
+  <!-- Fond de particules dorées -->
+  <div class="particles-bg">
+    <span *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+          class="particle"
+          [style.left.%]="(p * 5) % 100"
+          [style.animation-delay]="(p * 0.4) + 's'">
+    </span>
+  </div>
+
+  <!-- HEADER ÉPIQUE -->
+  <header class="method-header">
+   
+    <h1 class="title-glow"><br>LES 5 DIMENSIONS</h1>
+    <h2 class="title-sub">CHARLY GUITARE</h2>
+ 
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="icon">🎸</span>
+      <span class="line"></span>
     </div>
   </header>
 
-  <!-- Lecteur Vidéo Responsive -->
+  <!-- GRILLE DES DIMENSIONS -->
+  <main class="dimensions-grid">
+    <a *ngFor="let dim of dimensions; let i = index"
+       [routerLink]="[dim.route]"
+       class="dimension-card"
+       [style.--accent]="dim.couleur"
+       [style.--accent-light]="dim.couleurSecondaire"
+       [style.animation-delay]="(i * 0.15) + 's'"
+       [attr.title]="'Dimension ' + dim.nom + ' - ' + dim.sage">
+      
+      <!-- Particules internes de la carte -->
+      <div class="card-particles">
+        <span *ngFor="let p of [1,2,3,4,5,6]"></span>
+      </div>
+
+      <!-- Halo lumineux -->
+      <div class="card-halo"></div>
+
+      <!-- Image de fond -->
+      <div class="card-image-wrapper">
+        <img [src]="dim.image" [alt]="'Dimension ' + dim.nom" class="dimension-img" />
+        <div class="card-gradient-overlay"></div>
+      </div>
+
+      <!-- Contenu de la carte -->
+      <div class="card-content">
+        
+        <!-- Badge de couleur -->
+        <div class="dimension-badge">
+          <span class="badge-symbol">{{ dim.symbole }}</span>
+          <span class="badge-name">{{ dim.nom }}</span>
+        </div>
+
+        <!-- Métadonnées -->
+        <div class="dimension-meta">
+          <div class="meta-item">
+            <span class="meta-label">Note</span>
+            <span class="meta-value">{{ dim.note }}</span>
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-item">
+            <span class="meta-label">Sage</span>
+            <span class="meta-value">{{ dim.sage }}</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="dimension-description">{{ dim.description }}</p>
+
+        <!-- Action -->
+        <div class="card-action">
+          <span>Explorer</span>
+          <span class="material-icons">arrow_forward</span>
+        </div>
+      </div>
+
+      <!-- Coins décoratifs -->
+      <div class="corner-decoration top-left"></div>
+      <div class="corner-decoration top-right"></div>
+      <div class="corner-decoration bottom-left"></div>
+      <div class="corner-decoration bottom-right"></div>
+    </a>
+  </main>
+
+  <!-- SECTION VIDÉO -->
   <section class="video-section">
-    <div class="video-responsive-wrapper">
-      <iframe 
-        src="https://www.youtube.com/embed/GABVt9iGlJ4?autoplay=1" 
-        title="Présentation Charly Guitare"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
+    <div class="video-header">
+      <span class="material-icons">play_circle</span>
+      <h3>CHARLY GUITARE 5D</h3>
+    </div>
+    <div class="video-wrapper">
+      <div class="video-frame">
+        <iframe 
+          src="https://www.youtube.com/embed/GABVt9iGlJ4?autoplay=1&mute=1" 
+          title="Présentation Charly Guitare"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-glow"></div>
     </div>
   </section>
 
-  <!-- Grille Principale Contenu + Liens -->
-  <div class="content-grid">
-    
-    <!-- Les 5 Dimensions (Cartes d'accès) -->
-    <main class="dimensions-list">
-      
-      <a [routerLink]="['/noir']" class="dimension-card" title="Dimension Noir - Charly Guitare">
-        <div class="card-image-wrapper">
-          <img src="assets/noir.jpg" alt="Dimension Noir" class="dimension-img" />
-          <div class="card-overlay">
-            <span class="badge badge-noir">Noir</span>
-          </div>
-        </div>
-      </a>
-
-      <a [routerLink]="['/rouge']" class="dimension-card" title="Dimension Rouge - Charly Guitare">
-        <div class="card-image-wrapper">
-          <img src="assets/rouge.jpg" alt="Dimension Rouge" class="dimension-img" />
-          <div class="card-overlay">
-            <span class="badge badge-rouge">Rouge</span>
-          </div>
-        </div>
-      </a>
-
-      <a [routerLink]="['/vert']" class="dimension-card" title="Dimension Vert - Charly Guitare">
-        <div class="card-image-wrapper">
-          <img src="assets/vert.jpg" alt="Dimension Vert" class="dimension-img" />
-          <div class="card-overlay">
-            <span class="badge badge-vert">Vert</span>
-          </div>
-        </div>
-      </a>
-
-      <a [routerLink]="['/blanc']" class="dimension-card" title="Dimension Blanc - Charly Guitare">
-        <div class="card-image-wrapper">
-          <img src="assets/blanc.jpg" alt="Dimension Blanc" class="dimension-img" />
-          <div class="card-overlay">
-            <span class="badge badge-blanc">Blanc</span>
-          </div>
-        </div>
-      </a>
-
-      <a [routerLink]="['/bleu']" class="dimension-card" title="Dimension Bleu - Charly Guitare">
-        <div class="card-image-wrapper">
-          <img src="assets/bleu.jpg" alt="Dimension Bleu" class="dimension-img" />
-          <div class="card-overlay">
-            <span class="badge badge-bleu">Bleu</span>
-          </div>
-        </div>
-      </a>
-
-    </main>
-
-    <!-- Sidebar de Liens / Navigation Séparée -->
-    <aside class="sidebar-links">
-      <div class="sidebar-sticky-wrapper">
-        <app-lesliens></app-lesliens>
-      </div>
-    </aside>
-
-  </div>
+  <!-- FOOTER ÉPIQUE -->
+  <footer class="method-footer">
+    <div class="footer-quote">
+      <span class="quote-mark">«</span>
+      <p>Chaque dimension t'apprendra une note. Chaque note t'ouvrira un portail.</p>
+      <span class="quote-mark">»</span>
+    </div>
+    <p class="footer-signature">— Offowa, Gardienne des Sept Portails</p> 
+  </footer>
 
 </div>

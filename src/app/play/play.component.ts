@@ -1,158 +1,117 @@
-import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameService } from '../services/game.service';
+
+interface Particle {
+  left: number;
+  delay: number;
+  duration: number;
+  size: number;
+}
+
+interface Star {
+  top: number;
+  left: number;
+  delay: number;
+}
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.css']
+  styleUrls: ['./play.component.scss']
 })
 export class PlayComponent implements OnInit {
-
-  lavie: number | string | undefined;
-  succes: number | string | undefined;
-  lebonus: number | string | undefined;
   etapedujeu: string = "0";
-  titredelapage: string | undefined;
-  texteboutonun: string | undefined;
-  texteboutondeux: string | undefined;
-  texteboutontrois: string | undefined;
-  texteboutonquatre: string | undefined;
-  texteboutoncinq: string | undefined;
-  pointdevies: number = 0;
+  pointdevies: number = 6;
+  maxvies: number = 10;
   pointdebonus: number = 0;
 
-  constructor(private Activatedroute: ActivatedRoute, private router: Router, private cookieService: CookieService, private gameService: GameService) { }
+   particles: Particle[] = [];
+  stars: Star[] = [];
+
+
+  constructor(private router: Router) { }
+
+  
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    if (this.cookieService.check("etapejeu")) {
-      this.etapedujeu = this.cookieService.get("etapejeu");
-    } else {
-      this.fixetape("0");
-    }
-    if (this.cookieService.check("pointdevies")) {
-      this.lavie = this.cookieService.get("pointdevies");
-    }
-    this.lavie = this.Activatedroute.snapshot.queryParamMap.get('vie') || this.lavie;
-    this.lebonus = this.Activatedroute.snapshot.queryParamMap.get('bonus') || 0;
-    this.etapedujeu = this.Activatedroute.snapshot.queryParamMap.get('etape') || this.etapedujeu;
-    if (this.lavie) this.pointdevies = parseInt(this.lavie.toString());
-    if (this.lebonus) this.pointdebonus = parseInt(this.lebonus.toString());
-    this.fixetape(this.etapedujeu);
-    this.cookieService.set("pointdevies", this.pointdevies.toString());
-    this.afficheetape(this.etapedujeu);
+      this.generateParticles(40);
+    this.generateStars(60);
+    this.initTiltEffect();
   }
 
-  private fixetape(letape: string): void {
-    this.etapedujeu = letape;
-    this.cookieService.set("etapejeu", letape);
+  valider(s: string): boolean { return this.etapedujeu == s; }
+
+   private generateParticles(count: number): void {
+    this.particles = Array.from({ length: count }, () => ({
+      left: Math.random() * 100,
+      delay: Math.random() * 8,
+      duration: 6 + Math.random() * 8,
+      size: 2 + Math.random() * 4
+    }));
   }
 
-  private afficheetape(letape: string): void {
-    let montableau: string[] | undefined = this.gameService.queletape(letape);
-    if (montableau) {
-      this.titredelapage = montableau[0];
-      this.texteboutonun = montableau[1];
-      this.texteboutondeux = montableau[2];
-      this.texteboutontrois = montableau[3];
-      this.texteboutonquatre = montableau[4];
-      this.texteboutoncinq = montableau[5];
-    }
+  private generateStars(count: number): void {
+    this.stars = Array.from({ length: count }, () => ({
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      delay: Math.random() * 3
+    }));
   }
 
-  alleretapesuivante(letape: string): void {
-    const monetape = this.gameService.etapesuivante(letape);
-    this.cookieService.set("etapejeu", monetape);
-    this.etapedujeu = monetape;
-    this.afficheetape(monetape);
+  // 🎯 Effet tilt 3D sur les cartes de jeu (suit la souris)
+  private initTiltEffect(): void {
+    setTimeout(() => {
+      const cards = document.querySelectorAll<HTMLElement>('.btn-game');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -6;
+          const rotateY = ((x - centerX) / centerX) * 6;
+          card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.02)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }, 100);
   }
 
-  onVisualiser() {
-    switch (this.etapedujeu) {
-      case "0":
-        this.goToTictac(this.lavie!, this.lebonus!, "1");
-        break;
-      case "1":
-        this.goToboubou(this.pointdevies, this.pointdebonus, "2");
-        break;
-      case "2":
-        this.goToKronos(this.pointdevies, this.pointdebonus, "3");
-        break;
-      default:
-        this.alleretapesuivante(this.etapedujeu);
-        break;
-    }
+  // 🌊 Parallaxe douce sur le fond quand la souris bouge
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent): void {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    const glows = document.querySelectorAll<HTMLElement>('.glow');
+    glows.forEach((glow, i) => {
+      const factor = (i + 1) * 0.4;
+      glow.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+    });
   }
 
-  goToTictac(lavie: string | number, lebonus: string | number, letape: string | number) {
+
+  onSelectLyko(): void { this.goToTictac(this.pointdevies, this.pointdebonus, "1"); }
+  onSelectLykoduo(): void { this.goToTictacduo(this.pointdevies, this.pointdebonus, "1"); }
+  onSelectBoubouni(): void { this.goToboubou(this.pointdevies, this.pointdebonus, "2"); }
+  onSelectDeDeKronos(): void { this.goToKronos(this.pointdevies, this.pointdebonus, "3"); }
+
+  goToTictac(lavie: number, lebonus: number, letape: string): void {
     this.router.navigate(['/tictac'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
   }
 
-  goToKronos(lavie: string | number, lebonus: string | number, letape: string | number) {
+  goToTictacduo(lavie: number, lebonus: number, letape: string): void {
+    this.router.navigate(['/tictacduo'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
+  }
+
+  goToKronos(lavie: number, lebonus: number, letape: string): void {
     this.router.navigate(['/kronos'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
   }
 
-  goToboubou(lavie: string | number, lebonus: string | number, letape: string | number) {
+  goToboubou(lavie: number, lebonus: number, letape: string): void {
     this.router.navigate(['/cards'], { queryParams: { vie: lavie, bonus: lebonus, etape: letape } });
   }
-
-  onBoutondeux() {
-    switch (this.etapedujeu) {
-      case "0":
-        this.lavie = 500;
-        this.lebonus = 500;
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-      default:
-        this.alleretapesuivante(this.etapedujeu);
-        break;
-    }
-  }
-
-  onBoutontrois() {
-    switch (this.etapedujeu) {
-      case "0":
-        this.lavie = 500;
-        this.lebonus = 500;
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-      default:
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-    }
-  }
-
-  onBoutonquatre() {
-    switch (this.etapedujeu) {
-      case "0":
-        this.lavie = 500;
-        this.lebonus = 500;
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-      default:
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-    }
-  }
-
-  onBoutoncinq() {
-    switch (this.etapedujeu) {
-      case "0":
-        this.lavie = 500;
-        this.lebonus = 500;
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-      default:
-        this.alleretapesuivante(this.etapedujeu)
-        break;
-    }
-  }
-
-  onrecommencer() {
-    this.cookieService.deleteAll();
-    this.router.navigate(['/again']);
-  }
-
 }

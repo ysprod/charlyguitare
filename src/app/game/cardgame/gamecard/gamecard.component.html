@@ -1,0 +1,25 @@
+<div class="card-container" *ngIf="estvisible()">
+  <div 
+    class="card-3d" 
+    (click)="cardClicked.emit()" 
+    [@cardFlip]="data.state"
+    [class.is-flipped]="data.state === 'flipped'"
+    [class.is-matched]="data.state === 'matched'">
+    
+    <!-- Face Arrière (Dos de la carte - Dos mystique/Cyber) -->
+    <div class="card-face back">
+      <div class="card-border-glow"></div>
+      <img src="assets/thegame.jpg" alt="Dos de carte" class="card-img" />
+      <div class="shine-effect"></div>
+      <div class="pattern-overlay"></div>
+    </div>
+
+    <!-- Face Avant (Image révélée) -->
+    <div class="card-face front">
+      <div class="card-border-glow front-glow"></div>
+      <img [src]="data.imageId" alt="Image carte" class="card-img" />
+      <div class="shine-effect"></div>
+    </div>
+
+  </div>
+</div>

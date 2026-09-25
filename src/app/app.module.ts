@@ -13,28 +13,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Composants
-import { AccueilComponent } from './accueil/accueil.component';
+import { AccueilComponent } from './home/accueil/accueil.component';
 import { BlancComponent } from './univers/blanc/blanc.component';
 import { BleuComponent } from './univers/bleu/bleu.component';
-import { CardgameComponent } from './cardgame/cardgame.component';
-import { GamecardComponent } from './cardgame/gamecard/gamecard.component';
-import { CharlyguitaregameComponent } from './univers/charlyguitaregame/charlyguitaregame.component';
+import { CardgameComponent } from './game/cardgame/cardgame.component';
+ import { CharlyguitaregameComponent } from './univers/charlyguitaregame/charlyguitaregame.component';
 import { LemenuComponent } from './features/lemenu/lemenu.component';
 import { LesliensComponent } from './features/lesliens/lesliens.component';
-import { LvideoComponent } from './lvideo/lvideo.component';
+import { LvideoComponent } from './features/lvideo/lvideo.component';
 import { NoirComponent } from './univers/noir/noir.component';
 import { AgainComponent } from './play/again/again.component';
-import { CinqComponent } from './play/cinq/cinq.component';
-import { DeuxComponent } from './play/deux/deux.component';
-import { GardienComponent } from './play/gardien/gardien.component';
+ import { GardienComponent } from './play/gardien/gardien.component';
 import { PlayComponent } from './play/play.component';
 import { QuatreComponent } from './play/quatre/quatre.component';
-import { TroisComponent } from './play/trois/trois.component';
-import { UnComponent } from './play/un/un.component';
 import { RougeComponent } from './univers/rouge/rouge.component';
 import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
 import { VertComponent } from './univers/vert/vert.component';
-import { RdialogComponent } from './cardgame/rdialog/rdialog.component';
+import { RdialogComponent } from './game/cardgame/rdialog/rdialog.component';
 import { HomeComponent } from './home/home.component';
 import { KronosComponent } from './game/kronos/kronos.component';
 import { LiveComponent } from './live/live.component';
@@ -75,15 +70,23 @@ import { GameService } from './services/game.service';
 import { TictactoeserviceService } from './services/tictactoeservice.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
-import { MatMenuModule } from '@angular/material/menu';
+ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfilComponent } from './profil/profil.component';
 import { RegisterComponent } from './register/register.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { MentionsComponent } from './mentions/mentions.component';
-import { ContactComponent } from './contact/contact.component'; 
+import { ContactComponent } from './contact/contact.component';
+import { MessagerieComponent } from './messagerie/messagerie.component';
+import { LykoComponent } from './lyko/lyko.component';
+import { FretboardComponent } from './game/fretboard/fretboard.component';
+import { MemoryComponent } from './game/memory/memory.component';
+import { AcousticComponent } from './game/acoustic/acoustic.component';
+ import { MetronomeComponent } from './game/metronome/metronome.component'; 
+import { GamecardComponent } from './game/cardgame/gamecard/gamecard.component';
+import { ChordComponent } from './game/chord/chord.component';
+import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,11 +98,7 @@ import { ContactComponent } from './contact/contact.component';
     BlancComponent,
     NoirComponent,
     PlayComponent,
-    UnComponent,
-    DeuxComponent,
-    TroisComponent,
-    QuatreComponent,
-    CinqComponent,
+     QuatreComponent,
     AgainComponent,
     LesliensComponent,
     LemenuComponent,
@@ -129,7 +128,15 @@ import { ContactComponent } from './contact/contact.component';
     RegisterComponent,
     PrivacyComponent,
     MentionsComponent,
-    ContactComponent, 
+    ContactComponent,
+    MessagerieComponent,
+    LykoComponent,
+    FretboardComponent,
+    MemoryComponent,
+    AcousticComponent,
+    ChordComponent,
+    MetronomeComponent,
+    TictacduoComponent, 
   ],
   imports: [
     BrowserModule,

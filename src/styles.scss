@@ -784,3 +784,25 @@ $red-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
     }
   }
 }
+
+/* Conteneur principal englobant */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  position: relative; /* Flux normal, pas de chevauchement */
+  width: 100%;
+}
+
+.main-content {
+  flex: 1; /* Prend tout l'espace disponible entre le header et le footer */
+  width: 100%;
+  padding-top: 200px;
+}
+
+app-footer {
+  margin-top: auto;
+}

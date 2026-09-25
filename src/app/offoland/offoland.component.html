@@ -11,46 +11,12 @@
       </div><br>
       <div class="hero-text-block">
         <h1 class="hero-tagline">« OFFOLAND — Le monde où chaque dimension prend vie. »</h1>
-        <p class="hero-subtext">Bienvenue dans un univers sans frontières.</p>
       </div>
     </div>
 
-    <!-- NAVIGATION RAPIDE (2 COLONNES) -->
-    <section class="quick-nav">
-      <a [routerLink]="['/play']" class="nav-card" title="Jeux">
-        <img src="assets/jeu.jpg" alt="Jeux Charly Guitare" class="nav-icon-img" />
-      </a>
-
-      <a [routerLink]="['/game']" class="nav-card" title="Univers">
-        <img src="assets/univers.jpg" alt="Univers Charly Guitare" class="nav-icon-img" />
-      </a>
-
-      <a [routerLink]="['/academie']" class="nav-card" title="Académie">
-        <img src="assets/academi.jpg" alt="Académie" class="nav-icon-img" />
-      </a>
-
-      <a [routerLink]="['/academie']" class="nav-card" title="Bibliothèque">
-        <img src="assets/biblio.jpg" alt="Bibliothèque" class="nav-icon-img" />
-      </a>
-
-      <a [routerLink]="['/live']" class="nav-card" title="En Direct">
-        <img src="assets/endirect.jpg" alt="En Direct Live" class="nav-icon-img" />
-      </a>
-
-    </section>
+    <app-play></app-play>
+    <app-charlyguitaregame></app-charlyguitaregame>
 
   </main>
-
-  <!-- BARRE DE NAVIGATION INFÉRIEURE -->
-  <nav class="bottom-nav">
-    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
-      <span class="nav-icon">🏠</span>
-      <span class="nav-label">Accueil</span>
-    </a>
-    <a [routerLink]="['/profil']" routerLinkActive="active" class="nav-item">
-      <span class="nav-icon">👤</span>
-      <span class="nav-label">Profil</span>
-    </a>
-  </nav>
 
 </div>

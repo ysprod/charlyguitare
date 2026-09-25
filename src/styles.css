@@ -492,3 +492,23 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
+/* Conteneur principal englobant */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  position: relative; /* Flux normal, pas de chevauchement */
+  width: 100%;
+}
+
+.main-content {
+  flex: 1; /* Prend tout l'espace disponible entre le header et le footer */
+  width: 100%;
+}
+
+app-footer {
+  margin-top: auto;
+}

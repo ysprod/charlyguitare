@@ -1,27 +1,60 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { Observable, Subject, of } from 'rxjs';
+import { switchMap, map, takeUntil } from 'rxjs/operators';
+import { UserMessage } from './models/user-message.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'CHARLY GUITARE';
   currentYear: number = new Date().getFullYear();
-
-constructor(
-    public auth: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
 
   isMobileMenuOpen = false;
   isScrolled = false;
 
-  
+  unreadCount$!: Observable<number>;
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private db: AngularFireDatabase
+  ) {}
+
+  ngOnInit(): void {
+    // Calcul du nombre de messages ayant des réponses non lues ou un statut actif
+    this.unreadCount$ = this.auth.user$.pipe(
+      takeUntil(this.destroy$),
+      switchMap(user => {
+        if (!user) return of(0);
+
+        return this.db
+          .list<UserMessage>('messages', ref =>
+            ref.orderByChild('userId').equalTo(user.uid)
+          )
+          .valueChanges()
+          .pipe(
+            map(messages => {
+              // On compte les messages qui ont le statut 'replied' (répondu par l'admin)
+              return messages.filter(m => m.status === 'replied').length;
+            })
+          );
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -39,9 +72,9 @@ constructor(
   onLogout(): void {
     this.closeMobileMenu();
     this.auth.logout();
-    
+
     this.snackBar.open('Déconnexion réussie', 'Fermer', { duration: 3000 });
-    this.router.navigate(['/home']); // Ajustez selon la méthode de votre service auth
+    this.router.navigate(['/home']);
   }
 
   getInitials(name: string | null | undefined): string {
@@ -58,7 +91,6 @@ constructor(
       const result = await this.auth.loginWithGoogle();
       if (result.user) {
         this.snackBar.open(`Bienvenue ${result.user.displayName} !`, 'Fermer', { duration: 3000 });
-        // Optionnel : rediriger l'utilisateur vers l'Académie après connexion
         this.router.navigate(['/academie']);
       }
     } catch (error) {
@@ -66,11 +98,4 @@ constructor(
       this.snackBar.open('Échec de la connexion Google', 'Fermer', { duration: 3000 });
     }
   }
-
-  // async onLogout() {
-  //   await this.auth.logout();
-  //   this.snackBar.open('Déconnexion réussie', 'Fermer', { duration: 3000 });
-  //   this.router.navigate(['/home']);
-  // }
-
 }

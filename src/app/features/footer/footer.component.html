@@ -1,63 +1,153 @@
 <footer class="app-footer">
+  <!-- Décor lumineux supérieur -->
+  <div class="footer-glow"></div>
+
   <div class="footer-container">
-    
-    <!-- Colonne 1 : Identité & Marque -->
+
+    <!-- ============================================
+         COLONNE 1 : IDENTITÉ & MARQUE
+         ============================================ -->
     <div class="footer-brand">
-      <div class="brand-logo">
-        <span class="logo-icon">🎸</span>
-        <span class="logo-text">CHARLY GUITARE</span>
-      </div>
+      <a routerLink="/" class="brand-logo">
+        <div class="logo-icon-wrapper">
+          <span class="logo-icon">🎸</span>
+          <span class="logo-ring"></span>
+        </div>
+        <div class="logo-text-wrapper">
+          <span class="logo-text">CHARLY</span>
+          <span class="logo-text accent">GUITARE</span>
+        </div>
+      </a>
+
       <p class="brand-description">
-        L'Académie & l'Univers Offoland. Apprenez la guitare, le Coupé-Décalé et accédez aux ressources pédagogiques exclusives.
+        L'Académie & l'Univers Offoland. Apprenez la guitare, le Coupé-Décalé
+        et accédez aux ressources pédagogiques exclusives.
       </p>
-      
-      <!-- Réseaux Sociaux avec images -->
+
+      <!-- Réseaux Sociaux -->
       <div class="social-links">
-        <a href="https://www.youtube.com/@CharlyGuitare" target="_blank" aria-label="YouTube" class="social-icon">
-          <img src="assets/youtube.png" alt="YouTube Charly Guitare" class="social-img">
+        <a
+          href="https://www.youtube.com/@CharlyGuitare"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="YouTube"
+          class="social-link social-youtube"
+        >
+          <img src="assets/youtube.png" alt="" class="social-img">
+          <span class="social-tooltip">YouTube</span>
         </a>
-        <a href="https://facebook.com/charlyguitare2020" target="_blank" aria-label="Facebook" class="social-icon">
-          <img src="assets/facebook.png" alt="Facebook Charly Guitare" class="social-img">
+        <a
+          href="https://facebook.com/charlyguitare2020"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          class="social-link social-facebook"
+        >
+          <img src="assets/facebook.png" alt="" class="social-img">
+          <span class="social-tooltip">Facebook</span>
         </a>
-        <a href="https://www.instagram.com/charlyguitare" target="_blank" aria-label="Instagram" class="social-icon">
-          <img src="assets/instagram.png" alt="Instagram Charly Guitare" class="social-img">
+        <a
+          href="https://www.instagram.com/charlyguitare"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          class="social-link social-instagram"
+        >
+          <img src="assets/instagram.png" alt="" class="social-img">
+          <span class="social-tooltip">Instagram</span>
         </a>
       </div>
     </div>
 
-    <!-- Colonne 2 : Navigation Principale -->
+    <!-- ============================================
+         COLONNE 2 : NAVIGATION
+         ============================================ -->
     <div class="footer-column">
-      <h4 class="column-title">Navigation</h4>
+      <h4 class="column-title">
+        <span class="title-dot"></span>
+        Navigation
+      </h4>
       <nav class="footer-nav">
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-        <a [routerLink]="['/accueil']" routerLinkActive="active">Qui est Charly Guitare?</a>
-        <a [routerLink]="['/academie']" routerLinkActive="active">Formations</a>
-        <a [routerLink]="['/live']" routerLinkActive="active">Vidéos</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="nav-dot"></span>
+          Accueil
+        </a>
+        <a [routerLink]="['/accueil']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Qui est Charly Guitare ?
+        </a>
+        <a [routerLink]="['/academie']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Formations
+        </a>
+        <a [routerLink]="['/again']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Equipe technique
+        </a>
       </nav>
     </div>
 
-    <!-- Colonne 3 : Univers & Spécialités -->
+    <!-- ============================================
+         COLONNE 3 : DÉCOUVRIR
+         ============================================ -->
     <div class="footer-column">
-      <h4 class="column-title">Découvrir</h4>
+      <h4 class="column-title">
+        <span class="title-dot"></span>
+        Découvrir
+      </h4>
       <nav class="footer-nav">
-        <a [routerLink]="['/play']" routerLinkActive="active">Jeux</a>
-        <a [routerLink]="['/academie']" routerLinkActive="active">L'Académie</a>
-        <a [routerLink]="['/live']" routerLinkActive="active">Espace Live</a>
-        <a [routerLink]="['/contact']" routerLinkActive="active">Contact & Support</a>
+        <a [routerLink]="['/play']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Jeux
+        </a>
+        <a [routerLink]="['/academie']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          L'Académie
+        </a>
+        <a [routerLink]="['/live']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Espace Live
+        </a>
+        <a [routerLink]="['/contact']" routerLinkActive="active">
+          <span class="nav-dot"></span>
+          Contact & Support
+        </a>
       </nav>
     </div>
 
-  </div>
-
-  <!-- Barre de séparation & Copyright -->
-  <div class="footer-bottom">
+    
+ <div class="footer-bottom">
     <div class="bottom-container">
-      <p>&copy; {{ currentYear }} <strong>CHARLY GUITARE</strong>. Tous droits réservés.</p>
+      <p class="copyright">
+        &copy; {{ currentYear }}
+        <strong class="brand-highlight">CHARLY GUITARE</strong>
+        <span class="separator-dot">•</span>
+        Tous droits réservés.
+      </p>
+
       <div class="legal-links">
         <a [routerLink]="['/mentions']">Mentions légales</a>
-        <span class="separator">•</span>
+        <span class="link-separator">/</span>
         <a [routerLink]="['/privacy']">Confidentialité</a>
       </div>
+
+      <!-- Bouton retour en haut -->
+      <button
+        class="back-to-top"
+        (click)="scrollToTop()"
+        aria-label="Retour en haut"
+        title="Retour en haut"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+      </button>
     </div>
   </div>
+  </div>
+
+  <!-- ============================================
+       BARRE INFÉRIEURE
+       ============================================ -->
+ 
 </footer>

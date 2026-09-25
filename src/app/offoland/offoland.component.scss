@@ -1,397 +1,440 @@
-/* ==========================================================================
-   VARIABLES & DESIGN SYSTEM
-   ========================================================================== */
-$bg-black: #000000;
-$bg-card: #000000;
-$text-light: #f8fafc;
-$text-muted: #94a3b8;
-$accent-color: #ef4444;
-$border-subtle: rgba(255, 255, 255, 0.12);
+/* ============================================================
+   OFFOLAND — Landing immersive "Le monde où chaque dimension prend vie"
+   Thème : Néon Bois & Cordes
+   ============================================================ */
 
-/* Modèle de dégradés pour boutons et éléments interactifs */
-$purple-gradient: linear-gradient(135deg, #6b21a8 0%, #a855f7 100%);
-$blue-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
-$green-gradient: linear-gradient(135deg, #15803d 0%, #4ade80 100%);
-$amber-gradient: linear-gradient(135deg, #c2410c 0%, #fb923c 100%);
-$red-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
+:host {
+  /* Palette */
+  --bg-1: #0f0a06;
+  --bg-2: #1a120b;
+  --bg-3: #2b1d12;
+  --card: rgba(36, 26, 17, 0.55);
+  --border: rgba(212, 165, 116, 0.22);
+  --border-bright: rgba(212, 165, 116, 0.55);
+  --gold: #d4a574;
+  --gold-2: #e8c39e;
+  --accent: #f59e0b;
+  --violet: #a855f7;
+  --cyan: #22d3ee;
+  --text: #f5e6d3;
+  --text-muted: #b8a58e;
 
-/* ==========================================================================
-   LAYOUT GÉNÉRAL & CONTENEUR
-   ========================================================================== */
-.offoland-app {
-  background-color: $bg-black;
-  color: $text-light;
+  /* Dimensions */
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --shadow-glow-gold: 0 0 60px rgba(212, 165, 116, 0.35);
+  --shadow-glow-violet: 0 0 60px rgba(168, 85, 247, 0.35);
+
+  display: block;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    #241708 0%,
+    var(--bg-1) 45%,
+    #050301 100%
+  );
+}
+
+/* ============================================================
+   DÉCOR DE FOND ANIMÉ (halos + particules simulées via ::before)
+   ============================================================ */
+.offoland-app::before,
+.offoland-app::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.offoland-app::before {
+  width: 600px;
+  height: 600px;
+  top: -250px;
+  left: -180px;
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  opacity: 0.28;
+  animation: floatGlowA 20s ease-in-out infinite;
+}
+
+.offoland-app::after {
+  width: 700px;
+  height: 700px;
+  bottom: -350px;
+  right: -220px;
+  background: radial-gradient(circle, var(--violet), transparent 70%);
+  opacity: 0.22;
+  animation: floatGlowB 24s ease-in-out infinite;
+}
+
+@keyframes floatGlowA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(80px, 60px) scale(1.15); }
+}
+
+@keyframes floatGlowB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-70px, -50px) scale(1.1); }
+}
+
+/* ============================================================
+   STRUCTURE PRINCIPALE
+   ============================================================ */
+.main-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  font-family: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  padding-bottom: 80px; /* Espace pour la barre de nav inférieure */
+  gap: 3rem;
+}
 
-  /* --- TOP HEADER (GLASSMORPHISM SUR FOND NOIR) --- */
-  .top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.85rem 1.5rem;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid $border-subtle;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+/* ---------- Lien image ---------- */
+.hero-content .row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-      .brand-logo-icon {
-        font-size: 1.6rem;
-      }
+.hero-content p {
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
 
-      .brand-text {
-        display: flex;
-        flex-direction: column;
+.hero-content p a {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  line-height: 0;
+  text-decoration: none;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-        .brand-title {
-          font-weight: 900;
-          font-size: 1.2rem;
-          letter-spacing: 1.5px;
-          background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-           -webkit-text-fill-color: transparent;
-        }
+/* Image */
+.hero-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 80px rgba(212, 165, 116, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease,
+    box-shadow 0.6s ease;
+  will-change: transform;
+}
 
-        .brand-subtitle {
-          font-size: 0.75rem;
-          color: $text-muted;
-          letter-spacing: 0.5px;
-        }
-      }
-    }
+/* Overlay dégradé au-dessus de l'image */
+.hero-content p::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(15, 10, 6, 0.5) 85%,
+      rgba(15, 10, 6, 0.85) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
 
-    .profile-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 6px 14px;
-      background: $bg-card;
-      border: 1px solid $border-subtle;
-      border-radius: 20px;
-      color: $text-light;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
+/* Reflet lumineux qui balaye l'image au survol */
+.hero-content p a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--radius-lg);
+}
 
-      &:hover {
-        border-color: $accent-color;
-        background: rgba(239, 68, 68, 0.15);
-      }
-    }
-  }
+/* Bordure néon subtile */
+.hero-content p a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 165, 116, 0.7),
+    transparent 40%,
+    transparent 60%,
+    rgba(168, 85, 247, 0.5)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  mask:var(--accent);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 3;
+}
 
-  /* --- MAIN CONTENT CONTAINER --- */
+/* Hover sur l'image */
+.hero-content p a:hover {
+  transform: translateY(-6px) scale(1.015);
+}
+
+.hero-content p a:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.08) contrast(1.05);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 120px rgba(212, 165, 116, 0.45),
+    0 0 160px rgba(168, 85, 247, 0.25);
+}
+
+.hero-content p a:hover::before {
+  animation: shineSweep 1.2s ease-out forwards;
+}
+
+.hero-content p a:hover::after {
+  opacity: 1;
+}
+
+@keyframes shineSweep {
+  to { transform: translateX(100%); }
+}
+
+/* ---------- Tagline ---------- */
+.hero-text-block {
+  position: relative;
+  max-width: 900px;
+  padding: 0 1rem;
+}
+
+.hero-tagline {
+  position: relative;
+  margin: 0;
+  font-size: clamp(1.15rem, 3vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  font-style: italic;
+  color: var(--text);
+
+  /* Dégradé animé sur le texte */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    var(--gold-2) 30%,
+    var(--accent) 55%,
+    var(--violet) 80%,
+    var(--gold-2) 100%
+  );
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+/* Petites guillemets décoratifs */
+.hero-tagline::before,
+.hero-tagline::after {
+  content: '';
+  position: absolute;
+  font-family: Georgia, serif;
+  font-size: 3em;
+  color: var(--gold);
+  opacity: 0.15;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.hero-tagline::before {
+  content: '«';
+  top: -0.35em;
+  left: -0.5em;
+}
+
+.hero-tagline::after {
+  content: '»';
+  bottom: -0.7em;
+  right: -0.5em;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Ligne décorative sous la tagline */
+.hero-text-block::after {
+  content: '';
+  display: block;
+  margin: 1.5rem auto 0;
+  width: 80px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    var(--accent),
+    var(--violet),
+    transparent
+  );
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+  animation: lineBreath 4s ease-in-out infinite;
+}
+
+@keyframes lineBreath {
+  0%, 100% { width: 80px; opacity: 0.7; }
+  50%      { width: 160px; opacity: 1; }
+}
+
+/* ============================================================
+   COMPOSANTS ENFANTS (app-play, app-charlyguitaregame)
+   ============================================================ */
+app-play,
+app-charlyguitaregame {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+}
+
+/* Chaque composant enfant reçoit un cadre de verre dépoli */
+app-play::before,
+app-charlyguitaregame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.005)
+  );
+  border: 1px solid var(--border);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  z-index: -1;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Survol : bordure lumineuse */
+app-play:hover::before,
+app-charlyguitaregame:hover::before {
+  border-color: var(--border-bright);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(212, 165, 116, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
   .main-content {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
+    padding: 2.5rem 1rem 4rem;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 2rem 0.75rem 3rem;
     gap: 2rem;
   }
 
-  /* --- HERO BANNER & CONTENT --- */
-  .hero-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    align-items: center;
-    text-align: center;
-
-    .hero-banner-link {
-      display: block;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      background: $bg-card;
-      border: 1px solid $border-subtle;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-      transition: transform 0.3s ease, border-color 0.3s ease;
-
-      &:hover {
-        transform: translateY(-4px);
-        border-color: rgba(239, 68, 68, 0.6);
-      }
-
-      .hero-image-wrapper {
-        position: relative;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .hero-banner-img {
-          width: 100%;
-          height: auto;
-          max-height: 450px;
-          object-fit: contain;
-          display: block;
-        }
-
-        .hero-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9) 100%);
-        }
-      }
-    }
-
-    .hero-center-badge {
-      background: rgba(0, 0, 0, 0.9);
-      border: 2px solid #38bdf8;
-      border-radius: 50px;
-      padding: 1rem 2.5rem;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
-
-      .hero-logo-text {
-        font-size: 2rem;
-        font-weight: 900;
-        margin: 0;
-        letter-spacing: 2px;
-        background: linear-gradient(180deg, #ffffff 0%, #38bdf8 100%);
-         -webkit-text-fill-color: transparent;
-      }
-    }
-
-    .hero-text-block {
-      max-width: 700px;
-
-      .hero-tagline {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: $text-light;
-        margin: 0 0 0.5rem 0;
-        line-height: 1.3;
-      }
-
-      .hero-subtext {
-        font-size: 1rem;
-        color: $text-muted;
-        margin: 0;
-      }
-    }
+  .hero-tagline {
+    font-size: 1.05rem;
+    line-height: 1.45;
   }
 
-  /* --- MENU GRILLE EN 2 COLONNES --- */
-  .main-menu-grid,
-  .quick-nav {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    width: 100%;
+  .hero-tagline::before,
+  .hero-tagline::after {
+    font-size: 2.2em;
+    opacity: 0.1;
   }
 
-  .nav-card {
-    background: $bg-card;
-   
-    border-radius: 8px;
-    padding: 1.25rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    text-decoration: none;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: translateY(-4px);
-      border-color: rgba(239, 68, 68, 0.6);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-
-      .icon-square {
-        border-color: $accent-color;
-        transform: scale(1.05);
-
-        .nav-icon-img {
-          transform: scale(1.1);
-        }
-      }
-
-      .card-label {
-        color: $accent-color;
-      }
-    }
-
-    .icon-square {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid $border-subtle;
-      background: $bg-black;
-      transition: border-color 0.3s ease, transform 0.3s ease;
-
-      .nav-icon-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-      }
-    }
-
-    .card-label {
-      color: $text-light;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-align: center;
-      transition: color 0.2s ease;
-    }
+  .hero-content img {
+    border-radius: var(--radius-md);
   }
 
-  .menu-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 1.5rem;
-    border-radius: 16px;
-    text-decoration: none;
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid $border-subtle;
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
-    }
-
-    .card-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-
-      .card-icon { font-size: 1.8rem; }
-      .card-title { font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
-    }
-
-    .card-arrow { font-size: 1.8rem; font-weight: 300; opacity: 0.8; }
-
-    /* Variantes de gradients */
-    &.card-purple { background: $purple-gradient; }
-    &.card-blue   { background: $blue-gradient; }
-    &.card-green  { background: $green-gradient; }
-    &.card-amber  { background: $amber-gradient; }
+  .hero-content p,
+  .hero-content p a,
+  .hero-content p::after,
+  .hero-content p a::before,
+  .hero-content p a::after {
+    border-radius: var(--radius-md);
   }
 
-  /* --- BARRE LIVE --- */
-  .live-section .live-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    border-radius: 16px;
-    background: $red-gradient;
-    text-decoration: none;
-    color: #ffffff;
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-    transition: transform 0.2s ease;
-
-    &:hover { transform: translateY(-2px); }
-
-    .live-left {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-
-      .live-dot {
-        font-size: 1.2rem;
-        animation: blink 1.2s infinite;
-      }
-
-      .live-title {
-        font-weight: 900;
-        font-size: 1.2rem;
-        letter-spacing: 1.5px;
-      }
-    }
+  app-play::before,
+  app-charlyguitaregame::before {
+    border-radius: var(--radius-md);
   }
 
-  /* --- BOTTOM NAVIGATION BAR --- */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65px;
-    background-color: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(16px);
-    border-top: 1px solid $border-subtle;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
+  /* Allège les halos sur mobile */
+  .offoland-app::before { width: 380px; height: 380px; opacity: 0.2; }
+  .offoland-app::after  { width: 420px; height: 420px; opacity: 0.16; }
+}
 
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      color: $text-muted;
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      transition: color 0.2s ease;
-
-      .nav-icon { font-size: 1.3rem; }
-
-      &.active, &:hover {
-        color: $accent-color;
-      }
-    }
+/* ============================================================
+   ACCESSIBILITÉ
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* ==========================================================================
-   ANIMATIONS & RESPONSIVE DESIGN
-   ========================================================================== */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-@media (max-width: 600px) {
-  .offoland-app {
-    .main-menu-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .quick-nav {
-      gap: 0.85rem;
-
-      .nav-card {
-        padding: 1rem 0.5rem;
-
-        .icon-square {
-          width: 60px;
-          height: 60px;
-        }
-
-        .card-label {
-          font-size: 0.85rem;
-        }
-      }
-    }
-
-    .main-content {
-      padding: 1rem;
-    }
-
-    .hero-section .hero-tagline {
-      font-size: 1.1rem;
-    }
-  }
+/* Focus clavier visible */
+.hero-content p a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+  border-radius: var(--radius-lg);
 }

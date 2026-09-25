@@ -1,0 +1,205 @@
+<div class="decoder-container">
+
+  <!-- EN-TÊTE -->
+  <header class="decoder-header">
+    <h1>🎼 Décodeur &amp; Simulateur de Grille</h1>
+    <p class="subtitle">
+      Saisissez une grille d'accords, décodez l'harmonie, transposez et
+      entraînez-vous en rythme.
+    </p>
+  </header>
+
+  <div class="grid-layout">
+
+    <!-- ============================================================
+         COLONNE GAUCHE : ÉDITEUR
+         ============================================================ -->
+    <section class="editor-panel">
+
+      <!-- 1. SAISIE -->
+      <div class="panel-section">
+        <h3><span class="step">1</span> Saisie de la grille</h3>
+
+        <textarea
+          [(ngModel)]="rawInput"
+          (ngModelChange)="decodeGrid()"
+          rows="5"
+          spellcheck="false"
+          placeholder="Ex: [C] [Am] | [F] [G7]">
+        </textarea>
+
+        <div class="textarea-actions">
+          <button class="btn-ghost" (click)="clearAll()" title="Effacer">🗑 Effacer</button>
+          <button class="btn-ghost" (click)="saveGrid()" title="Sauvegarder">💾 Sauvegarder</button>
+        </div>
+      </div>
+
+      <!-- 2. PRESETS -->
+      <div class="panel-section">
+        <h3><span class="step">2</span> Grilles célèbres</h3>
+        <div class="presets-grid">
+          <button *ngFor="let p of presets"
+                  class="preset-chip"
+                  (click)="loadPreset(p)">
+            {{ p.name }}
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. TONALITÉ & TRANSPOSITION -->
+      <div class="panel-section">
+        <h3><span class="step">3</span> Tonalité &amp; transposition</h3>
+
+        <div class="controls-row">
+          <div class="control-group">
+            <label>Tonalité de référence</label>
+            <select [(ngModel)]="selectedKey" (change)="decodeGrid()">
+              <option *ngFor="let note of notesList" [value]="note">
+                {{ note }} Majeur
+              </option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Altérations</label>
+            <button class="btn-toggle" (click)="toggleFlats()">
+              {{ useFlats ? '♭ Bémols' : '♯ Dièses' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="transpose-buttons">
+          <button class="btn-action" (click)="transpose(-1)">−1 demi-ton</button>
+          <button class="btn-action" (click)="transpose(1)">+1 demi-ton</button>
+          <button class="btn-action" (click)="transpose(-12)">−1 octave</button>
+          <button class="btn-action" (click)="transpose(12)">+1 octave</button>
+        </div>
+      </div>
+
+      <!-- 4. PLAYBACK -->
+      <div class="panel-section">
+        <h3><span class="step">4</span> Simulateur &amp; métronome</h3>
+
+        <div class="playback-controls">
+          <button class="btn-play"
+                  [class.playing]="isPlaying"
+                  (click)="togglePlayback()">
+            {{ isPlaying ? '⏹ Arrêter' : '▶ Lancer' }}
+          </button>
+
+          <label class="metronome-toggle">
+            <input type="checkbox" [(ngModel)]="isMetronomeOn" />
+            <span>🔔 Métronome</span>
+          </label>
+        </div>
+
+        <div class="bpm-control">
+          <label>
+            Tempo : <strong>{{ bpm }} BPM</strong>
+          </label>
+          <input type="range" min="40" max="220"
+                 [(ngModel)]="bpm"
+                 (change)="onBpmChange()" />
+          <div class="beat-indicator" *ngIf="isPlaying">
+            <span *ngFor="let b of [0,1,2,3]"
+                  class="beat-dot"
+                  [class.active]="currentBeat === b"
+                  [class.accent]="b === 0"></span>
+          </div>
+        </div>
+      </div>
+
+    
+
+    </section>
+
+    <!-- ============================================================
+         COLONNE DROITE : VISUALISATION
+         ============================================================ -->
+    <section class="display-panel">
+
+      <!-- STATS -->
+      <div class="stats-bar" *ngIf="parsedBars.length">
+        <div class="stat">
+          <span class="stat-value">{{ parsedBars.length }}</span>
+          <span class="stat-label">Mesures</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ totalChords }}</span>
+          <span class="stat-label">Accords</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ uniqueChords }}</span>
+          <span class="stat-label">Uniques</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ diatonicPercentage }}%</span>
+          <span class="stat-label">Diatonique</span>
+        </div>
+      </div>
+
+      <!-- EN-TÊTE -->
+      <div class="display-header">
+        <h3>Grille décodée</h3>
+        <span class="playing-indicator" *ngIf="isPlaying">
+          ● En cours — Mesure {{ currentBarIndex + 1 }}
+        </span>
+      </div>
+
+      <!-- MESSAGE VIDE -->
+      <div class="empty-state" *ngIf="!parsedBars.length">
+        <div class="empty-icon">🎵</div>
+        <p>Saisis une grille pour la voir apparaître ici.</p>
+      </div>
+
+      <!-- GRILLE -->
+      <div class="bars-grid" *ngIf="parsedBars.length">
+        <article *ngFor="let bar of parsedBars; let i = index"
+                 class="bar-card"
+                 [class.active-bar]="isPlaying && currentBarIndex === i">
+
+          <header class="bar-header">
+            <span class="bar-number">M{{ bar.barNumber }}</span>
+            <span class="bar-chord-count">{{ bar.chords.length }} accord(s)</span>
+          </header>
+
+          <div class="chords-list">
+            <div *ngFor="let chord of bar.chords"
+                 class="chord-item"
+                 [class.non-diatonic]="!chord.isDiatonic">
+
+              <div class="chord-top">
+                <span class="chord-name">{{ chord.raw }}</span>
+                <span class="chord-degree" *ngIf="chord.degree">
+                  {{ chord.romanNumeral || chord.degree }}
+                </span>
+              </div>
+
+              <div class="chord-notes">
+                <span *ngFor="let note of chord.notes" class="note-pill">
+                  {{ note }}
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+        </article>
+      </div>
+
+    </section>
+  <!-- 5. GRILLES SAUVEGARDÉES -->
+      <div class="panel-section" *ngIf="savedGrids.length">
+        <h3><span class="step">★</span> Mes grilles</h3>
+        <ul class="saved-list">
+          <li *ngFor="let g of savedGrids; let i = index">
+            <button class="saved-item" (click)="loadSavedGrid(g)">
+              <span class="saved-name">{{ g.name }}</span>
+              <span class="saved-meta">{{ g.key }} · {{ g.bpm }} BPM</span>
+            </button>
+            <button class="btn-delete" (click)="deleteSaved(i)" title="Supprimer">×</button>
+          </li>
+        </ul>
+      </div>
+  </div>
+</div>

@@ -1,47 +1,258 @@
-<div class="container-fluid">
-  <div class="text-center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/Bp2ysJ4Jgp0?autoplay=1" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-md-6">
-      <h1>LA DIMENSION BLEUE</h1>
-      <br>
-      <h2>L'UNIVERS DE CHARLY GUITARE BLEU</h2>
-      <p>C'est le monde des rêves et des songes:
-        -n’a pas de sol
-        -tout est en nuage même les choses de la vraie réalité sont constitués de nuages uniquement avec un sol en nuage
-        et un
-        soleil bleu qui ne se couché jamais.
-      </p>
-      <p>Les êtres qui y vivent : chauves souris, hiboux, chouettes, vampires , loups garous, ouragan, tempête de
-        neige,
-        anges gardiens
-      </p>
-      <p>Le bleu ne meurt pas mais dort trop. Charly guitare bleu ne se réveille qu’avec un chargement de vie
-        automatique de un siècle (1h du temps) ou par sacrifice de points équivalent à mille
-      </p>
-      <p>Dans le labyrinthe il y’a des pièges comme les mines les explosif les sables mouvants les rivières les
-        mangroves les volcans les ouragans les trous</p>
-      <p>Il y’a aussi des créatures les chiens les loups garous les vampires les chauves souries
-      </p>
-      <p>Climat ensoleillé, pluvieux, neige , tempête, désert, forêt</p>
-      <p>Le Monde bleu a son répète dans le monde noir qui est l’univers de Zeus, le monde rouge a pour repère l’univers
-        de Bafum , le monde vert celui de Posséidon et le monde blanc celui de l’univers du léviathan dans l’univers
-        noir
-      </p>
-      <p>Ces créatures sucent le sang à chaque fois qu’elles touchent l’être qu’elles attaquent</p>
-      <p>Pour les vaincre il faut jouer le son d’une guitare verte</p>
-      <p>Pour pouvoir utiliser une guitare d’une autre couleur dans un monde x il faut sacrifier 500 points</p>
-      <p>Le Charly guitare bleue ne se réveille qu’avec un chargement de vie automatique de un siècle (1h du temps) ou
-        par sacrifice de points équivalent à mille</p>
-      <p>L’histoire se passe dans un labyrinthe au plein milieu d’une guerre qui consiste à tuer THUNDERFULL son maître
-      </p>
-      <br>
-    </div>
-    <div class="col-xs-12 col-md-3">
-      <app-lesliens></app-lesliens>
+<div class="bleu-container">
+
+  <!-- Nuages flottants en fond -->
+  <div class="clouds-bg">
+    <div class="cloud" *ngFor="let c of [1,2,3,4,5,6,7,8]"
+         [style.animation-delay]="(c * 1.2) + 's'"
+         [style.top.%]="(c * 12) % 80"
+         [style.animation-duration]="(20 + c * 3) + 's'">
+      ☁️
     </div>
   </div>
+
+  <!-- Particules bleues -->
+  <div class="particles-bg">
+    <span *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+          class="particle"
+          [style.left.%]="(p * 4) % 100"
+          [style.animation-delay]="(p * 0.5) + 's'">
+    </span>
+  </div>
+
+  <!-- Soleil bleu -->
+  <div class="blue-sun"></div>
+
+  <!-- HEADER ÉPIQUE -->
+  <header class="bleu-header">
+   
+    <h1 class="title-glow-bleu"><br>LA DIMENSION BLEUE</h1>
+   
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="icon">☁️</span>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <!-- SECTION VIDÉO -->
+  <section class="video-section">
+    <div class="video-header">
+      <span class="material-icons">play_circle</span>
+      <h3>PLONGEZ DANS LE RÊVE</h3>
+    </div>
+    <div class="video-wrapper">
+      <div class="video-frame">
+        <iframe 
+          src="https://www.youtube.com/embed/Bp2ysJ4Jgp0?autoplay=1&mute=1" 
+          title="Dimension Bleue - Charly Guitare"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-glow"></div>
+    </div>
+  </section>
+
+  <!-- SECTION INTRO -->
+  <section class="intro-section">
+    <div class="intro-card">
+      <div class="intro-icon">💭</div>
+      <div class="intro-content">
+        <h3>UN MONDE SANS SOL</h3>
+        <p>
+          La Dimension Bleue n'a pas de sol. Tout est en nuage — même les choses de la vraie réalité 
+          sont constituées de nuages, avec un sol en nuage et un soleil bleu qui ne se couche jamais.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CRÉATURES -->
+  <section class="creatures-section">
+    <div class="section-title">
+      <span class="material-icons">pets</span>
+      <h2>LES CRÉATURES DE LA NUIT</h2>
+      <span class="material-icons">pets</span>
+    </div>
+
+    <div class="creatures-grid">
+      <div *ngFor="let c of creatures; let i = index"
+           class="creature-card"
+           [style.--accent]="c.couleur"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        
+        <div class="card-glow"></div>
+        
+        <div class="creature-icon-wrapper">
+          <div class="creature-icon">{{ c.icone }}</div>
+          <div class="icon-ring"></div>
+        </div>
+
+        <div class="creature-info">
+          <h3 class="creature-nom">{{ c.nom }}</h3>
+          <p class="creature-description">{{ c.description }}</p>
+          
+          <div class="creature-danger">
+            <span class="material-icons">dangerous</span>
+            <span>{{ c.danger }}</span>
+          </div>
+        </div>
+
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+      </div>
+    </div>
+
+    <!-- Faiblesse des créatures -->
+    <div class="faiblesse-card">
+      <div class="faiblesse-icon">🎸</div>
+      <div class="faiblesse-content">
+        <h4>{{ faiblesseCreatures.titre }}</h4>
+        <p>{{ faiblesseCreatures.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PIÈGES DU LABYRINTHE -->
+  <section class="pieges-section">
+    <div class="section-title">
+      <span class="material-icons">warning</span>
+      <h2>LES PIÈGES DU LABYRINTHE</h2>
+      <span class="material-icons">warning</span>
+    </div>
+
+    <div class="pieges-grid">
+      <div *ngFor="let p of pieges; let i = index"
+           class="piege-card"
+           [style.animation-delay]="(i * 0.08) + 's'">
+        <div class="piege-icon">{{ p.icone }}</div>
+        <h4>{{ p.nom }}</h4>
+        <p>{{ p.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CLIMATS -->
+  <section class="climats-section">
+    <div class="section-title">
+      <span class="material-icons">cloud_queue</span>
+      <h2>LES CLIMATS DU MONDE BLEU</h2>
+      <span class="material-icons">cloud_queue</span>
+    </div>
+
+    <div class="climats-grid">
+      <div *ngFor="let c of climats; let i = index"
+           class="climat-card"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="climat-icon">{{ c.icone }}</div>
+        <span class="climat-nom">{{ c.nom }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CHARLY BLEU -->
+  <section class="charly-section">
+    <div class="section-title">
+      <span class="material-icons">person</span>
+      <h2>LE CHARLY GUITARE BLEU</h2>
+      <span class="material-icons">person</span>
+    </div>
+
+    <div class="charly-card">
+      <div class="charly-portrait">
+        <div class="portrait-glow"></div>
+        <div class="portrait-icon">😴</div>
+        <div class="portrait-clouds">
+          <span>☁️</span><span>💤</span><span>☁️</span>
+        </div>
+      </div>
+
+      <div class="charly-content">
+        <h3 class="charly-titre">Le Dormeur Éternel</h3>
+        <p class="charly-intro">
+          {{ charlyBleu.description }}
+        </p>
+
+        <!-- Modes de réveil -->
+        <div class="reveil-grid">
+          <div *ngFor="let r of charlyBleu.reveil" class="reveil-card">
+            <div class="reveil-icon">{{ r.icone }}</div>
+            <h4>{{ r.type }}</h4>
+            <div class="reveil-valeur">{{ r.valeur }}</div>
+          </div>
+        </div>
+
+        <!-- Note mystique -->
+        <div class="note-mystique">
+          <span class="material-icons">auto_awesome</span>
+          <p>Le Bleu ne meurt pas, mais dort trop. Chaque réveil est un miracle arraché au temps lui-même.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CORRESPONDANCES -->
+  <section class="correspondances-section">
+    <div class="section-title">
+      <span class="material-icons">swap_horiz</span>
+      <h2>LES CORRESPONDANCES ENTRE LES MONDES</h2>
+      <span class="material-icons">swap_horiz</span>
+    </div>
+
+    <div class="correspondances-grid">
+      <div *ngFor="let c of correspondances"
+           class="correspondance-card"
+           [style.--accent]="c.couleur">
+        <span class="monde-badge" [style.background]="c.couleur" 
+              [style.color]="c.monde === 'BLANC' ? '#000' : '#fff'">
+          {{ c.monde }}
+        </span>
+        <span class="arrow">→</span>
+        <span class="repere">{{ c.repere }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION RÈGLE -->
+  <section class="regle-section">
+    <div class="regle-card">
+      <div class="regle-icon">⚖️</div>
+      <div class="regle-content">
+        <h3>{{ reglePoints.titre }}</h3>
+        <p>{{ reglePoints.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CONTEXTE HISTOIRE -->
+  <section class="contexte-section">
+    <div class="contexte-card">
+      <div class="contexte-icon">⚔️</div>
+      <div class="contexte-content">
+        <h3>{{ contexteHistoire.titre }}</h3>
+        <p>{{ contexteHistoire.description }}</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FOOTER ÉPIQUE -->
+  <footer class="bleu-footer">
+    <div class="footer-quote">
+      <span class="quote-mark">«</span>
+      <p>Dans la Dimension Bleue, mourir est impossible — mais se réveiller est un miracle qui coûte un siècle ou mille points.</p>
+      <span class="quote-mark">»</span>
+    </div>
+    <p class="footer-signature">— Les Chroniques d'Offoland, Livre XI</p>
+
+    <div class="footer-badge">
+      <span class="icon">☁️</span>
+      <span>DIMENSION BLEUE</span>
+      <span class="dot">•</span>
+      <span>CHARLY GUITARE 5D</span>
+    </div>
+  </footer>
+
 </div>

@@ -1,54 +1,271 @@
-<div class="container-fluid">
-  <div class="text-center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/hCWFGuh8jaA?autoplay=1" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
-  </div>
-  <div class="row">
+<div class="vert-container">
 
-    <div class="col-xs-12 col-md-6">
-      <h1>LA DIEMSION VERTE</h1>
-      <br>
-      <h2>L'UNIVERS DE CHARLY GUITARE VERT</h2>
-      <p>C'est le monde de la nature qui fait ce qu’elle veut en bien comme en mal quand elle veut sans tenir compte de
-        ceux
-        qui y
-        habite.
-      </p>
-      <p> Le monde de la nature lui regroupe tous les reliefs et climats naturels du monde, sa particularité est qu’il
-        provoque exprès des tremblements de terre pour rétablir l’équilibre de sa réalité virtuelle
-      </p>
-      <p> Le Monde bleu a son répète dans le monde noir qui est l’univers de Zeus, le monde rouge a pour repère
-        l’univers de
-        Bafum , le monde vert celui de Posséidon et le monde blanc celui de l’univers du léviathan dans l’univers noir
-      </p>
-      <p>Dans l’univers vert il existe des sirènes qui vivent dans un lac appelé wata.Elles sont (3) </p>
-      <p>Elles ont pour mission d’empêcher quiconque qui pénètre dans l’univers des verts d’en sortir :
-        -la 1ère sirène émet un son médium berçant qui transforme l’univers de la personne qui l’entend en île
-        paradisiaque
-        -la 2ème émet un ultra son qui ne peut être capté que quand un être dort, il pense qu’il est dans l’univers bleu
-        comme un Dieu et refuse d’être humain jusqu’à ce que dans le monde vert réel une marrée monte pour l’emporter
-        dans
-        le lac de ces sirènes qui ne dégustent que les êtres endormis
-        -la 3em sirènes a le pouvoir de prendre une forme humaine féminine et de charmer tout être représentant une
-        menace
-        pour le monde vert, c’est à dire tout être qui n’est pas vert ou qui ne dort pas
-      </p>
-      <p>Leur faiblesse c’est le son d’une guitare joué par Charly guitare rouge</p>
-      <p>Pour pouvoir utiliser une guitare d’une autre couleur dans un monde x il faut sacrifier 500 points</p>
-      <p>Nb: tous les Charly exercent leur pouvoir en jouant leurs guitares</p>
-      <p>Le charly guitare vert est un hologramme qui peut apparaître partout à la fois, il a le pouvoir de simuler tous
-        les
-        autres pouvoirs des autres Charly sauf celui du rouge qui est la guérison et la résurrection</p>
-      <p>Le Charly guitare en effet apparaît avant que le Charly guitare ne passe en mode noir car après lui c’est le ko
-        total qui se présente</p>
-      <p>Alors il reçoit un ordre ultime avant de laisser la place au noir</p>
-      <p>Alors le Charly guitare blanc vert ne sont pas suffisamment fort pour défendre THUNDERFULL contre les lions
-        indomptables du labyrinthe, ces Charly sont juste des débarrasseurs d’obstacles physiques et non magique</p>
-      <br><br>
-    </div>
-    <div class="col-xs-12 col-md-3">
-      <app-lesliens></app-lesliens>
+  <!-- Feuilles flottantes en fond -->
+  <div class="leaves-bg">
+    <div class="leaf" *ngFor="let l of [1,2,3,4,5,6,7,8,9,10]"
+         [style.animation-delay]="(l * 0.7) + 's'"
+         [style.left.%]="(l * 10) % 100">
+      🍃
     </div>
   </div>
+
+  <!-- Particules vertes -->
+  <div class="particles-bg">
+    <span *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+          class="particle"
+          [style.left.%]="(p * 4) % 100"
+          [style.animation-delay]="(p * 0.5) + 's'">
+    </span>
+  </div>
+
+  <!-- HEADER ÉPIQUE -->
+  <header class="vert-header">
+ 
+    <h1 class="title-glow-vert"><br>LA DIMENSION VERTE</h1>
+ 
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="icon">🌿</span>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <!-- SECTION VIDÉO -->
+  <section class="video-section">
+    <div class="video-wrapper">
+      <div class="video-frame">
+        <iframe 
+          src="https://www.youtube.com/embed/hCWFGuh8jaA?autoplay=1&mute=1" 
+          title="Dimension Verte - Charly Guitare"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-glow"></div>
+    </div>
+  </section>
+
+  <!-- SECTION INTRO -->
+  <section class="intro-section">
+    <div class="intro-card">
+      <div class="intro-icon">🌳</div>
+      <div class="intro-content">
+        <h3>UNE NATURE INDOMTABLE</h3>
+        <p>
+          Le monde de la nature regroupe tous les reliefs et climats naturels. Sa particularité : 
+          il provoque exprès des tremblements de terre pour rétablir l'équilibre de sa réalité virtuelle. 
+          La nature agit selon sa propre volonté, sans se soucier des êtres qui l'habitent.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PHÉNOMÈNES NATURELS -->
+  <section class="phenomenes-section">
+    <div class="section-title">
+      <span class="material-icons">storm</span>
+      <h2>LES PHÉNOMÈNES NATURELS</h2>
+      <span class="material-icons">storm</span>
+    </div>
+
+    <div class="phenomenes-grid">
+      <div *ngFor="let p of phenomenes; let i = index"
+           class="phenomene-card"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        <div class="phenomene-icon">{{ p.icone }}</div>
+        <h3>{{ p.nom }}</h3>
+        <p>{{ p.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION SIRÈNES DU LAC WATA -->
+  <section class="sirenes-section">
+    <div class="section-title sirene-title">
+      <span class="material-icons">water</span>
+      <h2>LES 3 SIRÈNES DU LAC WATA</h2>
+      <span class="material-icons">water</span>
+    </div>
+    <p class="sirene-intro">
+      Dans l'univers vert, trois sirènes vivent dans un lac appelé <strong>Wata</strong>. 
+      Leur mission : empêcher quiconque pénètre dans l'univers vert d'en sortir.
+    </p>
+
+    <div class="sirenes-grid">
+      <div *ngFor="let s of sirenes; let i = index"
+           class="sirene-card"
+           [style.--accent]="s.couleur"
+           [style.animation-delay]="(i * 0.2) + 's'">
+        
+        <div class="card-glow"></div>
+        
+        <!-- Numéro de la sirène -->
+        <div class="sirene-numero">
+          <span class="numero-value">{{ s.numero }}</span>
+        </div>
+
+        <!-- Icône -->
+        <div class="sirene-icon-wrapper">
+          <div class="sirene-icon">{{ s.icone }}</div>
+          <div class="icon-ring"></div>
+        </div>
+
+        <div class="sirene-info">
+          <h3 class="sirene-nom">{{ s.nom }}</h3>
+          <div class="sirene-pouvoir">
+            <span class="material-icons">auto_awesome</span>
+            <span>{{ s.pouvoir }}</span>
+          </div>
+          <p class="sirene-description">{{ s.description }}</p>
+          
+          <div class="sirene-danger">
+            <span class="material-icons">dangerous</span>
+            <span>{{ s.danger }}</span>
+          </div>
+        </div>
+
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+      </div>
+    </div>
+
+    <!-- Faiblesse des sirènes -->
+    <div class="faiblesse-sirene-card">
+      <div class="faiblesse-icon">🎸</div>
+      <div class="faiblesse-content">
+        <h4>{{ faiblesseSirenes.titre }}</h4>
+        <p>{{ faiblesseSirenes.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CHARLY VERT -->
+  <section class="charly-section">
+    <div class="section-title">
+      <span class="material-icons">person</span>
+      <h2>LE CHARLY GUITARE VERT</h2>
+      <span class="material-icons">person</span>
+    </div>
+
+    <div class="charly-card">
+      <div class="charly-portrait">
+        <div class="portrait-glow"></div>
+        <div class="portrait-icon">🌿</div>
+        <div class="portrait-leaves">
+          <span>🍃</span><span>🌿</span><span>🍃</span>
+        </div>
+      </div>
+
+      <div class="charly-content">
+        <h3 class="charly-titre">L'Hologramme Omnipotent</h3>
+        <p class="charly-intro">
+          Le Charly Guitare Vert est un <strong>hologramme</strong> qui peut apparaître partout à la fois. 
+          Il a le pouvoir de simuler tous les autres pouvoirs des autres Charly, sauf celui du Rouge.
+        </p>
+
+        <!-- Pouvoirs -->
+        <div class="pouvoirs-grid">
+          <div *ngFor="let p of pouvoirsCharlyVert" class="pouvoir-card">
+            <div class="pouvoir-icon">{{ p.icone }}</div>
+            <h4>{{ p.nom }}</h4>
+            <p>{{ p.description }}</p>
+            <div class="pouvoir-limite">
+              <span class="material-icons">warning</span>
+              <span>{{ p.limite }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission spéciale -->
+        <div class="mission-card">
+          <div class="mission-header">
+            <span class="material-icons">schedule</span>
+            <h4>L'ORDRE ULTIME</h4>
+          </div>
+          <p>
+            Le Charly Vert apparaît avant que le Charly ne passe en mode Noir, car après lui vient le chaos total. 
+            Il reçoit un ordre ultime avant de laisser sa place au Noir.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CORRESPONDANCES -->
+  <section class="correspondances-section">
+    <div class="section-title">
+      <span class="material-icons">swap_horiz</span>
+      <h2>LES CORRESPONDANCES ENTRE LES MONDES</h2>
+      <span class="material-icons">swap_horiz</span>
+    </div>
+
+    <div class="correspondances-grid">
+      <div *ngFor="let c of correspondances"
+           class="correspondance-card"
+           [style.--accent]="c.couleur">
+        <span class="monde-badge" [style.background]="c.couleur" 
+              [style.color]="c.monde === 'BLANC' ? '#000' : '#fff'">
+          {{ c.monde }}
+        </span>
+        <span class="arrow">→</span>
+        <span class="repere">{{ c.repere }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION RÈGLE + NB -->
+  <section class="regle-section">
+    <div class="regle-card">
+      <div class="regle-icon">⚖️</div>
+      <div class="regle-content">
+        <h3>RÈGLE DES DIMENSIONS</h3>
+        <p>
+          Pour pouvoir utiliser une guitare d'une autre couleur dans un monde X, 
+          il faut <strong>sacrifier 500 points</strong>.
+        </p>
+      </div>
+    </div>
+
+    <div class="regle-card nb-card">
+      <div class="regle-icon">🎸</div>
+      <div class="regle-content">
+        <h3>NOTE IMPORTANTE</h3>
+        <p>
+          Tous les Charly exercent leur pouvoir en <strong>jouant leurs guitares</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION AVERTISSEMENT FINAL -->
+  <section class="avertissement-section">
+    <div class="avertissement-card">
+      <div class="avertissement-icon">⚠️</div>
+      <div class="avertissement-content">
+        <h3>{{ avertissementFinal.titre }}</h3>
+        <p>{{ avertissementFinal.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER ÉPIQUE -->
+  <footer class="vert-footer">
+    <div class="footer-quote">
+      <span class="quote-mark">«</span>
+      <p>Dans la Dimension Verte, la nature ne demande pas la permission — elle décide, et le monde s'incline.</p>
+      <span class="quote-mark">»</span>
+    </div>
+    <p class="footer-signature">— Les Chroniques d'Offoland, Livre XI</p>
+
+    <div class="footer-badge">
+      <span class="icon">🌿</span>
+      <span>DIMENSION VERTE</span>
+      <span class="dot">•</span>
+      <span>CHARLY GUITARE 5D</span>
+    </div>
+  </footer>
+
 </div>

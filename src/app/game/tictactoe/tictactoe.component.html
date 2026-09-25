@@ -1,52 +1,133 @@
-<div class="container-fluid">
-  <app-deux letitre="THE NEW GAME"></app-deux>
-  <div class="row">
-    <div class="col-xs-12 col-md-8">
-      <div class="game-area" *ngIf="oncontinue()">
-        <mat-grid-list class="tick-tack-grid" cols="3">
-          <mat-grid-tile *ngFor="let block of gs.blocks; let i = index" (click)="playerClick(i)">
-            <img src="{{ block.urlimg() }}" *ngIf="block.value"></mat-grid-tile>
-        </mat-grid-list>
+<div class="confetti-wrapper" *ngIf="showConfetti">
+  <div class="confetti-piece" *ngFor="let p of particles" [style.left.%]="(p * 7) % 100"
+    [style.animation-delay]="(p * 0.05) + 's'"
+    [style.background]="p % 3 === 0 ? '#00f2fe' : (p % 3 === 1 ? '#ff007f' : '#00ff88')">
+  </div>
+</div>
+
+<div class="overlay victory-overlay" *ngIf="showVictoryOverlay">
+  <div class="overlay-content">
+    <div class="overlay-icon">🏆</div>
+    <h1>VICTOIRE</h1>
+    <p>Vous remportez le duel d'alignements !</p>
+  </div>
+</div>
+
+<div class="temple-container py-4">
+  <div class="row g-4 align-items-start">
+    <div class="col-12 col-lg-7">
+      <div class="board-wrapper">      
+        <div class="dynamic-grid" [style.--grid-size]="gs.gridSize">
+          <div *ngFor="let block of gs.blocks; let i = index" (click)="playerClick(i)"
+            [class.disabled]="!block.free || lock" [class.winning-cell]="block.isWinningCell"
+            [class.new-cell]="block.isNew" class="grid-cell">
+
+            <div class="cell-content">
+              <img [src]="block.urlimg()" *ngIf="block.value" alt="Symbole" class="cell-icon pop-in" />
+              <span *ngIf="block.free && !lock && gs.turn === 0" class="hover-hint">+</span>
+            </div>
+
+            <div class="cell-particles" *ngIf="block.isNew">
+              <span *ngFor="let p of [1,2,3,4]"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="casuffit()" class="alert-ceiling">
+        <h4>🏆 SEUIL MAXIMAL ATTEINT !</h4>
+        <p>Lyko Le Sage s'incline devant votre bravoure.</p>
+        <button class="btn-cyber-primary" (click)="onrecommencer()">Passer à un autre jeu</button>
       </div>
     </div>
-    <div class="col-xs-12 col-md-4">
-      <button class="btn btn-success" (click)="resetjeu()" *ngIf="rejouer">
-        Continuer à jouer
-      </button><br><br><button class="btn btn-primary" (click)="onrecommencer()" *ngIf="gagnant()">
-        Passer a un autre jeu
-      </button><br>
-      <p>En cliquant dans les cases ci-dessus, Vous devez aligner trois charly guitare pour recuperer la guitare
-        blanche face à LYKO LE SAGE le gardien des guitares
-        sacrés. Vous gagnerez des points de vie.</p>
-      <div *ngIf="gagnant()">
-        <p>C'est Bien!. Vous detenez la guitare blanche. Vous pouvez <button class="btn btn-primary"
-            (click)="onrecommencer()">
-            Passer a un autre jeu
-          </button> ou continuer à jouer avec LYKO LE SAGE pour gagner des points de vie.</p>
+
+    <!-- PANNEAU LATÉRAL -->
+    <div class="col-12 col-lg-5">
+
+      <!-- Stats du Duel -->
+      <div class="stats-panel mb-4">
+        <div class="actions-grid">
+          <button class="btn-cyber-next" (click)="prochainNiveau()" *ngIf="rejouer">
+            🚀 NIVEAU SUIVANT ({{ gs.gridSize + 1 }}x{{ gs.gridSize + 1 }})
+          </button>
+          <button class="btn-cyber-secondary" (click)="resetjeu()" *ngIf="rejouer">
+            🔄 Rejouer sur cette grille
+          </button>
+
+          <div>
+            <div class="turn-indicator" [class.bot-turn]="gs.turn === 1">
+              <div class="player-tag" [class.active]="gs.turn === 0">
+                <span class="avatar">🎸</span>
+                <span class="name">VOUS</span>
+              </div>
+              <div class="vs">VS</div>
+              <div class="player-tag" [class.active]="gs.turn === 1">
+                <span class="avatar">🐵</span>
+                <span class="name">LYKÖ</span>
+                <span class="thinking-dots" *ngIf="gs.isBotThinking">
+                  <span></span><span></span><span></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Compteur d'alignements -->
+            <div class="alignment-counter">
+              🎯 Alignements — VOUS : <strong class="cyan">{{ gs.players[0].score }}</strong>
+              | LYKÖ : <strong class="magenta">{{ gs.players[1].score }}</strong>
+            </div>
+          </div>
+          <button class="btn-cyber-primary" (click)="onrecommencer()">
+            ⚔️ Retour au Menu des Jeux
+          </button>
+        </div>
+        <div class="panel-header">
+          <span><br>📊 STATISTIQUES D'AFFRONTEMENT</span>
+        </div>
+        <div class="pv-card">
+          <div>
+            <span class="pv-label">Points de Vie Accumulés</span>
+            <span class="pv-value">{{ pointdevies | number }} PV</span>
+          </div>
+          <div class="pv-icon">💖</div>
+        </div>
+
+        <div class="score-table">
+          <div class="score-row player-row">
+            <div class="score-name"><span class="dot cyan"></span> VOUS</div>
+            <div class="score-value cyan">{{ gs.players[0].score }}</div>
+          </div>
+          <div class="score-row bot-row">
+            <div class="score-name"><span class="dot magenta"></span> LYKÖ LE SAGE</div>
+            <div class="score-value magenta">{{ gs.players[1].score }}</div>
+          </div>
+          <div class="score-row draw-row">
+            <div class="score-name"><span class="dot gray"></span> Égalités</div>
+            <div class="score-value gray">{{ gs.draw }}</div>
+          </div>
+        </div>
       </div>
-      <div *ngIf="casuffit()">
-        <p>Attention : LYKO LE SAGE ne vous permet pas de depasser 10 000 points de vie chez lui. Veuillez passer à un
-          autre jeu.</p>
+
+      <!-- HEADER ÉPIQUE -->
+      <div class="temple-header text-center mb-4">
+        <div class="level-badge">
+          <span class="badge-icon">⚔️</span>
+          NIVEAU {{ gs.gridSize - 2 }} • GRILLE {{ gs.gridSize }}x{{ gs.gridSize }}
+        </div>
+        <h1 class="title-glow">LYKÖ LE SAGE</h1>
+        <p class="lyko-message">{{ messageLyko }}</p>
       </div>
-      <h2>Points de vie : {{ lavie }}</h2>
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <td>TOI:</td>
-            <td>{{ gs.players[0].score }}</td>
-          </tr>
-          <tr>
-            <td>Lyko le sage (le gardien des guitares sacrés):</td>
-            <td>{{ gs.players[1].score }}</td>
-          </tr>
-          <tr>
-            <td> MAtch Nul:</td>
-            <td>{{ gs.draw }}</td>
-          </tr>
-        </tbody>
-      </table><br><br>
-      <!-- <a class="pull-right text-right" class="btn btn-danger" (click)="resetjeu($event)" href="#">Reset Game</a>
-     <a class="pull-right text-right" class="btn btn-danger" (click)="newGame($event)" href="#">New Game</a> -->
+
+      <!-- Carte Lore -->
+      <div class="lore-panel">
+        <h5>📜 RÈGLES DU DUEL</h5>
+        <p>
+          Alignez <strong>3 Charly Guitare</strong> pour remporter
+          <strong>+10 PV</strong> par alignement.
+          La manche ne prend fin que lorsque <strong>toutes les cases de la grille sont occupées</strong> !
+          Le joueur comptabilisant le plus d'alignements gagne la manche.
+        </p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,56 +1,93 @@
 <!-- En-tête de navigation -->
 <header class="navbar" [class.scrolled]="isScrolled">
   <div class="navbar-container">
-    
-    <!-- 1. Gauche : Logo avec espacement entre l'icône et le texte -->
+
+    <!-- 1. Gauche : Logo avec Marque -->
     <a [routerLink]="['/']" class="logo-link" title="CHARLY GUITARE - Accueil">
-      <div class="logo">
+      <div class="logo-wrapper">
         <span class="logo-icon" aria-hidden="true">🎸</span>
-        <span class="logo-text">CHARLY <span>GUITARE</span></span>
       </div>
     </a>
 
     <!-- 2. Centre : Liens de navigation -->
     <nav class="nav-links" [class.open]="isMobileMenuOpen" aria-label="Navigation principale">
-      <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">Accueil</a>
-      <a [routerLink]="['/live']" routerLinkActive="active" (click)="closeMobileMenu()">Live</a>
+      <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMobileMenu()">Accueil</a>
+      <a [routerLink]="['/live']" routerLinkActive="active" (click)="closeMobileMenu()">
+        <span class="live-dot"></span> Live
+      </a>
+
+      <!-- Inbox avec badge de cloche dans le menu -->
+      <a [routerLink]="['/inbox']" routerLinkActive="active" (click)="closeMobileMenu()" class="nav-inbox-link">
+        <span>Inbox</span>
+        <span class="nav-badge" *ngIf="(unreadCount$ | async) as unreadCount">
+          <span *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+        </span>
+      </a>
+
       <a [routerLink]="['/academie']" routerLinkActive="active" (click)="closeMobileMenu()">Académie</a>
       <a [routerLink]="['/abonnement']" routerLinkActive="active" (click)="closeMobileMenu()">Abonnement</a>
       <a [routerLink]="['/offoland']" routerLinkActive="active" (click)="closeMobileMenu()">Offoland</a>
-      
+
       <!-- Optionnel pour le menu mobile -->
       <div class="mobile-auth" *ngIf="!(auth.user$ | async)">
         <a [routerLink]="['/login']" class="btn-login-mobile" (click)="closeMobileMenu()">Connexion</a>
       </div>
     </nav>
 
-    <!-- 3. Droite : Authentification & Menu Burger -->
+    <!-- 3. Droite : Authentification & Actions -->
     <div class="header-actions">
       <!-- Si l'utilisateur est connecté -->
       <ng-container *ngIf="auth.user$ | async as user; else loggedOut">
-        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-btn">
-          <div class="avatar">
-            <img *ngIf="user.photoURL; else defaultAvatar" [src]="user.photoURL" [alt]="user.displayName" />
-            <ng-template #defaultAvatar>
-              <span>{{ getInitials(user.displayName) }}</span>
-            </ng-template>
+
+        <!-- Bouton Cloche de Notification -->
+        <a [routerLink]="['/inbox']" class="notification-bell-btn" title="Voir mes messages">
+          <mat-icon>notifications</mat-icon>
+          <span class="bell-badge" *ngIf="unreadCount$ | async as unreadCount">
+            <span *ngIf="unreadCount > 0">{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
+          </span>
+        </a>
+
+        <!-- Bouton Profile Avatar Uniquement (Sans texte) -->
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-avatar-btn" aria-label="Menu profil">
+          <div class="avatar-ring">
+            <div class="avatar">
+              <img *ngIf="user.photoURL; else defaultAvatar" [src]="user.photoURL"
+                [alt]="user.displayName || 'Utilisateur'" />
+              <ng-template #defaultAvatar>
+                <span>{{ getInitials(user.displayName) }}</span>
+              </ng-template>
+            </div>
           </div>
-          <span class="user-name">{{ user.displayName || 'Mon Compte' }}</span>
-          <mat-icon>expand_more</mat-icon>
+          <mat-icon class="arrow-icon">expand_more</mat-icon>
         </button>
 
+        <!-- Menu déroulant profil enrichi -->
         <mat-menu #userMenu="matMenu" xPosition="before" class="custom-user-menu">
           <div class="menu-header">
-            <p class="menu-user-name">{{ user.displayName }}</p>
-            <p class="menu-user-email">{{ user.email }}</p>
+            <div class="menu-avatar">
+              <img *ngIf="user.photoURL; else defaultMenuAvatar" [src]="user.photoURL" [alt]="user.displayName" />
+              <ng-template #defaultMenuAvatar>
+                <span>{{ getInitials(user.displayName) }}</span>
+              </ng-template>
+            </div>
+            <div class="user-details">
+              <p class="menu-user-name">{{ user.displayName || 'Guitariste' }}</p>
+              <p class="menu-user-email">{{ user.email }}</p>
+            </div>
           </div>
           <mat-divider></mat-divider>
+          <button mat-menu-item [routerLink]="['/inbox']">
+            <mat-icon>mail_outline</mat-icon>
+            <span>Mes Messages</span>
+          </button>
           <button mat-menu-item [routerLink]="['/profil']">
-            <mat-icon>person</mat-icon>
+            <mat-icon>person_outline</mat-icon>
             <span>Mon Profil</span>
           </button>
+          <mat-divider></mat-divider>
           <button mat-menu-item (click)="onLogout()" class="logout-item">
-            <mat-icon color="warn">logout</mat-icon>
+            <mat-icon>logout</mat-icon>
             <span>Déconnexion</span>
           </button>
         </mat-menu>
@@ -62,7 +99,8 @@
       </ng-template>
 
       <!-- Bouton Menu Burger Mobile -->
-      <button class="burger-btn" (click)="toggleMobileMenu()" [class.is-active]="isMobileMenuOpen" aria-label="Menu Mobile">
+      <button class="burger-btn" (click)="toggleMobileMenu()" [class.is-active]="isMobileMenuOpen"
+        aria-label="Menu Mobile">
         <span></span>
         <span></span>
         <span></span>
@@ -76,5 +114,11 @@
 <main class="main-content">
   <router-outlet></router-outlet>
 </main>
-
+ <div class="contact-cta">
+  <a
+    [routerLink]="['/contact']"
+    routerLinkActive="active">
+    DISCUTEZ AVEC CHARLY GUITARE
+  </a>
+</div>
 <app-footer></app-footer>

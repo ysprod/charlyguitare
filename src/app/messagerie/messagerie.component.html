@@ -1,0 +1,147 @@
+<div class="user-messages-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Mes Messages</h1>
+      <p>Consultez vos échanges et répondez directement aux messages du support</p>
+    </div>
+  </header>
+
+  <div *ngIf="messages$ | async as messages; else loading" class="content-wrapper">
+    
+    <!-- Liste des messages à gauche -->
+    <div class="messages-list-section" [class.hidden-mobile]="selectedMessage !== null">
+      <div *ngIf="messages.length === 0" class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <h3>Aucun message envoyé</h3>
+        <p>Vous n'avez aucun message en cours.</p>
+      </div>
+
+      <div
+        *ngFor="let msg of messages"
+        class="message-card"
+        [class.active]="selectedMessage?.key === msg.key"
+        (click)="selectMessage(msg)"
+      >
+        <div class="card-header">
+          <span class="subject">{{ msg.subject || '(Sans sujet)' }}</span>
+          <span class="status-badge" [ngClass]="getStatusBadgeClass(msg.status)">
+            {{ getStatusLabel(msg.status) }}
+          </span>
+        </div>
+
+        <p class="preview-text">{{ msg.message }}</p>
+
+        <div class="card-footer">
+          <span class="date">{{ msg.createdAt | date:'dd MMM yyyy, HH:mm' }}</span>
+          <span class="replies-count" *ngIf="msg.replies">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            {{ getRepliesArray(msg.replies).length }} édit(s) / réponse(s)
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zone de discussion à droite -->
+    <div class="thread-section" [class.active-mobile]="selectedMessage !== null">
+      <ng-container *ngIf="selectedMessage; else selectPrompt">
+        
+        <!-- En-tête du fil -->
+        <div class="thread-header">
+          <button class="btn-back" (click)="closeThread()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            <span>Retour</span>
+          </button>
+
+          <div class="thread-title">
+            <h2>{{ selectedMessage.subject }}</h2>
+            <span class="status-badge" [ngClass]="getStatusBadgeClass(selectedMessage.status)">
+              {{ getStatusLabel(selectedMessage.status) }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Fil des échanges (Chronologique) -->
+        <div class="thread-body">
+          
+          <!-- Premier message envoyé par l'utilisateur -->
+          <div class="chat-bubble user-bubble">
+            <div class="bubble-header">
+              <span class="author">Vous</span>
+              <span class="time">{{ selectedMessage.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <p class="bubble-text">{{ selectedMessage.message }}</p>
+          </div>
+
+          <!-- Suite des échanges (Administrateur & Utilisateur) -->
+          <ng-container *ngIf="getRepliesArray(selectedMessage.replies) as replies">
+            <div
+              *ngFor="let reply of replies"
+              class="chat-bubble"
+              [class.admin-bubble]="reply.senderRole === 'admin'"
+              [class.user-bubble]="reply.senderRole === 'user'"
+            >
+              <div class="bubble-header">
+                <span class="author">
+                  {{ reply.senderRole === 'admin' ? 'Charly Guitare (Support)' : 'Vous' }}
+                </span>
+                <span class="time">{{ reply.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              <p class="bubble-text">{{ reply.message }}</p>
+            </div>
+          </ng-container>
+
+        </div>
+
+        <!-- Formulaire de réponse pour l'utilisateur -->
+        <div class="thread-reply-form">
+          <textarea
+            [(ngModel)]="replyText"
+            rows="3"
+            placeholder="Écrire une nouvelle réponse ou apporter des précisions..."
+            class="reply-textarea"
+          ></textarea>
+          <div class="form-actions">
+            <button
+              class="btn-send"
+              [disabled]="isSending || !replyText.trim()"
+              (click)="sendReply()"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="send-icon">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span *ngIf="!isSending">Répondre</span>
+              <span *ngIf="isSending">Envoi en cours...</span>
+            </button>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <!-- Message si aucun fil sélectionné -->
+      <ng-template #selectPrompt>
+        <div class="select-prompt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <p>Sélectionnez une discussion à gauche pour afficher les réponses et échanger avec l'équipe.</p>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des messages...</p>
+    </div>
+  </ng-template>
+</div>

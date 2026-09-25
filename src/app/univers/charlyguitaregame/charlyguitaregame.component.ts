@@ -1,15 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 
+export interface Dimension {
+  nom: string;
+  couleur: string;
+  couleurSecondaire: string;
+  symbole: string;
+  note: string;
+  sage: string;
+  description: string;
+  image: string;
+  route: string;
+}
+
 @Component({
   selector: 'app-charlyguitaregame',
   templateUrl: './charlyguitaregame.component.html',
-  styleUrls: ['./charlyguitaregame.component.css']
+  styleUrls: ['./charlyguitaregame.component.scss']
 })
 export class CharlyguitaregameComponent implements OnInit {
 
+   dimensions: Dimension[] = [
+    {
+      nom: 'NOIR',
+      couleur: '#1a1a1a',
+      couleurSecondaire: '#4a4a4a',
+      symbole: '🖤',
+      note: 'Sol',
+      sage: 'Offosol',
+      description: 'La Dimension de l\'Épreuve',
+      image: 'assets/noir.jpg',
+      route: '/noir'
+    },
+    {
+      nom: 'ROUGE',
+      couleur: '#dc2626',
+      couleurSecondaire: '#f87171',
+      symbole: '🔥',
+      note: 'Ré',
+      sage: 'Offoré',
+      description: 'La Dimension du Courage',
+      image: 'assets/rouge.jpg',
+      route: '/rouge'
+    },
+    {
+      nom: 'VERT',
+      couleur: '#22c55e',
+      couleurSecondaire: '#4ade80',
+      symbole: '🌿',
+      note: 'Mi',
+      sage: 'Offomi',
+      description: 'La Dimension de la Vie',
+      image: 'assets/vert.jpg',
+      route: '/vert'
+    },
+    {
+      nom: 'BLANC',
+      couleur: '#f8fafc',
+      couleurSecondaire: '#cbd5e1',
+      symbole: '✨',
+      note: 'Do',
+      sage: 'Offodo',
+      description: 'La Dimension du Commencement',
+      image: 'assets/blanc.jpg',
+      route: '/blanc'
+    },
+    {
+      nom: 'BLEU',
+      couleur: '#3b82f6',
+      couleurSecondaire: '#60a5fa',
+      symbole: '🌊',
+      note: 'Fa',
+      sage: 'Offofa',
+      description: 'La Dimension de la Connaissance',
+      image: 'assets/bleu.jpg',
+      route: '/bleu'
+    }
+  ];
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

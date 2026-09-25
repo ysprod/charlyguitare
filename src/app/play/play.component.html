@@ -1,34 +1,222 @@
-<div class="container-fluid">
-  <app-deux letitre="{{ titredelapage }}"></app-deux>
-  <div class="row">
-    <div class="col-xs-12 col-md-3">
-      <app-trois bonus="{{ lebonus }}" vie="{{ lavie }}"></app-trois>
+<div class="game-dashboard-container">
+  <div class="bg-decor" aria-hidden="true">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    <div class="glow glow-4"></div>
+
+    <div class="cyber-grid"></div>
+
+    <!-- Vagues de lumière -->
+    <div class="aurora"></div>
+
+    <!-- Particules montantes -->
+    <div class="particles">
+      <span class="particle" *ngFor="let p of particles" [style.left.%]="p.left" [style.animation-delay.s]="p.delay"
+        [style.animation-duration.s]="p.duration" [style.width.px]="p.size" [style.height.px]="p.size"></span>
     </div>
-    <div class="col-xs-12 col-md-6">
-      <app-quatre monquatre="{{ etapedujeu }}"></app-quatre>
-      <button type="button" class="btn btn-danger" (click)="onVisualiser()" *ngIf="texteboutonun"> {{ texteboutonun }}
-      </button>
-      &nbsp;
-      <button type="button" class="btn btn-primary" (click)="onBoutondeux()"
-        *ngIf="texteboutondeux">{{ texteboutondeux }}</button>
-      &nbsp;
-      <button type="button" class="btn btn-success" (click)="onBoutontrois()"
-        *ngIf="texteboutontrois">{{ texteboutontrois }}</button>
-      &nbsp;
-      <button type="button" class="btn btn-info" (click)="onBoutonquatre()"
-        *ngIf="texteboutonquatre">{{ texteboutonquatre }}</button>
-      &nbsp;
-      <button type="button" class="btn btn-warning" (click)="onBoutoncinq()"
-        *ngIf="texteboutoncinq">{{ texteboutoncinq }}</button>
-      <br><br>
-      <p>CREATIK : {{ etapedujeu }} </p><br>
-      <button class="btn btn-link" (click)="onrecommencer()">
-        Recommencer le jeu
-      </button>
+
+    <!-- Étoiles scintillantes -->
+    <div class="stars">
+      <span class="star" *ngFor="let s of stars" [style.top.%]="s.top" [style.left.%]="s.left"
+        [style.animation-delay.s]="s.delay"></span>
     </div>
-    <div class="col-xs-12 col-md-3">
-      <app-cinq moncinq="{{ etapedujeu }}"></app-cinq>
-    </div>
+
+    <!-- Rayons lumineux -->
+    <div class="rays"></div>
   </div>
-  <app-un monid="{{ succes }}"></app-un>
+
+  <div class="main-game-area">
+
+    <!-- ============================================================
+         COLONNE GAUCHE : Mascotte
+         ============================================================ -->
+    <aside class="side-panel left-panel">
+      <div class="panel-card image-card float-3d">
+        <div class="image-wrapper">
+          <img src="../assets/thegame.jpg" alt="Charly Guitare" />
+          <div class="image-overlay"></div>
+          <div class="image-shine"></div>
+          <div class="image-halo"></div> 
+        </div>
+
+        <!-- Effet de réflexion -->
+        <div class="reflection"></div>
+      </div>
+ 
+    </aside>
+
+    <!-- ============================================================
+         COLONNE CENTRALE : Sélecteur de jeux
+         ============================================================ -->
+    <main class="center-panel">
+
+      <section class="games-selector-section">
+
+        <!-- HEADER -->
+        <header class="selector-header">
+          <h1 class="section-title">
+            <span class="title-icon">🎯</span>
+            <span class="title-text" data-text="Choisis ton jeu">Choisis ton jeu</span>
+          </h1>
+         </header>
+
+        <!-- BARRE DE RECHERCHE / FILTRE (bonus wahou) -->
+       
+
+        <div class="game-buttons-grid">
+
+          <!-- 🐵 LYKO DUO -->
+          <button type="button" class="btn-game btn-lyko btn-duo" (click)="onSelectLykoduo()">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🐵</span>
+            <span class="btn-content">
+              <span class="btn-text">LYKO DUEL</span>
+              <span class="btn-sub">Jouez avec vos amis et en famille</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </button>
+
+          <!-- 🐵 LYKO SOLO -->
+          <button type="button" class="btn-game btn-lyko" (click)="onSelectLyko()">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🐵</span>
+            <span class="btn-content">
+              <span class="btn-text">LYKO SOLO</span>
+              <span class="btn-sub">Jouez contre l'IA</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </button>
+
+          <!-- 🎸 CHARLY GUITARE HERO -->
+          <a [routerLink]="['/fretboard']" class="btn-game btn-fretboard" title="Chasse au Fretboard">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🎸</span>
+            <span class="btn-content">
+              <span class="btn-text">CHARLY GUITARE HERO</span>
+              <span class="btn-sub">Chasse au fretboard</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </a>
+
+          <!-- 🪵 MÖLKKY DES ACCORDS -->
+          <a [routerLink]="['/memory']" class="btn-game btn-molkky" title="Mölkky des Accords">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🪵</span>
+            <span class="btn-content">
+              <span class="btn-text">METHODE CHARLY GUITARE</span>
+              <span class="btn-sub">Essentiel des accords</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="new-badge">NOUVEAU</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </a>
+
+          <!-- 🔊 QUIZ ACOUSTIQUE -->
+          <a [routerLink]="['/acoustic']" class="btn-game btn-quiz" title="Quiz Acoustique & Lutherie">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🔊</span>
+            <span class="btn-content">
+              <span class="btn-text">QUIZ ACOUSTIQUE</span>
+              <span class="btn-sub">Physique & lutherie</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="new-badge badge-quiz">QUIZ</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </a>
+
+          <!-- 🎼 SIMULATEUR -->
+          <a [routerLink]="['/chord']" class="btn-game btn-simulator" title="Décodeur & Simulateur de Grille">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🎼</span>
+            <span class="btn-content">
+              <span class="btn-text">EXO SIMULATION</span>
+              <span class="btn-sub">Décodeur & grille</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="new-badge badge-sim">OUTIL</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </a>
+
+          <!-- ⏱️ DÉFI MÉTRONOME -->
+          <a [routerLink]="['/metronome']" class="btn-game btn-metronome" title="Défi Métronome">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">⏱️</span>
+            <span class="btn-content">
+              <span class="btn-text">DÉFI MÉTRONOME</span>
+              <span class="btn-sub">Precision groove</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="new-badge badge-metro">DÉFI</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </a>
+
+          <!-- 🃏 BOUBOUNI -->
+          <button type="button" class="btn-game btn-boubouni" (click)="onSelectBoubouni()">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">🃏</span>
+            <span class="btn-content">
+              <span class="btn-text">BOUBOUNI</span>
+              <span class="btn-sub">Jeu de cartes</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </button>
+
+          <!-- ⏳ DÉ DE KRONOS -->
+          <button type="button" class="btn-game btn-kronos" (click)="onSelectDeDeKronos()">
+            <span class="btn-glow"></span>
+            <span class="btn-border-anim"></span>
+            <span class="btn-icon">⏳</span>
+            <span class="btn-content">
+              <span class="btn-text">DÉ DE KRONOS</span>
+              <span class="btn-sub">Maître du temps</span>
+            </span>
+            <span class="btn-arrow">→</span>
+            <span class="corner corner-tl"></span>
+            <span class="corner corner-tr"></span>
+            <span class="corner corner-bl"></span>
+            <span class="corner corner-br"></span>
+          </button>
+
+        </div>
+      </section>
+    </main>
+
+  </div>
 </div>

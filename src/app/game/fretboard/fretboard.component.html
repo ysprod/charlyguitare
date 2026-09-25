@@ -1,0 +1,172 @@
+<div class="fret-game-container">
+  <header class="game-hud">
+    <div class="hud-box score-box">
+      <span class="label">SCORE</span>
+      <span class="value">{{ gameState.score }}</span>
+    </div>
+
+    <div class="target-card" *ngIf="gameState.isPlaying">
+      <span class="sub-text">TROUVE LA NOTE :</span>
+      <h2 class="target-note pulse-target">{{ gameState.targetNote }}</h2>
+    </div>
+
+    <div class="hud-box combo-box" [class.combo-hot]="gameState.combo >= 3">
+      <span class="label">COMBO</span>
+      <span class="value">x{{ gameState.combo }}</span>
+    </div>
+  </header>
+
+  <div class="timer-bar-wrapper" *ngIf="gameState.isPlaying">
+    <div class="timer-bar" [style.width.%]="gameState.timeLeft" [style.background]="getTimerColor()"
+      [class.warning]="gameState.timeLeft < 30">
+    </div>
+  </div>
+
+  <div class="feedback-overlay" *ngIf="feedbackMessage" [@feedbackAnim]>
+    <span class="feedback-badge" [class.success]="feedbackType === 'success'" [class.error]="feedbackType === 'error'">
+      {{ feedbackMessage }}
+    </span>
+  </div>
+
+  <div class="particles-overlay" *ngIf="particles.length > 0">
+    <span *ngFor="let p of particles" class="particle" [style.left.%]="(p * 8) % 100"
+      [style.animation-delay]="(p * 0.05) + 's'" [style.background]="p % 2 === 0 ? '#00f2fe' : '#ffbe0b'">
+    </span>
+  </div>
+
+  <div class="fretboard-wrapper" *ngIf="gameState.isPlaying">
+    <div class="fretboard">
+
+      <!-- Repères du manche (Inlays) -->
+      <div class="fret-markers">
+        <span class="marker fret-3"></span>
+        <span class="marker fret-5"></span>
+        <span class="marker fret-7"></span>
+        <span class="marker fret-9"></span>
+        <span class="marker fret-12"></span>
+      </div>
+
+      <!-- En-tête des frettes -->
+      <div class="frets-header">
+        <div *ngFor="let fret of frets" class="fret-num">
+          {{ fret === 0 ? 'VIDE' : fret }}
+        </div>
+      </div>
+
+      <!-- Les 6 Cordes -->
+      <div class="strings-container">
+        <div *ngFor="let str of strings" class="guitar-string" [attr.data-string]="str.name">
+          <div *ngFor="let fret of frets" class="fret-node" [class.correct]="correctFretIndex === fret"
+            (click)="onFretClick(str.index, fret)">
+            <div class="fret-wire"></div>
+            <div class="touch-point">
+              <span class="note-label" *ngIf="shouldShowNoteLabel()">
+                {{ getNoteAt(str.index, fret) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div class="game-hud">
+    <div class="lives-box">
+      <span *ngFor="let heart of [1,2,3,4,5]; let i = index" class="heart" [class.lost]="i >= gameState.lives">
+        ❤️
+      </span>
+    </div>
+  </div> <br><br>
+
+  <!-- HEADER AVEC BOUTON RETOUR -->
+  <header class="game-top-bar">
+    <button class="btn-back" (click)="goToPlay()" title="Retour au menu">
+      <span class="material-icons">arrow_back</span>
+      <span>RETOUR</span>
+    </button>
+
+    <div class="logo-zone">
+      <span class="icon">🎸</span>
+      <h1>CHARLY GUITARE HERO</h1>
+    </div>
+
+    <div class="high-score-badge" *ngIf="highScore > 0">
+      <span class="material-icons">emoji_events</span>
+      <span>RECORD : {{ highScore }}</span>
+    </div>
+  </header>
+
+  <!-- ÉCRAN D'ACCUEIL / GAME OVER -->
+  <div class="overlay-screen" *ngIf="!gameState.isPlaying">
+
+    <!-- Écran d'accueil -->
+    <div class="card-modal" *ngIf="!gameState.isGameOver" [@modalAnim]>
+      <div class="modal-icon">🎸</div>
+      <h1> CHARLY GUITARE HERO </h1>
+      <p class="modal-description">
+        Repère la note demandée sur le manche le plus vite possible avant la fin du chrono !
+      </p>
+
+      <!-- Sélecteur de difficulté -->
+      <div class="difficulty-selector">
+        <span class="selector-label">DIFFICULTÉ :</span>
+        <div class="difficulty-buttons">
+          <button class="diff-btn" [class.active]="difficulty === 'facile'" (click)="setDifficulty('facile')">
+            FACILE
+          </button>
+          <button class="diff-btn" [class.active]="difficulty === 'normal'" (click)="setDifficulty('normal')">
+            NORMAL
+          </button>
+          <button class="diff-btn" [class.active]="difficulty === 'hardcore'" (click)="setDifficulty('hardcore')">
+            DIFFICILE
+          </button>
+        </div>
+      </div>
+
+      <div class="high-score-display" *ngIf="highScore > 0">
+        <span class="material-icons">emoji_events</span>
+        <span>Meilleur score : <strong>{{ highScore }}</strong></span>
+      </div>
+      <!-- 🎯 BOUTONS D'ACTION : LANCER + RETOUR -->
+      <div class="modal-actions-horizontal">
+
+        <button class="btn-secondary" (click)="goToPlay()">
+          <span class="material-icons">arrow_back</span>
+          RETOUR
+        </button> <button class="btn-start" (click)="startGame()">
+          <span class="material-icons">play_arrow</span>
+          LANCER LE DÉFI
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Over -->
+    <div class="card-modal game-over-modal" *ngIf="gameState.isGameOver" [@modalAnim]>
+      <div class="icon">🎸</div>
+      <h2>PARTIE TERMINÉE</h2>
+
+      <div class="final-stats">
+        <div class="final-stat">
+          <span class="stat-label">Score Final</span>
+          <span class="stat-value">{{ gameState.score }} Pts</span>
+        </div>
+        <div class="final-stat" *ngIf="gameState.score > highScore">
+          <span class="stat-label">🏆 NOUVEAU RECORD !</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-start" (click)="startGame()">
+          <span class="material-icons">refresh</span>
+          RÉESSAYER
+        </button>
+        <button class="btn-secondary" (click)="goToPlay()">
+          <span class="material-icons">arrow_back</span>
+          RETOUR AU MENU
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

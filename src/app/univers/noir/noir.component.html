@@ -1,41 +1,174 @@
-<div class="container-fluid">
-  <div class="text-center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/2E0VLP9kGlw?autoplay=1" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
+<div class="noir-container">
+  <!-- Fond d'éclairs animés -->
+  <div class="lightning-bg">
+    <div class="lightning-flash"></div>
+    <div class="lightning-flash delay-1"></div>
+    <div class="lightning-flash delay-2"></div>
   </div>
-  <div class="row">
- 
-    <div class="col-xs-12 col-md-6">
-      <h1>LA DIMENSION NOIRE</h1>
-      <br>
-      <h2>L'UNIVERS DE CHARLY GUITARE NOIR</h2>
-      <p>C'est le monde du jugement et de la terreur, le monde de la guerre
-      </p>
-      <p>Le monde de la magie noire, tout est ténèbre seul les dieux ont des éclairs qui leur servent de lumière quand
-        ils
-        se déplacent pour aller en guerre contre un territoire ennemi.
-      </p>
-      <p>Les êtres qui y vivent : le léviathan ( gros serpent aux yeux rouge qui pétrifie ses victimes rien qu’en les
-        regardant), poséidons le dieu des eaux, Zeus celui des éclaires et bafum le dieu des enfers
-      </p>
-      <p>Territoires des personnages :
-        -Zeus dans le ciel noir
-        -Posséidon dans l’océan
-        -Bafum dans les volcans
-        -Léviathan dans le sable de la plage</p>
-      <p>Posséidon est le Dieu gardien du passage entre l’univers noir et l’univers vert. Léviathan est le Dieu gardien
-        du
-        passage entre l’univers noir et l’univers blanc ( dont l’univers noir constitue un partie de celui-ci)
-      </p>
-      <p>Le Monde bleu a son répète dans le monde noir qui est l’univers de Zeus, le monde rouge a pour repère l’univers
-        de
-        Bafum , le monde vert celui de Posséidon et le monde blanc celui de l’univers du léviathan dans l’univers noir
-      </p>
-      <br><br>
-    </div>
-    <div class="col-xs-12 col-md-3">
-      <app-lesliens></app-lesliens>
-    </div>
+
+  <!-- Particules sombres -->
+  <div class="particles-bg">
+    <span *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+          class="particle"
+          [style.left.%]="(p * 4) % 100"
+          [style.animation-delay]="(p * 0.5) + 's'">
+    </span>
   </div>
+
+  <!-- HEADER ÉPIQUE -->
+  <header class="noir-header">
+    <h1 class="title-glow-dark"><br>LA DIMENSION NOIRE</h1>
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="icon">⚡</span>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <!-- SECTION VIDÉO -->
+  <section class="video-section">
+    <div class="video-wrapper">
+      <div class="video-frame">
+        <iframe 
+          src="https://www.youtube.com/embed/2E0VLP9kGlw?autoplay=1&mute=1" 
+          title="Dimension Noire - Charly Guitare"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-glow"></div>
+    </div>
+  </section>
+
+
+  <!-- SECTION DIVINITÉS -->
+  <section class="divinites-section">
+
+    <div class="divinites-grid">
+      <div *ngFor="let div of divinites; let i = index"
+           class="divinite-card"
+           [style.--accent]="div.couleur"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        
+        <div class="card-glow"></div>
+        
+        <!-- Icône du Dieu -->
+        <div class="divinite-icon-wrapper">
+          <div class="divinite-icon">{{ div.symbole }}</div>
+          <div class="icon-ring"></div>
+        </div>
+
+        <!-- Informations -->
+        <div class="divinite-info">
+          <h3 class="divinite-nom">{{ div.nom }}</h3>
+          <p class="divinite-titre">{{ div.titre }}</p>
+          
+          <div class="divinite-territoire">
+            <span class="material-icons">place</span>
+            <span>{{ div.territoire }}</span>
+          </div>
+
+          <p class="divinite-description">{{ div.description }}</p>
+
+          <div class="divinite-gardien" *ngIf="div.gardien">
+            <span class="material-icons">lock</span>
+            <span>{{ div.gardien }}</span>
+          </div>
+        </div>
+
+        <!-- Coins décoratifs -->
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PASSAGES DIMENSIONNELS -->
+  <section class="passages-section">
+    <div class="section-title">
+      <span class="material-icons">swap_horiz</span>
+      <h2>LES PASSAGES INTRA-DIMENSIONNELS</h2>
+      <span class="material-icons">swap_horiz</span>
+    </div>
+
+    <div class="passages-grid">
+      <div *ngFor="let p of passages; let i = index"
+           class="passage-card"
+           [style.--accent]="p.couleur"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        
+        <div class="passage-de">
+          <span class="dimension-badge noir">NOIR</span>
+        </div>
+
+        <div class="passage-link">
+          <div class="link-line"></div>
+          <div class="link-icon">🔗</div>
+          <div class="link-line"></div>
+        </div>
+
+        <div class="passage-vers">
+          <span class="dimension-badge" [style.background]="p.couleur">{{ p.vers | uppercase }}</span>
+        </div>
+
+        <div class="passage-gardien">
+          <span class="material-icons">shield</span>
+          <span>Gardien : <strong>{{ p.gardien }}</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION LORE (Correspondances) -->
+  <section class="lore-section">
+    <div class="lore-card">
+      <div class="lore-header">
+        <span class="material-icons">menu_book</span>
+        <h3>LES CORRESPONDANCES ENTRE LES DIMENSIONS</h3>
+      </div>
+      <div class="lore-content">
+        <div class="lore-item">
+          <span class="lore-badge" style="background: #3b82f6">BLEU</span>
+          <span class="lore-arrow">→</span>
+          <span class="lore-text">a son repère dans le monde de <strong>Zeus</strong></span>
+        </div>
+        <div class="lore-item">
+          <span class="lore-badge" style="background: #dc2626">ROUGE</span>
+          <span class="lore-arrow">→</span>
+          <span class="lore-text">a pour repère l'univers de <strong>Bafum</strong></span>
+        </div>
+        <div class="lore-item">
+          <span class="lore-badge" style="background: #22c55e">VERT</span>
+          <span class="lore-arrow">→</span>
+          <span class="lore-text">a pour repère l'univers de <strong>Poséidon</strong></span>
+        </div>
+        <div class="lore-item">
+          <span class="lore-badge" style="background: #f8fafc; color: #000">BLANC</span>
+          <span class="lore-arrow">→</span>
+          <span class="lore-text">a pour repère l'univers du <strong>Léviathan</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER ÉPIQUE -->
+  <footer class="noir-footer">
+    <div class="footer-quote">
+      <span class="quote-mark">«</span>
+      <p>Dans la Dimension Noire, même les dieux ont besoin d'éclairs pour se souvenir qu'ils existent.</p>
+      <span class="quote-mark">»</span>
+    </div>
+    <p class="footer-signature">— Les Chroniques d'Offoland, Livre XI</p>
+
+    <div class="footer-badge">
+      <span class="icon">🌑</span>
+      <span>DIMENSION NOIRE</span>
+      <span class="dot">•</span>
+      <span>CHARLY GUITARE 5D</span>
+    </div>
+  </footer>
+
 </div>

@@ -1,0 +1,123 @@
+<div class="confetti-wrapper" *ngIf="showConfetti">
+  <div class="confetti-piece" *ngFor="let p of particles" [style.left.%]="(p * 7) % 100"
+    [style.animation-delay]="(p * 0.05) + 's'" [style.background]="p % 2 === 0 ? '#8a2be2' : '#ffaa00'">
+  </div>
+</div>
+
+<div class="overlay victory-overlay" *ngIf="showVictoryOverlay">
+  <div class="overlay-content">
+    <div class="overlay-icon">🏆</div>
+    <h1>VICTOIRE</h1>
+    <p>Le duel s'achève sur une grande performance !</p>
+  </div>
+</div>
+
+<div class="temple-container py-4">
+  <div class="row g-4 align-items-start">
+    <!-- GRILLE DE JEU -->
+    <div class="col-12 col-lg-7">
+      <div class="board-wrapper">
+        <div class="dynamic-grid" [style.--grid-size]="gs.gridSize">
+          <div *ngFor="let block of gs.blocks; let i = index" (click)="playerClick(i)"
+            [class.disabled]="!block.free || lock" [class.winning-cell]="block.isWinningCell"
+            [class.new-cell]="block.isNew" class="grid-cell">
+
+            <div class="cell-content">
+              <img [src]="block.urlimg()" *ngIf="block.value" alt="Symbole" class="cell-icon pop-in" />
+              <span *ngIf="block.free && !lock" class="hover-hint">+</span>
+            </div>
+
+            <div class="cell-particles" *ngIf="block.isNew">
+              <span *ngFor="let p of [1,2,3,4]"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANNEAU LATÉRAL -->
+    <div class="col-12 col-lg-5">
+      <div class="stats-panel mb-4">
+
+        <!-- INDICATEUR DE TOUR -->
+        <div class="turn-indicator" [class.p2-turn]="gs.turn === 1">
+          <div class="player-tag" [class.active]="gs.turn === 0">
+            <span class="avatar">🎸</span>
+            <span class="name">JOUEUR 1</span>
+          </div>
+          <div class="vs">VS</div>
+          <div class="player-tag" [class.active]="gs.turn === 1">
+            <span class="avatar">🎸</span>
+            <span class="name">JOUEUR 2</span>
+          </div>
+        </div>
+
+        <!-- COMPTEUR D'ALIGNEMENTS -->
+        <div class="alignment-counter">
+          🎯 Alignements — J1 : <strong class="purple">{{ gs.players[0].score }}</strong>
+          | J2 : <strong class="amber">{{ gs.players[1].score }}</strong>
+        </div>
+
+        <!-- BOUTONS DE NAVIGATION ET ACTION -->
+        <div class="actions-grid">
+          <button class="btn-cyber-secondary" (click)="resetjeu()" *ngIf="rejouer">
+            🔄 Rejouer la grille
+          </button>
+
+          <button class="btn-cyber-next" (click)="prochainNiveau()">
+            🚀 NIVEAU SUIVANT ({{ gs.gridSize + 1 }}x{{ gs.gridSize + 1 }})
+          </button>
+
+          <!-- Affiche si la grille est supérieure à 4x4 (gridSize > 4) -->
+          <button class="btn-cyber-prev" (click)="precedentNiveau()" *ngIf="yaprecedent()">
+            ⏪ NIVEAU PRÉCÉDENT ({{ gs.gridSize - 1 }}x{{ gs.gridSize - 1 }})
+          </button>
+
+          <button class="btn-cyber-primary" (click)="onrecommencer()">
+            ⚔️ Menu des Jeux
+          </button>
+        </div>
+
+        <!-- TABLEAU DES SCORES -->
+        <div class="panel-header mt-4">
+          <span>📊 STATISTIQUES DU DUEL</span>
+        </div>
+
+        <div class="score-table">
+          <div class="score-row p1-row">
+            <div class="score-name"><span class="dot purple"></span> JOUEUR 1</div>
+            <div class="score-value purple">{{ gs.players[0].score }}</div>
+          </div>
+          <div class="score-row p2-row">
+            <div class="score-name"><span class="dot amber"></span> JOUEUR 2</div>
+            <div class="score-value amber">{{ gs.players[1].score }}</div>
+          </div>
+          <div class="score-row draw-row">
+            <div class="score-name"><span class="dot gray"></span> Égalités</div>
+            <div class="score-value gray">{{ gs.draw }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEADER ÉPIQUE -->
+      <div class="temple-header text-center mb-4">
+        <div class="level-badge">
+          <span class="badge-icon">⚔️</span>
+          NIVEAU {{ gs.gridSize - 2 }} • GRILLE {{ gs.gridSize }}x{{ gs.gridSize }}
+        </div>
+        <h1 class="title-glow">LYKO DUEL</h1>
+        <p class="lyko-message">{{ messageLyko }}</p>
+      </div>
+
+      <!-- RÈGLES -->
+      <div class="lore-panel">
+        <h5>📜 RÈGLES DU GAME</h5>
+        <p>
+          Alignez <strong>3 symboles identiques</strong> pour remporter
+          <strong>+10 PV</strong> par alignement.
+          La manche s'achève uniquement lorsque <strong>toutes les cases sont occupées</strong> !
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

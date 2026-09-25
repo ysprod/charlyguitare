@@ -1,56 +1,249 @@
 <div class="landing-page">
 
-  <!-- Hero Section -->
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
   <section class="hero-section">
-    <!-- Overlay & Background Image -->
+    <div class="hero-particles">
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+    </div>
+
     <div class="hero-bg">
       <img src="assets/charly-guitare-hero.png" alt="Charly Guitare" class="hero-image" />
-      <div class="hero-gradient-overlay"></div>
     </div>
 
-    <!-- Content Left -->
     <div class="hero-content">
-      <div class="accent-line"></div>
-      <h1 class="hero-title">CHARLY<br>GUITARE</h1>
-      <p class="hero-subtitle">La musique est une école<br>de vie.</p>
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="title-line">CHARLY</span>
+          <span class="title-line accent">GUITARE</span>
+        </h1>
+        <div class="hero-divider"></div>
+        <p class="hero-subtitle">
+          La musique est une école<br>
+          <span class="subtitle-accent">de vie.</span>
+        </p>
+        <div class="hero-actions">
+          <button class="cta-button cta-primary" [routerLink]="['/academie']">
+            <span>Découvrir l'académie</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
 
-      <!-- Bouton CTA pointant vers la présentation / accueil -->
-      <button class="cta-button" [routerLink]="['/academie']">
-        Découvrir <span class="arrow">→</span>
-      </button>
+          <button class="cta-button cta-secondary" [routerLink]="['/live']">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>Voir les vidéos</span>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Navigation Grid / Icons Footer Section -->
-  <section class="quick-nav">
-
-    <!-- Carte 1 : Jeux -->
-    <a [routerLink]="['/play']" class="nav-card">
-      <div class="icon-square">
-        <img src="assets/jeux.jpg" alt="Jeux Charly Guitare" class="nav-icon-img" />
+  <!-- ============================================================
+       BANNIÈRE PRIMUD
+       ============================================================ -->
+  <section class="section-intro">
+    <div class="gold-award-banner">
+      <div class="award-icon-wrapper">🏆</div>
+      <div class="award-details">
+        <h4>Lauréat PRIMUD 2019</h4>
+        <p>Sacré Meilleur Musicien de Côte d'Ivoire</p>
       </div>
-    </a>
+    </div>
+  </section>
 
-    <!-- Carte 2 : Cours de Guitare -->
-    <a [routerLink]="['/academie']" class="nav-card">
-      <div class="icon-square">
-        <img src="assets/coursguitare.jpg" alt="Cours de Guitare" class="nav-icon-img" />
-      </div>
-    </a>
+  <!-- ============================================================
+       SECTION FEATURES — RANGÉE 1
+       ============================================================ -->
+  <section class="features-section">
 
-    <!-- Carte 3 : Livres / Documents -->
-    <a [routerLink]="['/offoland']" class="nav-card">
-      <div class="icon-square">
-        <img src="assets/livres.jpg" alt="Livres & Documents" class="nav-icon-img" />
+    <!-- 🎮 JEUX -->
+    <article class="feature-card">
+      <a [routerLink]="['/play']" class="feature-image-link" title="Accéder aux jeux">
+        <div class="feature-image-wrapper2">
+          <img src="assets/jeuxnouveau.jpg" alt="Espace Jeux" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+          <span class="feature-tag feature-tag-live">
+            <span class="live-dot"></span>
+            Live
+          </span>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">Jeux</h3>
+        <p class="feature-desc">Amusez-vous !</p>
+        <a [routerLink]="['/play']" class="feature-link">
+          <span>Jouer maintenant</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
       </div>
-    </a>
+    </article>
 
-    <!-- Carte 4 : La Méthode / Formations -->
-    <a [routerLink]="['/academie']" class="nav-card">
-      <div class="icon-square">
-        <img src="assets/methode.jpg" alt="La Méthode Charly Guitare" class="nav-icon-img" />
+    <!-- 🎓 ACADÉMIE -->
+    <article class="feature-card">
+      <a [routerLink]="['/academie']" class="feature-image-link" title="Découvrir l'Académie">
+        <div class="feature-image-wrapper">
+          <img src="assets/academie.jpg" alt="L'Académie Charly Guitare" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+          <span class="feature-tag">Formation</span>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">L'Académie</h3>
+        <p class="feature-desc">
+          Une formation complète et structurée pour maîtriser la guitare à votre rythme.
+        </p>
+        <a [routerLink]="['/academie']" class="feature-link">
+          <span>En savoir plus</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
       </div>
-    </a>
+    </article>
+
+    <!-- 💎 ESSENTIEL -->
+    <article class="feature-card feature-card-accent">
+      <a [routerLink]="['/academie']" class="feature-image-link" title="Découvrir la Collection l'Essentiel">
+        <div class="feature-image-wrapper2">
+          <img src="assets/essentiel.jpg" alt="Collection l'Essentiel" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">Collection l'Essentiel</h3>
+        <p class="feature-desc">
+          Les fondamentaux des instruments de musique
+        </p>
+        <a [routerLink]="['/academie']" class="feature-link feature-link-gold">
+          <span>Acheter</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+    </article>
 
   </section>
+
+  <!-- ============================================================
+       SECTION FEATURES — RANGÉE 2
+       ============================================================ -->
+  <section class="features-section">
+
+    <!-- 🔴 LIVE -->
+    <article class="feature-card">
+      <a [routerLink]="['/live']" class="feature-image-link" title="Rejoindre le Live">
+        <div class="feature-image-wrapper">
+          <img src="assets/live.jpg" alt="Espace Live" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+          <span class="feature-tag feature-tag-live">
+            <span class="live-dot"></span>
+            Live
+          </span>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">Espace Live</h3>
+        <p class="feature-desc">
+          Rejoignez-nous en direct pour des sessions interactives et des conseils en temps réel.
+        </p>
+        <a [routerLink]="['/live']" class="feature-link">
+          <span>Rejoindre le live</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- 🌌 CHARLY GUITARE 5D -->
+    <article class="feature-card">
+      <a [routerLink]="['/game']" class="feature-image-link" title="Explorer Charly Guitare 5D">
+        <div class="feature-image-wrapper2">
+          <img src="assets/cinqd.jpg" alt="Charly Guitare 5D" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">Charly Guitare 5D</h3>
+        <p class="feature-desc">
+          Exploration des dimensions.
+        </p>
+        <a [routerLink]="['/game']" class="feature-link">
+          <span>En savoir plus</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- 👑 ABONNEMENT PREMIUM -->
+    <article class="feature-card feature-card-accent">
+      <a [routerLink]="['/abonnement']" class="feature-image-link" title="Découvrir l'Abonnement Premium">
+        <div class="feature-image-wrapper">
+          <img src="assets/abonnement.jpg" alt="Abonnement Charly Guitare" class="feature-image" loading="lazy" />
+          <div class="feature-overlay"></div>
+          <span class="feature-tag feature-tag-gold">Premium</span>
+        </div>
+      </a>
+      <div class="feature-content">
+        <h3 class="feature-title">Abonnement Premium</h3>
+        <p class="feature-desc">
+          Accédez à toutes les ressources, vidéos exclusives et supports pédagogiques.
+        </p>
+        <a [routerLink]="['/abonnement']" class="feature-link feature-link-gold">
+          <span>S'abonner</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       CTA FINAL
+       ============================================================ -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-content">
+      <h2 class="cta-title">Aller dans le futur</h2>
+      <p class="cta-text">Rejoignez-nous !</p>
+      <div class="cta-actions">
+        <button class="cta-button cta-primary" [routerLink]="['/academie']">
+          <span>Commencer maintenant</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+        <button class="cta-button cta-secondary" [routerLink]="['/contact']">
+          <span>Nous contacter</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
 </div>
