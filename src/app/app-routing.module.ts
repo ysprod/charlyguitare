@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+<<<<<<< HEAD
 // Imports des composants
 import { AbonnementComponent } from './abonnement/abonnement.component';
 import { AcademieComponent } from './academie/academie.component';
@@ -42,11 +43,20 @@ import { NoirComponent } from './univers/noir/noir.component';
 import { RougeComponent } from './univers/rouge/rouge.component';
 import { VertComponent } from './univers/vert/vert.component';
 import { LykomodeComponent } from './game/lykomode/lykomode.component';
+=======
+import { AdminComponent } from './admin/admin.component';
+import { AdmincontactComponent } from './admin/admincontact/admincontact.component';
+import { AdmindocumentsComponent } from './admin/admindocuments/admindocuments.component';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AdminusersComponent } from './adminusers/adminusers.component';
+>>>>>>> 6959cce1417468aab288e12bc60fbfd7a81b8dbd
 
 const routes: Routes = [
-  // Page de connexion (Accessible sans authentification)
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+<<<<<<< HEAD
   { path: 'home', component: HomeComponent },
   // Ensemble des routes protégées par AuthGuard
   { path: 'accueil', component: AccueilComponent, canActivate: [AuthGuard] },
@@ -89,14 +99,25 @@ const routes: Routes = [
   // Redirections par défaut
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
+=======
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'contact', pathMatch: 'full' }, // Redirige /admin vers /admin/contact
+      { path: 'contact', component: AdmincontactComponent },
+      { path: 'documents', component: AdmindocumentsComponent },
+      { path: 'users', component: AdminusersComponent }
+    ]
+  },
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  { path: '**', redirectTo: 'admin' }
+>>>>>>> 6959cce1417468aab288e12bc60fbfd7a81b8dbd
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'top' // Remet le scroll à (0, 0)
-    })
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

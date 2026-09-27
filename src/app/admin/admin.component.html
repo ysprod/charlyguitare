@@ -1,0 +1,165 @@
+<div class="admin-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
+  <!-- Overlay mobile -->
+  <div
+    class="sidebar-overlay"
+    [class.visible]="mobileMenuOpen"
+    (click)="closeMobileMenu()"
+  ></div>
+
+  <!-- ============================================
+        SIDEBAR
+        ============================================ -->
+  <aside class="admin-sidebar" [class.mobile-open]="mobileMenuOpen">
+    <!-- Logo / En-tête -->
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <span>⚡</span>
+        </div>
+        <div class="logo-text" *ngIf="!sidebarCollapsed">
+          <h1>Admin Panel</h1>
+          <p>Tableau de bord</p>
+        </div>
+      </div>
+
+      <button
+        class="collapse-btn"
+        (click)="toggleSidebar()"
+        [attr.aria-label]="sidebarCollapsed ? 'Déplier' : 'Replier'"
+        [title]="sidebarCollapsed ? 'Déplier la sidebar' : 'Replier la sidebar'"
+      >
+        <span class="collapse-icon">{{ sidebarCollapsed ? '→' : '←' }}</span>
+      </button>
+    </div>
+
+    <!-- Profil utilisateur -->
+    <div class="user-profile" *ngIf="!sidebarCollapsed">
+      <div class="user-avatar">A</div>
+      <div class="user-info">
+        <p class="user-name">Administrateur</p>
+        <p class="user-role">Super Admin</p>
+      </div>
+      <span class="user-status"></span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <p class="nav-section-title" *ngIf="!sidebarCollapsed">Menu principal</p>
+
+      <a
+        routerLink="/admin/contact"
+        routerLinkActive="active"
+        class="nav-item"
+        [title]="sidebarCollapsed ? 'Messages reçus' : ''"
+        (click)="closeMobileMenu()"
+      >
+        <span class="nav-icon-wrapper">
+          <i class="nav-icon">✉️</i>
+          <span class="nav-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
+        </span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Messages reçus</span>
+        <span class="nav-indicator"></span>
+      </a>
+
+      <a
+        routerLink="/admin/documents"
+        routerLinkActive="active"
+        class="nav-item"
+        [title]="sidebarCollapsed ? 'Gestion des documents' : ''"
+        (click)="closeMobileMenu()"
+      >
+        <span class="nav-icon-wrapper">
+          <i class="nav-icon">📚</i>
+        </span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Documents</span>
+        <span class="nav-indicator"></span>
+      </a>
+
+      <a
+        routerLink="/admin/users"
+        routerLinkActive="active"
+        class="nav-item"
+        [title]="sidebarCollapsed ? 'Utilisateurs' : ''"
+        (click)="closeMobileMenu()"
+      >
+        <span class="nav-icon-wrapper">
+          <i class="nav-icon">👥</i>
+        </span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Utilisateurs</span>
+        <span class="nav-indicator"></span>
+      </a>
+
+      <p class="nav-section-title" *ngIf="!sidebarCollapsed">Compte</p>
+
+      <a
+        routerLink="/admin/settings"
+        routerLinkActive="active"
+        class="nav-item"
+        [title]="sidebarCollapsed ? 'Paramètres' : ''"
+      >
+        <span class="nav-icon-wrapper"><i class="nav-icon">⚙️</i></span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Paramètres</span>
+        <span class="nav-indicator"></span>
+      </a>
+
+      <a class="nav-item nav-danger" (click)="logout()">
+        <span class="nav-icon-wrapper"><i class="nav-icon">🚪</i></span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Déconnexion</span>
+      </a>
+    </nav>
+
+    <!-- Footer sidebar -->
+    <div class="sidebar-footer" *ngIf="!sidebarCollapsed">
+      <p>© 2026 Admin Panel</p>
+      <p class="version">v2.0.0</p>
+    </div>
+  </aside>
+
+  <!-- ============================================
+        CONTENU PRINCIPAL
+        ============================================ -->
+  <main class="admin-content">
+    <!-- Top bar -->
+    <header class="content-topbar">
+      <button
+        class="mobile-menu-btn"
+        (click)="toggleMobileMenu()"
+        aria-label="Menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="breadcrumb">
+        <span class="breadcrumb-item">Admin</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">{{ currentPageTitle }}</span>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Cloche de notification stylisée -->
+        <a
+          routerLink="/admin/contact"
+          class="notification-bell-btn"
+          [class.has-unread]="unreadMessages > 0"
+          title="Voir les messages reçus"
+        >
+          <span class="bell-icon">🔔</span>
+          <span class="notification-badge" *ngIf="unreadMessages > 0">
+            {{ unreadMessages > 99 ? '99+' : unreadMessages }}
+          </span>
+        </a>
+
+        <button class="icon-btn" title="Aide">
+          <span>❓</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Zone de contenu avec animation -->
+    <div class="content-area">
+      <div class="content-inner" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+      </div>
+    </div>
+  </main>
+</div>

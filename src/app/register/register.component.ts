@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database'; // Import Realtime Database
 import firebase from 'firebase/compat/app';
-import { UserProfile } from '../models/user.model'; // Ajustez le chemin de votre modèle
 
 @Component({
   selector: 'app-register',
@@ -21,7 +19,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase, // Injection de Realtime Database
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -54,15 +51,10 @@ export class RegisterComponent implements OnInit {
         this.email,
         this.password
       );
-
-      if (credential.user) {
-        // Enregistrer l'utilisateur dans Realtime Database
-        await this.saveUserDataInRealtimeDB(credential.user);
-        
-        // Envoi de l'email de vérification
-        await credential.user.sendEmailVerification();
-      }
-
+      
+      // Envoi de l'email de vérification
+      await credential.user?.sendEmailVerification();
+      
       // Redirection vers l'espace demandé
       await this.router.navigateByUrl(this.returnUrl);
     } catch (error: any) {
@@ -79,13 +71,7 @@ export class RegisterComponent implements OnInit {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
-      const credential = await this.afAuth.signInWithPopup(provider);
-
-      if (credential.user) {
-        // Enregistrer ou mettre à jour dans Realtime Database
-        await this.saveUserDataInRealtimeDB(credential.user);
-      }
-
+      await this.afAuth.signInWithPopup(provider);
       await this.router.navigateByUrl(this.returnUrl);
     } catch (error: any) {
       if (error.code !== 'auth/popup-closed-by-user') {
@@ -93,38 +79,6 @@ export class RegisterComponent implements OnInit {
       }
     } finally {
       this.loading = false;
-    }
-  }
-
-  /**
-   * Enregistre ou met à jour le profil utilisateur sous la clé 'users/{uid}'
-   */
-  private async saveUserDataInRealtimeDB(user: firebase.User): Promise<void> {
-    const userRef = this.db.object<UserProfile>(`users/${user.uid}`);
-    const snapshot = await userRef.query.once('value');
-    const now = new Date().toISOString();
-
-    if (snapshot.exists()) {
-      // Si le profil existe déjà (cas de Google Auth s'il s'était déjà connecté)
-      await userRef.update({
-        lastLogin: now,
-        email: user.email || '',
-        displayName: user.displayName || user.email?.split('@')[0] || ''
-      });
-    } else {
-      // Nouveau compte : création complète
-      const newUser: UserProfile = {
-        uid: user.uid,
-        email: user.email || '',
-        displayName: user.displayName || user.email?.split('@')[0] || '',
-        photoURL: user.photoURL || '',
-        role: 'user', // Rôle par défaut
-        createdAt: now,
-        lastLogin: now,
-        disabled: false
-      };
-
-      await userRef.set(newUser);
     }
   }
 

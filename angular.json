@@ -25,8 +25,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/sitemap.xml",
-              "src/robots.txt",
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -43,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "8mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "25kb",
-                  "maximumError": "30kb"
+                  "maximumError": "40kb"
                 }
               ],
               "fileReplacements": [
@@ -66,7 +64,19 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "50kb",
+                  "maximumError": "100kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -107,7 +117,6 @@
               "src/styles.css",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
-
             ],
             "scripts": []
           }

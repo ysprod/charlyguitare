@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "charlyguitare",
+    "site": "charlyguitareadmin",
    "public": "dist/charlyguitarweb",
     "ignore": [
       "firebase.json",

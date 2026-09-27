@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';// Import de Realtime Database
 import firebase from 'firebase/compat/app';
-import { UserProfile } from '../models/user.model';
-  // Ajustez le chemin vers votre interface
 
 @Component({
   selector: 'app-login',
@@ -22,7 +19,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase, // Injection de Realtime Database
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -41,12 +37,7 @@ export class LoginComponent implements OnInit {
     this.clearMessages();
 
     try {
-      const credential = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
-      
-      if (credential.user) {
-        await this.updateUserDataInRealtimeDB(credential.user);
-      }
-
+      await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
       await this.router.navigateByUrl(this.returnUrl);
     } catch (error: any) {
       this.errorMessage = this.getFrenchErrorMessage(error.code);
@@ -62,12 +53,7 @@ export class LoginComponent implements OnInit {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
-      const credential = await this.afAuth.signInWithPopup(provider);
-
-      if (credential.user) {
-        await this.updateUserDataInRealtimeDB(credential.user);
-      }
-
+      await this.afAuth.signInWithPopup(provider);
       await this.router.navigateByUrl(this.returnUrl);
     } catch (error: any) {
       if (error.code !== 'auth/popup-closed-by-user') {
@@ -94,40 +80,6 @@ export class LoginComponent implements OnInit {
       this.errorMessage = this.getFrenchErrorMessage(error.code);
     } finally {
       this.loading = false;
-    }
-  }
-
-  /**
-   * Crée ou met à jour l'utilisateur dans Realtime Database sous la clé 'users/{uid}'
-   */
-  private async updateUserDataInRealtimeDB(user: firebase.User): Promise<void> {
-    const userRef = this.db.object<UserProfile>(`users/${user.uid}`);
-    
-    // Vérifier si l'utilisateur existe déjà dans la base
-    const snapshot = await userRef.query.once('value');
-    const now = new Date().toISOString();
-
-    if (snapshot.exists()) {
-      // Si l'utilisateur existe déjà, on met à jour uniquement lastLogin (et infos de base)
-      await userRef.update({
-        lastLogin: now,
-        email: user.email || '',
-        displayName: user.displayName || user.email?.split('@')[0] || ''
-      });
-    } else {
-      // Première connexion : création initiale du profil complet
-      const newUser: UserProfile = {
-        uid: user.uid,
-        email: user.email || '',
-        displayName: user.displayName || user.email?.split('@')[0] || '',
-        photoURL: user.photoURL || '',
-        role: 'user', // Rôle par défaut
-        createdAt: now,
-        lastLogin: now,
-        disabled: false
-      };
-
-      await userRef.set(newUser);
     }
   }
 

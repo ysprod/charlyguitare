@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+<<<<<<< HEAD
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -49,6 +50,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Firebase Modules
+=======
+>>>>>>> 6959cce1417468aab288e12bc60fbfd7a81b8dbd
 import { AngularFireModule } from '@angular/fire/compat';
 import {
   AngularFireAnalyticsModule,
@@ -58,6 +61,7 @@ import {
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+<<<<<<< HEAD
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 // Services & Environment
@@ -130,6 +134,41 @@ import { LykomodeComponent } from './game/lykomode/lykomode.component';
     MetronomeComponent,
     TictacduoComponent,
     LykomodeComponent,
+=======
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import 'firebase/compat/auth';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../environments/environment';
+import { AdminComponent } from './admin/admin.component';
+import { AdmincontactComponent } from './admin/admincontact/admincontact.component';
+import { AdmindocumentsComponent } from './admin/admindocuments/admindocuments.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AdminusersComponent } from './adminusers/adminusers.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,      
+    LoginComponent, 
+    RegisterComponent, 
+    AdminComponent,
+    AdmincontactComponent,
+    AdmindocumentsComponent,
+    AdminusersComponent
+>>>>>>> 6959cce1417468aab288e12bc60fbfd7a81b8dbd
   ],
   imports: [
     BrowserModule,
@@ -148,7 +187,6 @@ import { LykomodeComponent } from './game/lykomode/lykomode.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule,
     AngularFireAuthGuardModule,
     AngularFireAnalyticsModule, // <-- Ajout Analytics dans les imports
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -157,9 +195,13 @@ import { LykomodeComponent } from './game/lykomode/lykomode.component';
     })
   ],
   providers: [
+<<<<<<< HEAD
     CookieService,
     TictactoeserviceService,
     GameService,
+=======
+    CookieService, 
+>>>>>>> 6959cce1417468aab288e12bc60fbfd7a81b8dbd
     ScreenTrackingService, // <-- Suivi automatique de la navigation de page
     UserTrackingService   // <-- Suivi automatique de la connexion utilisateur
   ],

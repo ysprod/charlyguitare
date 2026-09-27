@@ -1,0 +1,351 @@
+<div class="admin-container">
+
+  <!-- ============================================
+       TOAST NOTIFICATION
+       ============================================ -->
+  <div
+    class="toast"
+    [class.show]="toast.show"
+    [class.toast-success]="toast.type === 'success'"
+    [class.toast-error]="toast.type === 'error'"
+    [class.toast-info]="toast.type === 'info'"
+  >
+    <span class="toast-icon">
+      {{ toast.type === 'success' ? '✓' : toast.type === 'error' ? '⚠' : 'ℹ' }}
+    </span>
+    <span class="toast-message">{{ toast.message }}</span>
+  </div>
+
+  <!-- ============================================
+       EN-TÊTE
+       ============================================ -->
+  <header class="admin-header">
+    <div class="header-content">
+      <div class="header-title-block">
+        <span class="header-icon">📚</span>
+        <div>
+          <h1>Gestion des Documents</h1>
+          <p class="header-subtitle">
+            Gérez vos méthodes, partitions et supports pédagogiques
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats-grid" *ngIf="documents$ | async as docs">
+      <div class="stat-card">
+        <span class="stat-icon">📊</span>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.total }}</span>
+          <span class="stat-label">Documents</span>
+        </div>
+      </div>
+      <div
+        class="stat-card"
+        *ngFor="let type of types"
+      >
+        <span class="stat-icon">{{ type.icon }}</span>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.byType[type.label] || 0 }}</span>
+          <span class="stat-label">{{ type.label }}</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================
+       FORMULAIRE D'AJOUT / ÉDITION
+       ============================================ -->
+  <section class="admin-card form-card" [class.editing]="editingKey">
+    <div class="card-header">
+      <div class="card-title-block">
+        <span class="card-icon">{{ editingKey ? '✏️' : '➕' }}</span>
+        <h2>
+          {{ editingKey ? 'Modifier le document' : 'Ajouter un nouveau document' }}
+        </h2>
+      </div>
+      <button
+        *ngIf="editingKey"
+        type="button"
+        class="btn-cancel-edit"
+        (click)="cancelEdit()"
+      >
+        ✕ Annuler l'édition
+      </button>
+    </div>
+
+    <form [formGroup]="docForm" (ngSubmit)="onSubmit()" class="doc-form">
+
+      <div class="form-group">
+        <label for="title">
+          Titre du document <span class="required">*</span>
+        </label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Ex: Méthode Coupé-Décalé Vol. 1"
+          [class.invalid]="isFieldInvalid('title')"
+        />
+        <small class="error-msg" *ngIf="isFieldInvalid('title')">
+          {{ getFieldError('title') }}
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="description">
+          Description <span class="required">*</span>
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          placeholder="Brève description du contenu..."
+          [class.invalid]="isFieldInvalid('description')"
+        ></textarea>
+        <div class="field-footer">
+          <small class="error-msg" *ngIf="isFieldInvalid('description')">
+            {{ getFieldError('description') }}
+          </small>
+          <small class="char-count">
+            {{ docForm.get('description')?.value?.length || 0 }} / 500
+          </small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="type">
+            Type de document <span class="required">*</span>
+          </label>
+          <select id="type" formControlName="type">
+            <option *ngFor="let t of types" [value]="t.label">
+              {{ t.icon }} {{ t.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group col">
+          <label for="level">
+            Niveau <span class="required">*</span>
+          </label>
+          <select id="level" formControlName="level">
+            <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="format">
+            Format / Contenu <span class="required">*</span>
+          </label>
+          <select id="format" formControlName="format">
+            <option *ngFor="let f of formats" [value]="f">{{ f }}</option>
+          </select>
+        </div>
+
+        <div class="form-group col">
+          <label for="downloadUrl">
+            Lien de téléchargement <span class="required">*</span>
+          </label>
+          <input
+            id="downloadUrl"
+            type="url"
+            formControlName="downloadUrl"
+            placeholder="https://..."
+            [class.invalid]="isFieldInvalid('downloadUrl')"
+          />
+          <small class="error-msg" *ngIf="isFieldInvalid('downloadUrl')">
+            {{ getFieldError('downloadUrl') }}
+          </small>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          [disabled]="isSubmitting || docForm.invalid"
+          class="btn-submit"
+        >
+          <span class="btn-icon">
+            {{ isSubmitting ? '⏳' : (editingKey ? '💾' : '➕') }}
+          </span>
+          <span class="btn-text">
+            {{ isSubmitting
+              ? 'Enregistrement...'
+              : (editingKey ? 'Mettre à jour' : 'Ajouter le document') }}
+          </span>
+          <span class="btn-spinner" *ngIf="isSubmitting"></span>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============================================
+       LISTE DES DOCUMENTS
+       ============================================ -->
+  <section class="admin-card list-card">
+    <div class="card-header">
+      <div class="card-title-block">
+        <span class="card-icon">📋</span>
+        <h2>Documents en ligne</h2>
+      </div>
+    </div>
+
+    <div *ngIf="documents$ | async as documents; else loading">
+
+      <!-- Barre de filtres -->
+      <div class="toolbar" *ngIf="documents.length > 0">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Rechercher un document..."
+            [(ngModel)]="searchTerm"
+            [ngModelOptions]="{ standalone: true }"
+            class="search-input"
+          />
+          <button
+            *ngIf="searchTerm"
+            class="search-clear"
+            (click)="searchTerm = ''"
+            type="button"
+          >✕</button>
+        </div>
+
+        <select
+          [(ngModel)]="filterType"
+          [ngModelOptions]="{ standalone: true }"
+          class="filter-select"
+        >
+          <option value="all">Tous les types</option>
+          <option *ngFor="let t of types" [value]="t.label">
+            {{ t.icon }} {{ t.label }}
+          </option>
+        </select>
+
+        <select
+          [(ngModel)]="filterLevel"
+          [ngModelOptions]="{ standalone: true }"
+          class="filter-select"
+        >
+          <option value="all">Tous les niveaux</option>
+          <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
+        </select>
+
+        <button
+          *ngIf="searchTerm || filterType !== 'all' || filterLevel !== 'all'"
+          class="btn-reset-filters"
+          (click)="resetFilters()"
+          type="button"
+        >
+          ↺ Réinitialiser
+        </button>
+      </div>
+
+      <!-- État vide global -->
+      <div *ngIf="documents.length === 0" class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>Aucun document dans la base de données</h3>
+        <p>Commencez par ajouter votre premier document via le formulaire ci-dessus.</p>
+      </div>
+
+      <!-- État vide filtré -->
+      <ng-container *ngIf="applyFilters(documents) as filtered">
+        <div *ngIf="documents.length > 0 && filtered.length === 0" class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>Aucun résultat</h3>
+          <p>Aucun document ne correspond à vos critères de recherche.</p>
+          <button class="btn-reset-filters" (click)="resetFilters()" type="button">
+            Réinitialiser les filtres
+          </button>
+        </div>
+
+        <!-- Tableau des documents -->
+        <div class="table-wrapper" *ngIf="filtered.length > 0">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Titre</th>
+                <th>Niveau</th>
+                <th>Format</th>
+                <th>Date</th>
+                <th class="actions-col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doc of filtered; trackBy: trackByKey" class="doc-row">
+                <td data-label="Type">
+                  <span
+                    class="badge"
+                    [ngClass]="doc.typeClass"
+                    [style.--badge-color]="getTypeColor(doc.type)"
+                  >
+                    {{ doc.icon }} {{ doc.type }}
+                  </span>
+                </td>
+                <td data-label="Titre">
+                  <div class="title-cell">
+                    <strong class="doc-title">{{ doc.title }}</strong>
+                    <small class="doc-description">{{ doc.description }}</small>
+                  </div>
+                </td>
+                <td data-label="Niveau">
+                  <span class="level-badge">{{ doc.level }}</span>
+                </td>
+                <td data-label="Format">
+                  <span class="format-text">{{ doc.format }}</span>
+                </td>
+                <td data-label="Date">
+                  <span class="date-text" *ngIf="doc.createdAt">
+                    {{ doc.createdAt | date:'dd/MM/yyyy' }}
+                  </span>
+                  <span class="date-text muted" *ngIf="!doc.createdAt">—</span>
+                </td>
+                <td data-label="Actions" class="actions-col">
+                  <div class="actions-group">
+                    <a
+                      [href]="doc.downloadUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="action-btn btn-view"
+                      title="Voir le document"
+                    >
+                      👁 Voir
+                    </a>
+                    <button
+                      *ngIf="doc.key"
+                      (click)="editDocument(doc)"
+                      class="action-btn btn-edit"
+                      title="Modifier"
+                    >
+                      ✏️ Modifier
+                    </button>
+                    <button
+                      *ngIf="doc.key"
+                      (click)="deleteDocument(doc.key, doc.title)"
+                      class="action-btn btn-delete"
+                      title="Supprimer"
+                    >
+                      🗑 Supprimer
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-template #loading>
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Chargement des documents...</p>
+      </div>
+    </ng-template>
+  </section>
+</div>
