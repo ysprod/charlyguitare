@@ -9,7 +9,7 @@ import { map, take } from 'rxjs/operators';
 })
 export class RedirectLoggedInGuard implements CanActivate {
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {}
+  constructor(private afAuth: AngularFireAuth, private router: Router) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.afAuth.authState.pipe(
@@ -19,7 +19,7 @@ export class RedirectLoggedInGuard implements CanActivate {
           // Redirige vers l'académie ou l'accueil s'il est déjà connecté
           return this.router.createUrlTree(['/academie']);
         } else {
-          return true; // Accès autorisé
+          return true;
         }
       })
     );

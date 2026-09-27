@@ -2,11 +2,11 @@
   "projects": {
     "default": "charly-guitare"
   },
-  "targets": {
-    "charlyguitare": {
+  "targets": {     
+    "charlyguitareadmin": {
       "hosting": {
-        "charlyguitare": [
-          "charlyguitare"
+        "charlyguitareadmin": [
+          "charlyguitareadmin"
         ]
       }
     }
