@@ -1,23 +1,45 @@
 <div class="card-container" *ngIf="estvisible()">
-  <div 
-    class="card-3d" 
-    (click)="cardClicked.emit()" 
-    [@cardFlip]="data.state"
-    [class.is-flipped]="data.state === 'flipped'"
-    [class.is-matched]="data.state === 'matched'">
-    
-    <!-- Face Arrière (Dos de la carte - Dos mystique/Cyber) -->
+  <div class="card-3d" (click)="cardClicked.emit()" [@cardFlip]="data.state"
+    [class.is-flipped]="data.state === 'flipped'" [class.is-matched]="data.state === 'matched'">
+
+    <!-- ============================================================
+         FACE ARRIÈRE (Dos mystique)
+         ============================================================ -->
     <div class="card-face back">
       <div class="card-border-glow"></div>
-      <img src="assets/thegame.jpg" alt="Dos de carte" class="card-img" />
+
+      <!-- Cadre interne décoratif -->
+      <div class="inner-frame">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <!-- Symbole central -->
+        <div class="back-emblem">
+          <span class="emblem-glyph">🧙</span>
+        </div>
+
+        <!-- Motif de fond -->
+        <div class="back-pattern"></div>
+      </div>
+
       <div class="shine-effect"></div>
       <div class="pattern-overlay"></div>
     </div>
 
-    <!-- Face Avant (Image révélée) -->
+    <!-- ============================================================
+         FACE AVANT (Image révélée)
+         ============================================================ -->
     <div class="card-face front">
       <div class="card-border-glow front-glow"></div>
-      <img [src]="data.imageId" alt="Image carte" class="card-img" />
+
+      <!-- Image avec cadre -->
+      <div class="front-image-wrapper">
+        <img [src]="data.imageId" alt="Carte" class="card-img" />
+        <div class="front-shine"></div>
+      </div>
+
       <div class="shine-effect"></div>
     </div>
 

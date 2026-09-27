@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LemenuComponent } from './lemenu.component';
+import { LykomodeComponent } from './lykomode.component';
 
-describe('LemenuComponent', () => {
-  let component: LemenuComponent;
-  let fixture: ComponentFixture<LemenuComponent>;
+describe('LykomodeComponent', () => {
+  let component: LykomodeComponent;
+  let fixture: ComponentFixture<LykomodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LemenuComponent ]
+      declarations: [ LykomodeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LemenuComponent);
+    fixture = TestBed.createComponent(LykomodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

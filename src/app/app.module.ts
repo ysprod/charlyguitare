@@ -6,87 +6,83 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 
 // Firebase Compat Globals (Empêche l'erreur app.auth is not a function)
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Composants
-import { AccueilComponent } from './home/accueil/accueil.component';
-import { BlancComponent } from './univers/blanc/blanc.component';
-import { BleuComponent } from './univers/bleu/bleu.component';
-import { CardgameComponent } from './game/cardgame/cardgame.component';
- import { CharlyguitaregameComponent } from './univers/charlyguitaregame/charlyguitaregame.component';
-import { LemenuComponent } from './features/lemenu/lemenu.component';
-import { LesliensComponent } from './features/lesliens/lesliens.component';
-import { LvideoComponent } from './features/lvideo/lvideo.component';
-import { NoirComponent } from './univers/noir/noir.component';
-import { AgainComponent } from './play/again/again.component';
- import { GardienComponent } from './play/gardien/gardien.component';
-import { PlayComponent } from './play/play.component';
-import { QuatreComponent } from './play/quatre/quatre.component';
-import { RougeComponent } from './univers/rouge/rouge.component';
-import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
-import { VertComponent } from './univers/vert/vert.component';
-import { RdialogComponent } from './game/cardgame/rdialog/rdialog.component';
-import { HomeComponent } from './home/home.component';
-import { KronosComponent } from './game/kronos/kronos.component';
-import { LiveComponent } from './live/live.component';
-import { AcademieComponent } from './academie/academie.component';
 import { AbonnementComponent } from './abonnement/abonnement.component';
-import { OffolandComponent } from './offoland/offoland.component';
-import { FooterComponent } from './features/footer/footer.component';
-import { EncemomentComponent } from './live/encemoment/encemoment.component';
-import { DocumentsComponent } from './academie/documents/documents.component';
+import { AcademieComponent } from './academie/academie.component';
+import { AnnoncesComponent } from './academie/annonces/annonces.component';
 import { ApprendreComponent } from './academie/apprendre/apprendre.component';
-import { MasterclassComponent } from './academie/masterclass/masterclass.component';
-import { EvenementsComponent } from './academie/evenements/evenements.component';
 import { BoutiqueComponent } from './academie/boutique/boutique.component';
 import { CoursprivesComponent } from './academie/coursprives/coursprives.component';
-import { AnnoncesComponent } from './academie/annonces/annonces.component';
+import { DocumentsComponent } from './academie/documents/documents.component';
+import { EvenementsComponent } from './academie/evenements/evenements.component';
+import { MasterclassComponent } from './academie/masterclass/masterclass.component';
+import { FooterComponent } from './features/footer/footer.component';
+import { LvideoComponent } from './features/lvideo/lvideo.component';
+import { CardgameComponent } from './game/cardgame/cardgame.component';
+import { RdialogComponent } from './game/cardgame/rdialog/rdialog.component';
+import { KronosComponent } from './game/kronos/kronos.component';
+import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
+import { AccueilComponent } from './home/accueil/accueil.component';
+import { AgainComponent } from './home/again/again.component';
+import { HomeComponent } from './home/home.component';
+import { EncemomentComponent } from './live/encemoment/encemoment.component';
+import { LiveComponent } from './live/live.component';
 import { LoginComponent } from './login/login.component';
+import { OffolandComponent } from './offoland/offoland.component';
+import { PlayComponent } from './game/play/play.component';
+import { BlancComponent } from './univers/blanc/blanc.component';
+import { BleuComponent } from './univers/bleu/bleu.component';
+import { CharlyguitaregameComponent } from './univers/charlyguitaregame/charlyguitaregame.component';
+import { NoirComponent } from './univers/noir/noir.component';
+import { RougeComponent } from './univers/rouge/rouge.component';
+import { VertComponent } from './univers/vert/vert.component';
 
 // Material Modules
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
 
 // Firebase Modules
 import { AngularFireModule } from '@angular/fire/compat';
+import {
+  AngularFireAnalyticsModule,
+  ScreenTrackingService,
+  UserTrackingService
+} from '@angular/fire/compat/analytics'; // <-- Ajout Analytics
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { 
-  AngularFireAnalyticsModule, 
-  ScreenTrackingService, 
-  UserTrackingService 
-} from '@angular/fire/compat/analytics'; // <-- Ajout Analytics
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 // Services & Environment
-import { GameService } from './services/game.service';
-import { TictactoeserviceService } from './services/tictactoeservice.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
- import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfilComponent } from './profil/profil.component';
-import { RegisterComponent } from './register/register.component';
-import { PrivacyComponent } from './privacy/privacy.component';
-import { MentionsComponent } from './mentions/mentions.component';
-import { ContactComponent } from './contact/contact.component';
-import { MessagerieComponent } from './messagerie/messagerie.component';
-import { LykoComponent } from './lyko/lyko.component';
-import { FretboardComponent } from './game/fretboard/fretboard.component';
-import { MemoryComponent } from './game/memory/memory.component';
 import { AcousticComponent } from './game/acoustic/acoustic.component';
- import { MetronomeComponent } from './game/metronome/metronome.component'; 
 import { GamecardComponent } from './game/cardgame/gamecard/gamecard.component';
 import { ChordComponent } from './game/chord/chord.component';
+import { FretboardComponent } from './game/fretboard/fretboard.component';
+import { LykoComponent } from './game/lyko/lyko.component';
+import { MemoryComponent } from './game/memory/memory.component';
+import { MetronomeComponent } from './game/metronome/metronome.component';
 import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
+import { ContactComponent } from './home/contact/contact.component';
+import { MentionsComponent } from './home/mentions/mentions.component';
+import { MessagerieComponent } from './home/messagerie/messagerie.component';
+import { PrivacyComponent } from './home/privacy/privacy.component';
+import { ProfilComponent } from './home/profil/profil.component';
+import { RegisterComponent } from './register/register.component';
+import { GameService } from './services/game.service';
+import { TictactoeserviceService } from './services/tictactoeservice.service';
+import { LykomodeComponent } from './game/lykomode/lykomode.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,13 +94,9 @@ import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
     BlancComponent,
     NoirComponent,
     PlayComponent,
-     QuatreComponent,
     AgainComponent,
-    LesliensComponent,
-    LemenuComponent,
     LvideoComponent,
     TictactoeComponent,
-    GardienComponent,
     CardgameComponent,
     GamecardComponent,
     RdialogComponent,
@@ -136,7 +128,8 @@ import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
     AcousticComponent,
     ChordComponent,
     MetronomeComponent,
-    TictacduoComponent, 
+    TictacduoComponent,
+    LykomodeComponent,
   ],
   imports: [
     BrowserModule,
@@ -164,8 +157,8 @@ import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
     })
   ],
   providers: [
-    CookieService, 
-    TictactoeserviceService, 
+    CookieService,
+    TictactoeserviceService,
     GameService,
     ScreenTrackingService, // <-- Suivi automatique de la navigation de page
     UserTrackingService   // <-- Suivi automatique de la connexion utilisateur

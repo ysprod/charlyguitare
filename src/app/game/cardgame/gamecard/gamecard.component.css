@@ -1,50 +1,72 @@
+/* ============================================================
+   HOST
+   ============================================================ */
 :host {
   display: block;
   width: 100%;
   height: 100%;
-  perspective: 1000px;
+  aspect-ratio: 3 / 4;         /* ✅ Force un ratio élégant, carte bien visible */
+  perspective: 1200px;
+  position: relative;
 }
 
+/* ============================================================
+   CONTENEUR
+   ============================================================ */
 .card-container {
   width: 100%;
   height: 100%;
-  min-height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 6px;                /* ✅ petit padding pour ne pas coller aux voisins */
+  box-sizing: border-box;
 }
 
-/* Structure 3D de la carte */
+/* ============================================================
+   STRUCTURE 3D DE LA CARTE
+   ============================================================ */
 .card-3d {
   width: 100%;
   height: 100%;
   position: relative;
-  border-radius: 8px;
+  border-radius: 18px;
   cursor: pointer;
   transform-style: preserve-3d;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
-              0 0 0 1px rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+
+  /* Ombre de base + halo subtil */
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 25px rgba(124, 58, 237, 0.15);
 }
 
-/* Survol au-dessus de la carte */
 .card-3d:hover {
-  box-shadow: 0 15px 35px rgba(0, 242, 254, 0.3),
-              0 0 20px rgba(0, 242, 254, 0.4);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.65),
+    0 0 30px rgba(0, 242, 254, 0.5),
+    0 0 60px rgba(124, 58, 237, 0.4);
+  transform: translateY(-4px) scale(1.02);
 }
 
-.card-3d:hover .shine-effect {
-  transform: translateX(100%) translateY(100%) rotate(45deg);
+/* Ne pas animer les cartes déjà matchées */
+.card-3d.is-matched {
+  pointer-events: none;
 }
 
-/* Faces de la carte */
+/* ============================================================
+   FACES
+   ============================================================ */
 .card-face {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -54,47 +76,164 @@
   background: #0f172a;
 }
 
-/* Face Arrière (Dos) */
+/* ---- Face ARRIÈRE (Dos) ---- */
 .back {
   transform: rotateY(0deg);
-  border: 2px solid rgba(124, 58, 237, 0.5);
+  border: 2px solid rgba(124, 58, 237, 0.65);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(124, 58, 237, 0.35), transparent 65%),
+    linear-gradient(145deg, #1a1440 0%, #0a0620 100%);
 }
 
-/* Face Avant (Image) */
+/* ---- Face AVANT (Image) ---- */
 .front {
   transform: rotateY(180deg);
-  border: 2px solid rgba(0, 242, 254, 0.6);
-  background: #1e1b4b;
+  border: 2px solid rgba(0, 242, 254, 0.7);
+  background: linear-gradient(145deg, #1e1b4b, #0a0620);
 }
 
-/* Image de la carte */
+/* ============================================================
+   CADRE INTERNE DU DOS (HUD décoratif)
+   ============================================================ */
+.inner-frame {
+  position: absolute;
+  inset: 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(168, 85, 247, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Coins lumineux */
+.inner-frame .corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #a855f7;
+  filter: drop-shadow(0 0 6px #a855f7);
+  animation: cornerGlow 2.4s ease-in-out infinite;
+}
+.corner-tl { top: 4px; left: 4px; border-top: 2px solid; border-left: 2px solid; border-top-left-radius: 6px; }
+.corner-tr { top: 4px; right: 4px; border-top: 2px solid; border-right: 2px solid; border-top-right-radius: 6px; }
+.corner-bl { bottom: 4px; left: 4px; border-bottom: 2px solid; border-left: 2px solid; border-bottom-left-radius: 6px; }
+.corner-br { bottom: 4px; right: 4px; border-bottom: 2px solid; border-right: 2px solid; border-bottom-right-radius: 6px; }
+
+@keyframes cornerGlow {
+  0%,100% { opacity: 0.55; transform: scale(1); }
+  50%     { opacity: 1; transform: scale(1.15); }
+}
+
+/* Emblème central (au dos de la carte) */
+.back-emblem {
+  width: 64%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle, rgba(168, 85, 247, 0.35), rgba(124, 58, 237, 0.15) 60%, transparent 80%);
+  border: 2px solid rgba(168, 85, 247, 0.7);
+  box-shadow:
+    0 0 25px rgba(168, 85, 247, 0.6),
+    inset 0 0 25px rgba(168, 85, 247, 0.35);
+  animation: emblemPulse 3s ease-in-out infinite;
+  position: relative;
+  z-index: 3;
+}
+
+.emblem-glyph {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.9));
+  animation: glyphBob 3s ease-in-out infinite;
+}
+
+@keyframes emblemPulse {
+  0%,100% { transform: scale(1); box-shadow: 0 0 25px rgba(168, 85, 247, 0.6), inset 0 0 25px rgba(168, 85, 247, 0.35); }
+  50%     { transform: scale(1.05); box-shadow: 0 0 40px rgba(168, 85, 247, 0.95), inset 0 0 35px rgba(168, 85, 247, 0.55); }
+}
+@keyframes glyphBob {
+  0%,100% { transform: translateY(0) rotate(-4deg); }
+  50%     { transform: translateY(-4px) rotate(4deg); }
+}
+
+/* Motif de fond du dos */
+.back-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(168, 85, 247, 0.18) 1px, transparent 1px),
+    radial-gradient(rgba(0, 242, 254, 0.12) 1px, transparent 1px);
+  background-size: 14px 14px, 28px 28px;
+  background-position: 0 0, 7px 7px;
+  opacity: 0.6;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   IMAGE DE LA FACE AVANT
+   ============================================================ */
+.front-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
 .card-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 14px;
-  transition: transform 0.3s ease;
+  object-fit: cover;               /* ✅ remplissage propre, pas de déformation */
+  object-position: center;
+  border-radius: 12px;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .card-3d:hover .card-img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
-/* Aura / Contour Fluo */
+/* Petite brillance sur l'image avant */
+.front-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 40%);
+  pointer-events: none;
+  border-radius: 16px;
+}
+
+/* ============================================================
+   AURA / CONTOUR FLUO
+   ============================================================ */
 .card-border-glow {
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   pointer-events: none;
-  box-shadow: inset 0 0 15px rgba(124, 58, 237, 0.6);
+  box-shadow:
+    inset 0 0 20px rgba(124, 58, 237, 0.7),
+    inset 0 0 40px rgba(124, 58, 237, 0.25);
   z-index: 2;
 }
 
 .front-glow {
-  box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.6);
+  box-shadow:
+    inset 0 0 20px rgba(0, 242, 254, 0.7),
+    inset 0 0 40px rgba(0, 242, 254, 0.25);
 }
 
-/* Effet "Shine" (Reflet Lumineux au Survol) */
+/* ============================================================
+   EFFET SHINE AU SURVOL
+   ============================================================ */
 .shine-effect {
   position: absolute;
   top: -50%;
@@ -104,21 +243,51 @@
   background: linear-gradient(
     45deg,
     transparent 45%,
-    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.28) 50%,
     transparent 55%
   );
   transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  transition: transform 0.6s ease-in-out;
+  transition: transform 0.7s ease-in-out;
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
-/* Motif de quadrillage moderne sur le dos */
+.card-3d:hover .shine-effect {
+  transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* ============================================================
+   MOTIF OVERLAY (grille fine)
+   ============================================================ */
 .pattern-overlay {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
-  background-size: 10px 10px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 12px 12px;
   pointer-events: none;
   z-index: 1;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  :host {
+    aspect-ratio: 3 / 4;
+  }
+  .emblem-glyph { font-size: 1.6rem; }
+  .inner-frame { inset: 8px; }
+  .back-emblem { width: 60%; }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .card-3d:hover { transform: none; }
 }

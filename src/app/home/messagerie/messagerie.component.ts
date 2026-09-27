@@ -3,7 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject, of } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
-import { MessageReply, UserMessage } from '../models/user-message.model';
+import { MessageReply, UserMessage } from '../../models/user-message.model';
  
 @Component({
   selector: 'app-messagerie',

@@ -9,14 +9,14 @@
   <div class="overlay-content">
     <div class="overlay-icon">🏆</div>
     <h1>VICTOIRE</h1>
-    <p>Vous remportez le duel d'alignements !</p>
+    <p>Vous remportez le duel contre l'IA !</p>
   </div>
 </div>
 
 <div class="temple-container py-4">
   <div class="row g-4 align-items-start">
     <div class="col-12 col-lg-7">
-      <div class="board-wrapper">      
+      <div class="board-wrapper">
         <div class="dynamic-grid" [style.--grid-size]="gs.gridSize">
           <div *ngFor="let block of gs.blocks; let i = index" (click)="playerClick(i)"
             [class.disabled]="!block.free || lock" [class.winning-cell]="block.isWinningCell"
@@ -32,14 +32,8 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <div *ngIf="casuffit()" class="alert-ceiling">
-        <h4>🏆 SEUIL MAXIMAL ATTEINT !</h4>
-        <p>Lyko Le Sage s'incline devant votre bravoure.</p>
-        <button class="btn-cyber-primary" (click)="onrecommencer()">Passer à un autre jeu</button>
-      </div>
     </div>
 
     <!-- PANNEAU LATÉRAL -->
@@ -48,12 +42,6 @@
       <!-- Stats du Duel -->
       <div class="stats-panel mb-4">
         <div class="actions-grid">
-          <button class="btn-cyber-next" (click)="prochainNiveau()" *ngIf="rejouer">
-            🚀 NIVEAU SUIVANT ({{ gs.gridSize + 1 }}x{{ gs.gridSize + 1 }})
-          </button>
-          <button class="btn-cyber-secondary" (click)="resetjeu()" *ngIf="rejouer">
-            🔄 Rejouer sur cette grille
-          </button>
 
           <div>
             <div class="turn-indicator" [class.bot-turn]="gs.turn === 1">
@@ -77,19 +65,27 @@
               | LYKÖ : <strong class="magenta">{{ gs.players[1].score }}</strong>
             </div>
           </div>
+
+          <button class="btn-cyber-secondary" (click)="resetjeu()" *ngIf="rejouer">
+            🔄 Rejouer sur cette grille
+          </button>
+
+          <button class="btn-cyber-next" (click)="prochainNiveau()">
+            🚀 NIVEAU SUIVANT ({{ gs.gridSize + 1 }}x{{ gs.gridSize + 1 }})
+          </button>
+
+          <!-- Affiche si la grille est supérieure à 4x4 (gridSize > 4) -->
+          <button class="btn-cyber-prev" (click)="precedentNiveau()" *ngIf="yaprecedent()">
+            ⏪ NIVEAU PRÉCÉDENT ({{ gs.gridSize - 1 }}x{{ gs.gridSize - 1 }})
+          </button>
+
           <button class="btn-cyber-primary" (click)="onrecommencer()">
             ⚔️ Retour au Menu des Jeux
           </button>
         </div>
+
         <div class="panel-header">
           <span><br>📊 STATISTIQUES D'AFFRONTEMENT</span>
-        </div>
-        <div class="pv-card">
-          <div>
-            <span class="pv-label">Points de Vie Accumulés</span>
-            <span class="pv-value">{{ pointdevies | number }} PV</span>
-          </div>
-          <div class="pv-icon">💖</div>
         </div>
 
         <div class="score-table">
@@ -118,15 +114,55 @@
         <p class="lyko-message">{{ messageLyko }}</p>
       </div>
 
-      <!-- Carte Lore -->
-      <div class="lore-panel">
-        <h5>📜 RÈGLES DU DUEL</h5>
-        <p>
-          Alignez <strong>3 Charly Guitare</strong> pour remporter
-          <strong>+10 PV</strong> par alignement.
-          La manche ne prend fin que lorsque <strong>toutes les cases de la grille sont occupées</strong> !
-          Le joueur comptabilisant le plus d'alignements gagne la manche.
-        </p>
+      
+      <!-- ============================================================
+           📖 COMMENT JOUER — Aide rapide pour le joueur
+           ============================================================ -->
+      <div class="how-to-play">
+        <h5 class="howto-title">
+          <span class="howto-icon">📖</span>
+          COMMENT JOUER ?
+        </h5>
+
+        <div class="howto-grid">
+
+          <!-- Bloc 1 : Objectif -->
+          <div class="howto-card card-objective">
+            <div class="howto-header">
+              <span class="howto-badge">🎯 OBJECTIF</span>
+            </div>
+            <p>
+              Alignez <strong>3 pions consécutifs</strong> (horizontal, vertical ou diagonal) pour marquer
+              <strong>+10 PV</strong> — et recommencez autant de fois que possible ! Le plateau s'agrandit à
+              chaque niveau : <em>plus la grille est grande, plus les alignements sont nombreux</em>.
+            </p>
+          </div>
+
+          <!-- Bloc 2 : Placement -->
+          <div class="howto-card card-placement">
+            <div class="howto-header">
+              <span class="howto-badge">👆 PLACEMENT</span>
+            </div>
+            <p>
+              <strong>Clique sur n'importe quelle case vide</strong> de la grille pour y déposer ton pion.
+              Le jeu alterne automatiquement entre les joueurs — chacun son tour, <em>une case à la fois</em>.
+              Une fois posée, un pion ne bouge plus : la case reste occupée pour le reste de la manche.
+            </p>
+          </div>
+
+          <!-- Bloc 3 : Fin de manche -->
+          <div class="howto-card card-end">
+            <div class="howto-header">
+              <span class="howto-badge">🏁 FIN DE MANCHE</span>
+            </div>
+            <p>
+              La manche se termine uniquement quand <strong>toutes les cases sont occupées</strong>.
+              Celui qui a réalisé le <strong>plus d'alignements</strong> remporte le duel.
+              À toi de bloquer l'adversaire tout en construisant tes propres lignes ! 🎯
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

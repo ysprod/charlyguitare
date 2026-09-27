@@ -8,7 +8,7 @@
   <div class="overlay-content">
     <div class="overlay-icon">🏆</div>
     <h1>VICTOIRE</h1>
-    <p>Le duel s'achève sur une grande performance !</p>
+    <p>{{ messageLyko }}</p>
   </div>
 </div>
 
@@ -74,7 +74,7 @@
           </button>
 
           <button class="btn-cyber-primary" (click)="onrecommencer()">
-            ⚔️ Menu des Jeux
+            ⚔️ Retour au Menu des Jeux
           </button>
         </div>
 
@@ -109,14 +109,55 @@
         <p class="lyko-message">{{ messageLyko }}</p>
       </div>
 
-      <!-- RÈGLES -->
-      <div class="lore-panel">
-        <h5>📜 RÈGLES DU GAME</h5>
-        <p>
-          Alignez <strong>3 symboles identiques</strong> pour remporter
-          <strong>+10 PV</strong> par alignement.
-          La manche s'achève uniquement lorsque <strong>toutes les cases sont occupées</strong> !
-        </p>
+      
+      <!-- ============================================================
+           📖 COMMENT JOUER — Aide rapide pour le joueur
+           ============================================================ -->
+      <div class="how-to-play">
+        <h5 class="howto-title">
+          <span class="howto-icon">📖</span>
+          COMMENT JOUER ?
+        </h5>
+
+        <div class="howto-grid">
+
+          <!-- Bloc 1 : Objectif -->
+          <div class="howto-card card-objective">
+            <div class="howto-header">
+              <span class="howto-badge">🎯 OBJECTIF</span>
+            </div>
+            <p>
+              Alignez <strong>3 pions consécutifs</strong> (horizontal, vertical ou diagonal) pour marquer
+              <strong>+10 PV</strong> — et recommencez autant de fois que possible ! Le plateau s'agrandit à
+              chaque niveau : <em>plus la grille est grande, plus les alignements sont nombreux</em>.
+            </p>
+          </div>
+
+          <!-- Bloc 2 : Placement -->
+          <div class="howto-card card-placement">
+            <div class="howto-header">
+              <span class="howto-badge">👆 PLACEMENT</span>
+            </div>
+            <p>
+              <strong>Clique sur n'importe quelle case vide</strong> de la grille pour y déposer ton pion.
+              Le jeu alterne automatiquement entre les joueurs — chacun son tour, <em>une case à la fois</em>.
+              Une fois posée, un pion ne bouge plus : la case reste occupée pour le reste de la manche.
+            </p>
+          </div>
+
+          <!-- Bloc 3 : Fin de manche -->
+          <div class="howto-card card-end">
+            <div class="howto-header">
+              <span class="howto-badge">🏁 FIN DE MANCHE</span>
+            </div>
+            <p>
+              La manche se termine uniquement quand <strong>toutes les cases sont occupées</strong>.
+              Celui qui a réalisé le <strong>plus d'alignements</strong> remporte le duel.
+              À toi de bloquer l'adversaire tout en construisant tes propres lignes ! 🎯
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

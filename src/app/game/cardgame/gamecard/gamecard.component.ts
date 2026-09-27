@@ -2,7 +2,6 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardData } from '../CardData';
 
-
 @Component({
   selector: 'app-gamecard',
   templateUrl: './gamecard.component.html',
@@ -10,31 +9,31 @@ import { CardData } from '../CardData';
   animations: [
     trigger('cardFlip', [
       state('default', style({
-        transform: 'perspective(1000px) rotateY(0deg)',
+        transform: 'perspective(1200px) rotateY(0deg)',
         opacity: 1
       })),
       state('flipped', style({
-        transform: 'perspective(1000px) rotateY(180deg)',
+        transform: 'perspective(1200px) rotateY(180deg)',
         opacity: 1
       })),
       state('matched', style({
-        transform: 'perspective(1000px) rotateY(180deg) scale(0)',
+        transform: 'perspective(1200px) rotateY(180deg) scale(0)',
         opacity: 0,
         pointerEvents: 'none'
       })),
 
-      // Transitions de retournement fluides avec easing personnalisé
+      // Retournement fluide avec rebond
       transition('default <=> flipped', [
-        animate('450ms cubic-bezier(0.34, 1.56, 0.64, 1)')
+        animate('500ms cubic-bezier(0.34, 1.56, 0.64, 1)')
       ]),
 
-      // Animation WAHOU lors d'une paire trouvée (Matched)
+      // Animation WAHOU lors d'une paire trouvée
       transition('* => matched', [
-        animate('700ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
-          style({ transform: 'perspective(1000px) rotateY(180deg) scale(1)', filter: 'brightness(1)', offset: 0 }),
-          style({ transform: 'perspective(1000px) rotateY(180deg) scale(1.15)', filter: 'brightness(1.8) drop-shadow(0 0 25px #00f2fe)', offset: 0.4 }),
-          style({ transform: 'perspective(1000px) rotateY(180deg) scale(0.9)', filter: 'brightness(1.5)', offset: 0.7 }),
-          style({ transform: 'perspective(1000px) rotateY(360deg) scale(0)', opacity: 0, offset: 1 })
+        animate('800ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
+          style({ transform: 'perspective(1200px) rotateY(180deg) scale(1)', filter: 'brightness(1)', offset: 0 }),
+          style({ transform: 'perspective(1200px) rotateY(200deg) scale(1.2)', filter: 'brightness(1.9) drop-shadow(0 0 30px #00f2fe)', offset: 0.4 }),
+          style({ transform: 'perspective(1200px) rotateY(280deg) scale(0.95)', filter: 'brightness(1.5)', offset: 0.7 }),
+          style({ transform: 'perspective(1200px) rotateY(360deg) scale(0)', opacity: 0, offset: 1 })
         ]))
       ])
     ])
@@ -52,5 +51,4 @@ export class GamecardComponent implements OnInit {
   estvisible(): boolean {
     return this.data.state === 'flipped' || this.data.state === 'default';
   }
-
 }

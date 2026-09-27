@@ -1,65 +1,162 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 
 <head>
+
+  <!-- =========================================================
+       CONFIGURATION DE BASE & META VITALES
+  ========================================================== -->
   <meta charset="utf-8">
-  <title>Charly Guitare - La référence de la guitare & de la musique</title>
+  <title>Charly Guitare | Apprendre la guitare, jouer, progresser</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Balises SEO Fondamentales -->
-  <meta name="description" content="Découvrez Charly Guitare : cours de guitare en ligne, méthodes d'apprentissage, livres interactifs et jeux éducatifs pour maîtriser la musique.">
-  <meta name="keywords" content="Charly Guitare, cours de guitare, apprendre la guitare, méthode guitare, formation musique, livres guitare">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Charly Guitare vous accompagne pour apprendre la guitare et la musique : cours, méthodes, livres interactifs, exercices, jeux musicaux et ressources pédagogiques.">
+  <meta name="keywords" content="Charly Guitare, guitare, apprendre la guitare, cours de guitare, cours guitare en ligne, méthode guitare, apprendre musique, formation musicale, jeux musicaux, solfège, guitare débutant, coupé décalé">
   <meta name="author" content="Charly Guitare">
-  <meta name="robots" content="index, follow">
+  <meta name="creator" content="Charly Guitare">
+  <meta name="publisher" content="Charly Guitare">
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Indexation Canonique & Multi-langue -->
   <link rel="canonical" href="https://charlyguitare.com/">
+  <link rel="alternate" hreflang="fr" href="https://charlyguitare.com/">
+  <link rel="alternate" hreflang="x-default" href="https://charlyguitare.com/">
 
-  <!-- Open Graph / Facebook / WhatsApp -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://charlyguitare.com/">
-  <meta property="og:title" content="Charly Guitare - La musique est une école de vie">
-  <meta property="og:description" content="Cours de guitare, méthodes interactives et jeux musicaux. Apprenez la guitare à votre rythme.">
-  <meta property="og:image" content="https://charlyguitare.com/assets/charly-guitare-hero.png">
-  <meta property="og:locale" content="fr_FR">
 
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://charlyguitare.com/">
-  <meta name="twitter:title" content="Charly Guitare - Apprendre la guitare">
-  <meta name="twitter:description" content="Cours de guitare, méthodes d'apprentissage et jeux interactifs.">
-  <meta name="twitter:image" content="https://charlyguitare.com/assets/charly-guitare-hero.png">
-
-  <!-- Favicon & PWA -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0f172a">
-
-  <!-- Fonts & Material Icons -->
+  <!-- =========================================================
+       PERFORMANCE & PRECONNECT (LCP / CLS Optimisations)
+  ========================================================== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
 
-  <!-- Google AdSense -->
+  <!-- Chargement asynchrone non-bloquant des polices -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="print" onload="this.media='all'">
+  
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </noscript>
+
+  <!-- Preload de l'image LCP (Hero) -->
+  <link rel="preload" as="image" type="image/png" href="assets/charly-guitare-hero.png">
+
+
+  <!-- =========================================================
+       OPEN GRAPH (FACEBOOK, WHATSAPP, LINKEDIN)
+  ========================================================== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Charly Guitare">
+  <meta property="og:url" content="https://charlyguitare.com/">
+  <meta property="og:title" content="Charly Guitare | La musique est une école de vie">
+  <meta property="og:description" content="Apprenez la guitare et développez votre passion grâce aux cours, méthodes interactives, exercices et jeux musicaux de Charly Guitare.">
+  <meta property="og:image" content="https://charlyguitare.com/assets/charly-guitare-hero.png">
+  <meta property="og:image:secure_url" content="https://charlyguitare.com/assets/charly-guitare-hero.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Charly Guitare - Apprendre la guitare et la musique">
+  <meta property="og:locale" content="fr_FR">
+
+
+  <!-- =========================================================
+       TWITTER / X CARD
+  ========================================================== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Charly Guitare | Apprendre la guitare et la musique">
+  <meta name="twitter:description" content="Cours de guitare, méthodes interactives, exercices et jeux musicaux pour apprendre, pratiquer et progresser.">
+  <meta name="twitter:image" content="https://charlyguitare.com/assets/charly-guitare-hero.png">
+  <meta name="twitter:image:alt" content="Charly Guitare - Plateforme musicale et pédagogique">
+
+
+  <!-- =========================================================
+       PWA, ICONS & INTEGRATION MOBILE
+  ========================================================== -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180x180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Charly Guitare">
+
+
+  <!-- =========================================================
+       GOOGLE ADSENSE (Optimisé Async)
+  ========================================================== -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4776906885222505" crossorigin="anonymous"></script>
 
-  <!-- Données structurées Schema.org (JSON-LD) -->
+
+  <!-- =========================================================
+       DONNÉES STRUCTURÉES CONSOLIDÉES (SCHEMA.ORG JSON-LD)
+  ========================================================== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "Charly Guitare",
-    "url": "https://charlyguitare.com/",
-    "logo": "https://charlyguitare.com/assets/charly-guitare-hero.png",
-    "description": "Plateforme de cours de guitare en ligne, méthodes d'apprentissage et formations musicales.",
-    "sameAs": []
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        "@id": "https://charlyguitare.com/#organization",
+        "name": "Charly Guitare",
+        "url": "https://charlyguitare.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://charlyguitare.com/assets/charly-guitare-hero.png",
+          "width": "1200",
+          "height": "630"
+        },
+        "image": "https://charlyguitare.com/assets/charly-guitare-hero.png",
+        "description": "Plateforme pédagogique dédiée à l'apprentissage de la guitare et de la musique avec des cours, méthodes, exercices, livres interactifs et jeux musicaux.",
+        "knowsAbout": [
+          "Guitare",
+          "Musique",
+          "Apprentissage de la guitare",
+          "Formation musicale",
+          "Solfège",
+          "Coupé-Décalé"
+        ],
+        "areaServed": "Worldwide"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://charlyguitare.com/#website",
+        "url": "https://charlyguitare.com/",
+        "name": "Charly Guitare",
+        "description": "Apprendre la guitare et la musique avec Charly Guitare.",
+        "inLanguage": "fr-FR",
+        "publisher": {
+          "@id": "https://charlyguitare.com/#organization"
+        }
+      }
+    ]
   }
   </script>
+
 </head>
 
 <body class="mat-typography">
+
+  <!-- Application Angular -->
   <app-root></app-root>
-  <noscript>Veuillez activer JavaScript pour accéder à l'application Charly Guitare.</noscript>
+
+  <!-- Fallback d'Accessibilité (No-JavaScript) -->
+  <noscript>
+    <main style="max-width: 800px; margin: 40px auto; padding: 30px; text-align: center; font-family: system-ui, -apple-system, sans-serif; color: #1e293b;">
+      <h1>Charly Guitare</h1>
+      <p>Bienvenue sur Charly Guitare, votre plateforme dédiée à l'apprentissage de la guitare et de la musique.</p>
+      <p>Pour profiter de nos cours interactifs, exercices pratiques et jeux musicaux, veuillez activer JavaScript dans les paramètres de votre navigateur.</p>
+    </main>
+  </noscript>
+
 </body>
 
 </html>

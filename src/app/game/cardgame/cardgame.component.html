@@ -1,11 +1,76 @@
 <div class="game-wrapper">
 
+  <!-- ============================================================
+       DÉCOR ANIMÉ EN ARRIÈRE-PLAN
+       ============================================================ -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    <div class="cyber-grid"></div>
+    <div class="particles">
+      <span class="particle"
+            *ngFor="let p of particles"
+            [style.left.%]="p.left"
+            [style.animation-delay.s]="p.delay"
+            [style.animation-duration.s]="p.duration"
+            [style.width.px]="p.size"
+            [style.height.px]="p.size"
+            [style.background]="p.color"
+            [style.box-shadow]="'0 0 12px ' + p.color"></span>
+    </div>
+    <div class="floating-coins">
+      <span class="coin" *ngFor="let c of coins"
+            [style.left.%]="c.left"
+            [style.animation-delay.s]="c.delay"
+            [style.animation-duration.s]="c.duration">{{ c.symbol }}</span>
+    </div>
+  </div>
 
   <div class="main-content">
-    <!-- Zone de jeu -->
+
+    <!-- ============================================================
+         ZONE DE JEU
+         ============================================================ -->
     <section class="game-section">
+
+      <!-- Header du jeu -->
+      <header class="game-header">
+        <div class="header-badge">
+          <span class="badge-dot"></span>
+          <span>CHASSE AU TRÉSOR</span>
+        </div>
+        <h1 class="header-title">
+          <span class="title-icon">🃏</span>
+          <span class="title-text">BOUBOUNI</span>
+        </h1>
+        <p class="header-subtitle">
+          Retrouvez toutes les paires pour gagner !
+        </p>
+      </header>
+
+      <!-- Barre de stats rapide -->
+      <div class="quick-stats" *ngIf="oncontinue()">
+        <div class="quick-stat">
+          <span class="qs-icon">🎯</span>
+          <span class="qs-label">Paires</span>
+          <span class="qs-value">{{ matchedCount }} / {{ cardImages.length }}</span>
+        </div>
+        <div class="quick-stat">
+          <span class="qs-icon">🎴</span>
+          <span class="qs-label">Coups</span>
+          <span class="qs-value">{{ moves }}</span>
+        </div>
+        <div class="quick-stat">
+          <span class="qs-icon">💖</span>
+          <span class="qs-label">PV</span>
+          <span class="qs-value">{{ pointdevies | number }}</span>
+        </div>
+      </div>
+
+      <!-- Plateau -->
       <div class="game-area-card" *ngIf="oncontinue()">
-        <mat-grid-list cols="4" rowHeight="1:1" gutterSize="16px">
+        <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px">
           <mat-grid-tile *ngFor="let c of cards; let idx = index">
             <app-gamecard [data]="c" (click)="cardClicked(idx)" class="card-item">
             </app-gamecard>
@@ -15,54 +80,109 @@
 
       <!-- Écran Limite Atteinte -->
       <div class="limit-reached-card" *ngIf="casuffit()">
+        <div class="limit-glow"></div>
         <div class="limit-icon">🏆</div>
-        <h2>Score maximum atteint !</h2>
-        <p>BOUBOUNI ne vous permet pas de dépasser <strong>10 000 points de vie</strong> ici. Félicitations !</p>
-        <button class="btn-action pulse" (click)="onrecommencer()">
-          Passer au jeu suivant 🚀
-        </button>
-      </div>
-    </section>
-
-    <!-- Sidebar Tableau de bord -->
-    <aside class="dashboard-section">
-      <!-- Header dynamique -->
-      <header class="game-header">
-        <div class="header-title">
-          <h1>BOUBOUNI</h1>
-        </div>
-      </header>
-      <!-- Panneau de score -->
-      <div class="glass-card score-card">
-        <h3>VOS GAINS</h3>
-        <div class="stat-row">
-          <div class="stat-item">
-            <span class="stat-label">Points de Vie</span>
-            <span class="stat-value life-pts">{{ lavie | number }}</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-label">Bonus</span>
-            <span class="stat-value bonus-pts">+{{ lebonus }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Instructions & Actions -->
-      <div class="glass-card info-card">
-        <h3>Règles du Gardien</h3>
-        <p class="rules-text">
-          Flip deux cartes pour former une paire.
-          <span class="penalty-text">-100 pts par coup</span>.
-          Trouvez toutes les paires pour remporter le trésor de BOUBOUNI !
+        <h2 class="limit-title">TRÉSOR MAXIMAL ATTEINT !</h2>
+        <p class="limit-text">
+          Le Gardien BOUBOUNI s'incline devant votre talent.<br>
+          Le plafond de <strong>10 000 points de vie</strong> est franchi avec panache !
         </p>
-
-        <div class="action-zone">
-          <button class="btn-secondary" (click)="onrecommencer()">
-            Retour au Menu des Jeux
+        <div class="limit-actions">
+          <button class="btn-cyber-primary pulse" (click)="onrecommencer()">
+            🚀 Passer au jeu suivant
+          </button>
+          <button class="btn-cyber-secondary" (click)="onrecommencer()">
+            ⚔️ Retour au Menu
           </button>
         </div>
       </div>
+    </section>
+
+    <!-- ============================================================
+         SIDEBAR DASHBOARD
+         ============================================================ -->
+    <aside class="dashboard-section">
+
+      <!-- Carte des gains -->
+      <div class="glass-card score-card">
+        <div class="card-header">
+          <span class="card-icon">💎</span>
+          <h3>VOS GAINS</h3>
+        </div>
+
+        <div class="pv-display">
+          <span class="pv-label">Points de Vie</span>
+          <span class="pv-value">{{ lavie | number }}</span>
+          <div class="pv-bar">
+            <div class="pv-fill"
+                 [style.width.%]="(pointdevies / 10000) * 100"></div>
+          </div>
+          <span class="pv-max">Plafond : 10 000 PV</span>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-item">
+            <span class="stat-icon">🎁</span>
+            <span class="stat-label">Bonus</span>
+            <span class="stat-value bonus-pts">+{{ lebonus }}</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-icon">🏅</span>
+            <span class="stat-label">Niveau</span>
+            <span class="stat-value">{{ etapedujeu }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Règles & Actions -->
+      <div class="glass-card info-card">
+        <div class="card-header">
+          <span class="card-icon">📜</span>
+          <h3>RÈGLES DU GARDIEN</h3>
+        </div>
+
+        <ul class="rules-list">
+          <li>
+            <span class="rule-num">1</span>
+            <span>Retourne <strong>deux cartes</strong> pour tenter de former une paire.</span>
+          </li>
+          <li>
+            <span class="rule-num">2</span>
+            <span>Chaque coup te coûte <strong class="penalty">-100 PV</strong>.</span>
+          </li>
+          <li>
+            <span class="rule-num">3</span>
+            <span>Une paire trouvée te rapporte <strong class="reward">+5 000 PV</strong>.</span>
+          </li>
+          <li>
+            <span class="rule-num">4</span>
+            <span>Trouve <strong>toutes les paires</strong> pour remporter le trésor !</span>
+          </li>
+        </ul>
+
+        <div class="action-zone">
+          <button class="btn-cyber-primary" (click)="onrecommencer()">
+            ⚔️ Retour au Menu des Jeux
+          </button>
+          <button class="btn-cyber-secondary" (click)="restart()">
+            🔄 Nouvelle partie
+          </button>
+        </div>
+      </div>
+
+      <!-- Astuce du Sage -->
+      <div class="glass-card tip-card">
+        <div class="card-header">
+          <span class="card-icon">🐵</span>
+          <h3>ASTUCE DU GARDIEN</h3>
+        </div>
+        <p class="tip-text">
+          « Mémorise bien l'emplacement des cartes ratées...
+          <em>la mémoire est la clé du trésor</em>. »
+        </p>
+      </div>
+
     </aside>
   </div>
 </div>

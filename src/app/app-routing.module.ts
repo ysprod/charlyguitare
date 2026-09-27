@@ -1,47 +1,47 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // Imports des composants
-import { AccueilComponent } from './home/accueil/accueil.component';
-import { EvenementsComponent } from './academie/evenements/evenements.component';
-import { AnnoncesComponent } from './academie/annonces/annonces.component';
-import { CoursprivesComponent } from './academie/coursprives/coursprives.component';
-import { BoutiqueComponent } from './academie/boutique/boutique.component';
-import { MasterclassComponent } from './academie/masterclass/masterclass.component';
-import { ApprendreComponent } from './academie/apprendre/apprendre.component';
-import { DocumentsComponent } from './academie/documents/documents.component';
-import { EncemomentComponent } from './live/encemoment/encemoment.component';
 import { AbonnementComponent } from './abonnement/abonnement.component';
-import { OffolandComponent } from './offoland/offoland.component';
 import { AcademieComponent } from './academie/academie.component';
-import { LiveComponent } from './live/live.component';
+import { AnnoncesComponent } from './academie/annonces/annonces.component';
+import { ApprendreComponent } from './academie/apprendre/apprendre.component';
+import { BoutiqueComponent } from './academie/boutique/boutique.component';
+import { CoursprivesComponent } from './academie/coursprives/coursprives.component';
+import { DocumentsComponent } from './academie/documents/documents.component';
+import { EvenementsComponent } from './academie/evenements/evenements.component';
+import { MasterclassComponent } from './academie/masterclass/masterclass.component';
+import { AcousticComponent } from './game/acoustic/acoustic.component';
+import { CardgameComponent } from './game/cardgame/cardgame.component';
+import { ChordComponent } from './game/chord/chord.component';
+import { FretboardComponent } from './game/fretboard/fretboard.component';
+import { KronosComponent } from './game/kronos/kronos.component';
+import { LykoComponent } from './game/lyko/lyko.component';
+import { MemoryComponent } from './game/memory/memory.component';
+import { MetronomeComponent } from './game/metronome/metronome.component';
+import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
+import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { AccueilComponent } from './home/accueil/accueil.component';
+import { AgainComponent } from './home/again/again.component';
+import { ContactComponent } from './home/contact/contact.component';
 import { HomeComponent } from './home/home.component';
+import { MentionsComponent } from './home/mentions/mentions.component';
+import { EncemomentComponent } from './live/encemoment/encemoment.component';
+import { LiveComponent } from './live/live.component';
+import { LoginComponent } from './login/login.component';
+import { MessagerieComponent } from './home/messagerie/messagerie.component';
+import { OffolandComponent } from './offoland/offoland.component';
+import { PlayComponent } from './game/play/play.component';
+import { PrivacyComponent } from './home/privacy/privacy.component';
+import { ProfilComponent } from './home/profil/profil.component';
+import { RegisterComponent } from './register/register.component';
+import { BlancComponent } from './univers/blanc/blanc.component';
+import { BleuComponent } from './univers/bleu/bleu.component';
 import { CharlyguitaregameComponent } from './univers/charlyguitaregame/charlyguitaregame.component';
+import { NoirComponent } from './univers/noir/noir.component';
 import { RougeComponent } from './univers/rouge/rouge.component';
 import { VertComponent } from './univers/vert/vert.component';
-import { BleuComponent } from './univers/bleu/bleu.component';
-import { BlancComponent } from './univers/blanc/blanc.component';
-import { NoirComponent } from './univers/noir/noir.component';
-import { PlayComponent } from './play/play.component';
-import { GardienComponent } from './play/gardien/gardien.component';
-import { TictactoeComponent } from './game/tictactoe/tictactoe.component';
-import { CardgameComponent } from './game/cardgame/cardgame.component';
-import { KronosComponent } from './game/kronos/kronos.component';
-import { AgainComponent } from './play/again/again.component';
-import { AuthGuard } from './guards/auth/auth.guard';
-import { LoginComponent } from './login/login.component';
-import { ProfilComponent } from './profil/profil.component';
-import { RegisterComponent } from './register/register.component';
-import { PrivacyComponent } from './privacy/privacy.component';
-import { MentionsComponent } from './mentions/mentions.component';
-import { ContactComponent } from './contact/contact.component';
-import { MessagerieComponent } from './messagerie/messagerie.component';
-import { LykoComponent } from './lyko/lyko.component';
-import { FretboardComponent } from './game/fretboard/fretboard.component';
-import { MemoryComponent } from './game/memory/memory.component';
-import { AcousticComponent } from './game/acoustic/acoustic.component';
-import { MetronomeComponent } from './game/metronome/metronome.component';
-import { ChordComponent } from './game/chord/chord.component';
-import { TictacduoComponent } from './game/tictacduo/tictacduo.component';
+import { LykomodeComponent } from './game/lykomode/lykomode.component';
 
 const routes: Routes = [
   // Page de connexion (Accessible sans authentification)
@@ -79,13 +79,13 @@ const routes: Routes = [
   { path: 'bleu', component: BleuComponent, canActivate: [AuthGuard] },
   { path: 'blanc', component: BlancComponent, canActivate: [AuthGuard] },
   { path: 'noir', component: NoirComponent, canActivate: [AuthGuard] },
-  { path: 'gardien', component: GardienComponent, canActivate: [AuthGuard] },
   { path: 'tictac', component: TictactoeComponent, canActivate: [AuthGuard] },
   { path: 'cards', component: CardgameComponent, canActivate: [AuthGuard] },
   { path: 'kronos', component: KronosComponent, canActivate: [AuthGuard] },
   { path: 'again', component: AgainComponent, canActivate: [AuthGuard] },
   { path: 'lyko', component: LykoComponent, canActivate: [AuthGuard] },
-    { path: 'tictacduo', component: TictacduoComponent, canActivate: [AuthGuard] },
+  { path: 'tictacduo', component: TictacduoComponent, canActivate: [AuthGuard] },
+  { path: 'lykomode', component: LykomodeComponent, canActivate: [AuthGuard] },
   // Redirections par défaut
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
